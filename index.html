@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Transformer, Block by Block — Interactive Deep Learning Architecture Guide</title>
 <meta name="description" content="An interactive visual course explaining the Transformer neural network architecture from zero to GPT and BERT. Interactive Q/K/V attention, tensor math, and step-by-step visualizations.">
 <meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing">
@@ -22,9 +22,6 @@
   --fb:"Atkinson Hyperlegible","Segoe UI",Roboto,sans-serif;
   --fm:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0e1117;--panel:#161a22;--panel2:#1c212b;--ink:#eef1f6;--ink2:#b9c0cc;--ink3:#8a92a2;--line:#2b313d;
-  --tok:#9aa1ad;--emb:#5b8ff0;--pos:#f08a45;--q:#3cbf5f;--k:#a678ea;--v:#2cc2c2;--sc:#f0c63c;--att:#f06262;--out:#7d9bf0;--mask:#000000;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e1117;--panel:#161a22;--panel2:#1c212b;--ink:#eef1f6;--ink2:#b9c0cc;--ink3:#8a92a2;--line:#2b313d;
   --tok:#9aa1ad;--emb:#5b8ff0;--pos:#f08a45;--q:#3cbf5f;--k:#a678ea;--v:#2cc2c2;--sc:#f0c63c;--att:#f06262;--out:#7d9bf0;--mask:#000000;color-scheme:dark}
@@ -2507,9 +2504,9 @@ const boot=()=>{if(!document.querySelector(".finale")||!document.querySelector("
 const ls={get:k=>{try{return localStorage.getItem("tbb_"+k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem("tbb_"+k,v)}catch(e){}}};
 // ---------- light / dark
 const tb=$("themebtn"),root=document.documentElement;
-const isDark=()=>root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+const isDark=()=>root.dataset.theme==="dark";
 const showT=()=>{tb.textContent=isDark()?"☀ Light":"◐ Dark";tb.setAttribute("aria-pressed",isDark())};
-const saved=ls.get("theme");if(saved)root.dataset.theme=saved;showT();
+const saved=ls.get("theme");root.dataset.theme=(saved==="dark"?"dark":"light");showT();
 tb.onclick=()=>{root.dataset.theme=isDark()?"light":"dark";ls.set("theme",root.dataset.theme);showT()};
 
 // ---------- printable worksheet
