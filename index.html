@@ -1,7 +1,19 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Transformer, Block by Block</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Transformer, Block by Block — Interactive Deep Learning Architecture Guide</title>
+<meta name="description" content="An interactive visual course explaining the Transformer neural network architecture from zero to GPT and BERT. Interactive Q/K/V attention, tensor math, and step-by-step visualizations.">
+<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing">
+<meta name="author" content="Rajeev Pandey">
+<meta property="og:title" content="Transformer, Block by Block — Interactive Deep Learning Architecture Guide">
+<meta property="og:description" content="Visual, interactive deep dive into modern Transformer architecture. Every step computed in real numbers with pictures first.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rajeevranjanpandey.github.io/transformer-block-by-block/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Transformer, Block by Block">
+<meta name="twitter:description" content="Interactive visual guide from zero to GPT and BERT with real numbers and tensor dimensions.">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;600&display=swap">
+</head><body>
 <style>
 :root{
   --bg:#f2f4f7;--panel:#ffffff;--panel2:#f7f8fa;--ink:#151922;--ink2:#495062;--ink3:#626a7a;--line:#dce0e7;
@@ -1702,11 +1714,22 @@ DEEP["7"]=()=>{const H0=D.h,toks=TOK4,nrm=v=>Math.hypot(v[0],v[1]);
   const C=150,mk=Math.max(...H0.K.map(nrm))*1.3,S1=125/mk;
   const P=(v,S)=>[C+v[0]*S,C-v[1]*S];
   const grid=()=>`<rect x="3" y="3" width="294" height="294" rx="12" class="pbg"/>`+[-3,-2,-1,1,2,3].map(i=>`<line x1="${C+i*40}" y1="12" x2="${C+i*40}" y2="288" class="gl"/><line x1="12" y1="${C+i*40}" x2="288" y2="${C+i*40}" class="gl"/>`).join("")+`<line x1="12" y1="${C}" x2="288" y2="${C}" class="ax"/><line x1="${C}" y1="12" x2="${C}" y2="288" class="ax"/>`;
-  const arr=(a,b,c,w,op=1)=>{const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);if(L<2)return `<circle cx="${b[0]}" cy="${b[1]}" r="${w}" fill="var(--${c})" opacity="${op}"/>`;
-    const ux=dx/L,uy=dy/L,hs=Math.min(L,5+w*1.4),bx=b[0]-ux*hs,by=b[1]-uy*hs,hw=hs*.62;
-    return `<g opacity="${op}"><line x1="${a[0]}" y1="${a[1]}" x2="${bx}" y2="${by}" stroke="var(--${c})" stroke-width="${w}" stroke-linecap="round"/><path d="M${b[0]} ${b[1]}L${bx-uy*hw} ${by+ux*hw}L${bx+uy*hw} ${by-ux*hw}Z" fill="var(--${c})"/></g>`};
-  const labs=it=>{it.forEach(o=>{const w=String(o.t).length*7;if(o.anc==="start"&&o.x+w>290){o.anc="end";o.x=Math.min(o.ax-6,290)}if(o.anc==="end"&&o.x-w<10){o.anc="start";o.x=Math.max(o.ax+6,10)}});it.sort((a,b)=>a.y-b.y);for(let i=1;i<it.length;i++){const p=it[i-1],c=it[i];if(Math.abs(c.x-p.x)<80&&c.y-p.y<15)c.y=p.y+15}
-    return it.map(o=>`${Math.hypot(o.x-o.ax,o.y-o.ay)>18?`<line x1="${o.ax}" y1="${o.ay}" x2="${o.x+(o.anc==="end"?2:-2)}" y2="${o.y-4}" class="ld"/>`:""}<text x="${o.x}" y="${o.y}" text-anchor="${o.anc}" class="lb" style="opacity:${o.op??1}">${o.t}</text>`).join("")};
+  const arr=(a,b,c,w,op=1)=>{
+    const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);
+    if(L<2.5)return `<circle cx="${b[0]}" cy="${b[1]}" r="${Math.max(2,w*0.75)}" fill="var(--${c})" opacity="${op}"/>`;
+    const ux=dx/L,uy=dy/L;
+    const hs=Math.max(6.5,Math.min(13,w*2.4,L*0.44));
+    const hw=hs*0.58;
+    const bx=b[0]-ux*hs,by=b[1]-uy*hs;
+    const sx=b[0]-ux*(hs-1.2),sy=b[1]-uy*(hs-1.2);
+    return `<g opacity="${op}"><line x1="${a[0]}" y1="${a[1]}" x2="${sx}" y2="${sy}" stroke="var(--${c})" stroke-width="${w}" stroke-linecap="round"/><path d="M${b[0]} ${b[1]}L${bx-uy*hw} ${by+ux*hw}L${bx+ux*1.8} ${by+uy*1.8}L${bx+uy*hw} ${by-ux*hw}Z" fill="var(--${c})"/></g>`
+  };
+  const labs=it=>{
+    it.forEach(o=>{const w=String(o.t).length*7;if(o.anc==="start"&&o.x+w>290){o.anc="end";o.x=Math.min(o.ax-6,290)}if(o.anc==="end"&&o.x-w<10){o.anc="start";o.x=Math.max(o.ax+6,10)}});
+    it.sort((a,b)=>a.y-b.y);
+    for(let i=1;i<it.length;i++){const p=it[i-1],c=it[i];if(Math.abs(c.x-p.x)<80&&c.y-p.y<15)c.y=p.y+15}
+    return it.map(o=>`${Math.hypot(o.x-o.ax,o.y-o.ay)>18?`<line x1="${o.ax}" y1="${o.ay}" x2="${o.x+(o.anc==="end"?2:-2)}" y2="${o.y-4}" class="ld"/>`:""}<text x="${o.x}" y="${o.y}" text-anchor="${o.anc}" class="lb" style="opacity:${o.op??1}">${o.t}</text>`).join("")
+  };
   const tipLab=(v,S,t,op)=>{const e=P(v,S),n=nrm(v)||1,dx=v[0]/n,dy=-v[1]/n;return{ax:e[0],ay:e[1],x:e[0]+dx*12+(v[0]>=0?4:-4),y:e[1]+dy*12+4,anc:v[0]>=0?"start":"end",t,op}};
   const calc=()=>{const s=H0.K.map(k=>q[0]*k[0]+q[1]*k[1]),sc=s.map(v=>v/SQ2),a=softmaxRaw(sc);return{s,sc,a,o:[0,1].map(d=>a.reduce((x,w,j)=>x+w*H0.V[j][d],0))}};
   const mkSvg=l=>sv("svg",{viewBox:"0 0 300 300",class:"g4svg",role:"img","aria-label":l});
@@ -1723,8 +1746,15 @@ DEEP["7"]=()=>{const H0=D.h,toks=TOK4,nrm=v=>Math.hypot(v[0],v[1]);
     let g=grid()+`<line x1="${C-u[0]*190}" y1="${C+u[1]*190}" x2="${C+u[0]*190}" y2="${C-u[1]*190}" class="ray"/>`;
     KS.forEach((k,j)=>{const d=k[0]*u[0]+k[1]*u[1],off=(j-1.5)*7,ox=u[1]*off,oy=u[0]*off,f=P([u[0]*d*st.t2,u[1]*d*st.t2],S1),tip=P(k,S1),ft=P([u[0]*d,u[1]*d],S1);
       if(st.t2>0)g+=`<line x1="${tip[0]}" y1="${tip[1]}" x2="${ft[0]}" y2="${ft[1]}" class="pj" style="opacity:${st.t2}"/><line x1="${C+ox}" y1="${C+oy}" x2="${f[0]+ox}" y2="${f[1]+oy}" stroke="var(--sc)" stroke-width="3" stroke-linecap="round" opacity=".75"/>`});
-    KS.forEach((k,j)=>g+=arr([C,C],P(k,S1),"k",j===top&&st.t3>0?3.5:2.5,st.t3>0?.35+.65*a[j]:1));
-    const Lq=Math.min(qn*S1,138)*st.t1,qe=[C+u[0]*Lq,C-u[1]*Lq];g+=arr([C,C],qe,"q",4.5);
+    KS.forEach((k,j)=>{
+      const isTop=j===top&&st.t3>0;
+      const kOp=st.t3>0?.35+.65*a[j]:.9;
+      g+=arr([C,C],P(k,S1),"k",isTop?3.6:2.4,kOp);
+      if(isTop)g+=`<circle cx="${P(k,S1)[0]}" cy="${P(k,S1)[1]}" r="5" fill="none" stroke="var(--att)" stroke-width="1.8"/>`;
+    });
+    const Lq=Math.max(10,Math.min(qn*S1,136)*st.t1),qe=[C+u[0]*Lq,C-u[1]*Lq];
+    g+=arr([C,C],qe,"q",4.5);
+    g+=`<circle cx="${qe[0]}" cy="${qe[1]}" r="6.5" fill="var(--q)" stroke="#fff" stroke-width="2.5" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));cursor:grab;"/>`;
     g+=labs([...KS.map((k,j)=>tipLab(k,S1,`key '${toks[j]}'`,st.t3>0?.45+.55*a[j]:1)),{ax:qe[0],ay:qe[1],x:qe[0]+(u[0]>=0?8:-8),y:qe[1]+(u[1]>=0?-6:14),anc:u[0]>=0?"start":"end",t:`query '${w}'`}]);
     sv1.innerHTML=g;
     // 2 · scores
@@ -1736,21 +1766,56 @@ DEEP["7"]=()=>{const H0=D.h,toks=TOK4,nrm=v=>Math.hypot(v[0],v[1]);
     a.forEach((v,j)=>{const wd=v*260*st.t3;g+=`<rect x="${cx}" y="38" width="${Math.max(0,wd-1)}" height="26" rx="3" fill="var(--att)" opacity="${.3+.7*v}"/>`+(v>.12&&st.t3>.99?`<text x="${cx+wd/2}" y="56" text-anchor="middle" class="lb inv">${toks[j]} ${pc(v)}</text>`:"");cx+=wd});
     a.forEach((v,j)=>{const y=100+j*50;g+=`<text x="14" y="${y+5}" class="lb b">${toks[j]}</text><rect x="64" y="${y-10}" width="200" height="20" rx="4" class="track"/><rect x="64" y="${y-10}" width="${v*200*st.t3}" height="20" rx="4" fill="var(--att)"/><text x="${Math.min(64+v*200*st.t3+5,252)}" y="${y+5}" class="lb${v*200*st.t3+5>188?" inv":""}" ${v*200*st.t3+5>188?'text-anchor="end" dx="-10"':""}>${st.t3>0?pc(v):""}</text>`});
     sv3.innerHTML=g;
-    // 4 · mix (zoomed so the weighted pieces fill the picture)
-    let cur=[0,0];const pts4=[[0,0]];a.forEach((w,j)=>{cur=[cur[0]+w*H0.V[j][0],cur[1]+w*H0.V[j][1]];pts4.push(cur)});
-    const ext=Math.max(.25,...pts4.map(nrm)),S4=110/ext;
+    // 4 · mix (zoomed so the weighted pieces fill the picture cleanly)
+    const maxV=Math.max(...H0.V.map(nrm));
+    const Sv=115/maxV;
+    let cur=[0,0];const pts4=[[0,0]];
+    a.forEach((w,j)=>{cur=[cur[0]+w*H0.V[j][0],cur[1]+w*H0.V[j][1]];pts4.push(cur)});
+    const ext=Math.max(.25,...pts4.map(nrm),nrm(o)),S4=Math.min(115/ext,260);
     g=`<clipPath id="g4clip"><rect x="3" y="3" width="294" height="294" rx="12"/></clipPath>`+grid()+`<g clip-path="url(#g4clip)">`;
-    H0.V.forEach((v,j)=>g+=arr([C,C],P(v,S4),"v",2,st.t3>0?.15+.35*a[j]:.4));g+="</g>";
+    // Background full value vectors (scaled to fit within canvas with arrowheads)
+    H0.V.forEach((v,j)=>{
+      const p=P(v,Sv);
+      const vOp=st.t3>0?.14+.28*a[j]:.32;
+      g+=arr([C,C],p,"v",1.8,vOp);
+      g+=`<text x="${p[0]+(v[0]>=0?6:-6)}" y="${p[1]+(v[1]>=0?-4:12)}" text-anchor="${v[0]>=0?"start":"end"}" class="lb sm" style="opacity:${vOp+.15}">v('${toks[j]}')</text>`;
+    });
+    g+="</g>";
+    // Chained weighted addition: a[j] * v[j]
     cur=[0,0];const segs=st.t4*4,pl=[];
-    for(let j=0;j<4;j++){const part=Math.max(0,Math.min(1,segs-j));if(!part)break;const nx=[cur[0]+a[j]*H0.V[j][0]*part,cur[1]+a[j]*H0.V[j][1]*part],p0=P(cur,S4),p1=P(nx,S4);
-      if(a[j]>.005){g+=arr(p0,p1,"v",5,.95);if(a[j]>=.05&&part>=1)pl.push({ax:(p0[0]+p1[0])/2,ay:(p0[1]+p1[1])/2,x:(p0[0]+p1[0])/2+8,y:(p0[1]+p1[1])/2-8,anc:"start",t:`${pc(a[j])} × v '${toks[j]}'`})}cur=nx}
-    if(st.t4>=1){g+=arr([C,C],P(o,S4),"out",3.5);const oe=P(o,S4);pl.push({ax:oe[0],ay:oe[1],x:oe[0]+(o[0]>=0?10:-10),y:oe[1]+(o[1]>=0?-12:22),anc:o[0]>=0?"start":"end",t:"output"})}
-    g+=labs(pl)+`<text x="14" y="288" class="lb sm">zoomed in: full value arrows (faded) run off</text>`;
+    const segCols=["tok","q","k","att"];
+    for(let j=0;j<4;j++){
+      const part=Math.max(0,Math.min(1,segs-j));
+      if(!part)break;
+      const nx=[cur[0]+a[j]*H0.V[j][0]*part,cur[1]+a[j]*H0.V[j][1]*part],p0=P(cur,S4),p1=P(nx,S4);
+      const segDist=Math.hypot(p1[0]-p0[0],p1[1]-p0[1]);
+      const sc=segCols[j];
+      if(segDist>=2.5){
+        g+=arr(p0,p1,sc,4.4,.95);
+        if(a[j]>=.04&&part>=.8){
+          pl.push({ax:(p0[0]+p1[0])/2,ay:(p0[1]+p1[1])/2,x:(p0[0]+p1[0])/2+(p1[0]>=p0[0]?8:-8),y:(p0[1]+p1[1])/2-8,anc:p1[0]>=p0[0]?"start":"end",t:`${pc(a[j])} × v '${toks[j]}'`});
+        }
+      }else if(part>=.8){
+        g+=`<circle cx="${p0[0]}" cy="${p0[1]}" r="3" fill="var(--${sc})" opacity=".6"/>`;
+      }
+      cur=nx;
+    }
+    // Resultant output arrow from (C, C) to destination
+    if(st.t4>=.75){
+      const oProg=Math.min(1,(st.t4-.75)/.25);
+      const currentO=[o[0]*oProg,o[1]*oProg];
+      const oe=P(currentO,S4);
+      g+=arr([C,C],oe,"out",4,1);
+      if(oProg>=.99){
+        pl.push({ax:oe[0],ay:oe[1],x:oe[0]+(o[0]>=0?12:-12),y:oe[1]+(o[1]>=0?-12:20),anc:o[0]>=0?"start":"end",t:"output vector"});
+      }
+    }
+    g+=labs(pl)+`<text x="14" y="288" class="lb sm">faded: full value vectors · colored chain: weighted mix · navy: output</text>`;
     sv4.innerHTML=g;
-    cap[0].innerHTML=`'${w}' asks a question: its query <b class="cq">${vec(q.map(R))}</b>${qn*S1>138?" (drawn shorter to fit)":""}. Every word also has a key, its address (purple).`;
+    cap[0].innerHTML=`'${w}' asks a question: its query <b class="cq">${vec(q.map(R))}</b>${qn*S1>138?" (drawn to circle margin)":""}. Drag the green tip handle to test any query! Every word also offers its key address (purple).`;
     cap[1].innerHTML=`${spread?"<i>Keys spread for clarity; the bars use the real numbers.</i> ":""}Score = how far a key reaches along the query (yellow shadow) × the query's length. Key '${toks[top]}' reaches furthest: <b>${f(s[top])}</b>. Keys pointing away get negative scores.`;
     cap[2].innerHTML=`Scores ÷ √2, then softmax: eˣ makes each one positive, ÷ total makes them add to 100%. '${toks[top]}' takes <b>${pc(a[top])}</b>.`;
-    cap[3].innerHTML=`Walk ${a.map((v,j)=>v>=.005?`${pc(v)} of value '${toks[j]}'`:null).filter(Boolean).join(", then ")}. The navy arrow ${vec(o.map(R))} is the new meaning of '${w}'.`;
+    cap[3].innerHTML=`Chain the weighted vectors: walk ${a.map((v,j)=>v>=.005?`${pc(v)} of v '${toks[j]}'`:null).filter(Boolean).join(", then ")}. The navy arrow ${vec(o.map(R))} is the direct resulting vector for '${w}'.`;
     eq.innerHTML=`output('${w}') = ${a.map((v,j)=>`<span style="opacity:${v<.005?.45:1}">${v.toFixed(2)} × ${vec(H0.V[j])}</span>`).join(" + ")} = <b>${vec(o.map(R))}</b>`}
   const tween=(k,ms,my)=>new Promise(res=>{if(reduceMotion()||!ms){st[k]=1;render();return res(my===run)}const t0=performance.now();const fr=t=>{if(my!==run)return res(false);st[k]=Math.min(1,(t-t0)/ms);render();st[k]<1?requestAnimationFrame(fr):res(true)};requestAnimationFrame(fr)});
   const pause=(ms,my)=>new Promise(r=>setTimeout(()=>r(my===run),reduceMotion()?0:ms));
@@ -1758,8 +1823,19 @@ DEEP["7"]=()=>{const H0=D.h,toks=TOK4,nrm=v=>Math.hypot(v[0],v[1]);
     for(const [i,k,ms] of [[1,"t1",600],[2,"t2",1000],[3,"t3",1000],[4,"t4",1800]]){act=i;render();if(!await pause(250,my)||!await tween(k,ms,my)||!await pause(700,my))return}act=0;render();done()}
   const done=()=>{delete pb.dataset.on;pb.textContent="▶ Play the 4 moves"};
   const still=()=>{run++;act=0;st={t1:1,t2:1,t3:1,t4:1};render();done()};
-  const pick=e=>{const r=sv1.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*300,y=(e.clientY-r.top)/r.height*300;q=[(x-C)/S1,(C-y)/S1];still()};
-  let drag=false;sv1.addEventListener("pointerdown",e=>{drag=true;sv1.setPointerCapture(e.pointerId);pick(e)});sv1.addEventListener("pointermove",e=>drag&&pick(e));sv1.addEventListener("pointerup",()=>drag=false);
+  const pick=e=>{
+    const r=sv1.getBoundingClientRect();
+    const rx=(e.clientX-r.left)/r.width*300,ry=(e.clientY-r.top)/r.height*300;
+    const dx=rx-C,dy=C-ry,dist=Math.hypot(dx,dy),maxR=136;
+    const scale=dist>maxR?maxR/dist:1;
+    q=[(dx*scale)/S1,(dy*scale)/S1];
+    still();
+  };
+  let drag=false;
+  sv1.addEventListener("pointerdown",e=>{drag=true;sv1.setPointerCapture(e.pointerId);pick(e)});
+  sv1.addEventListener("pointermove",e=>drag&&pick(e));
+  sv1.addEventListener("pointerup",()=>{drag=false});
+  sv1.addEventListener("pointercancel",()=>{drag=false});
   sv1.addEventListener("keydown",e=>{const an=Math.atan2(q[1],q[0]),n=nrm(q);let na=an,nn=n;if(e.key==="ArrowLeft")na+=.12;else if(e.key==="ArrowRight")na-=.12;else if(e.key==="ArrowUp")nn*=1.12;else if(e.key==="ArrowDown")nn/=1.12;else return;e.preventDefault();q=[nn*Math.cos(na),nn*Math.sin(na)];still()});
   const seg=h("div",{class:"seg",role:"group","aria-label":"Which word asks"},...toks.map((t,i)=>{const b=h("button",{"aria-pressed":i===0},t);b.onclick=()=>{row=i;q=[...H0.Q[i]];seg.querySelectorAll("button").forEach((x,k)=>x.setAttribute("aria-pressed",k===i));run++;done();play()};return b}));
   const pb=h("button",{class:"btn pri"},"▶ Play the 4 moves");pb.onclick=play;
@@ -2219,6 +2295,74 @@ const SIMP=["The tiny model is trained on only 6 four-word sentences (a copy tas
 const cite=`Sawlani, R. (2026). Transformer, Block by Block: an interactive visual lesson on the Transformer architecture [Interactive web lesson]. Based on Vaswani et al. (2017), "Attention Is All You Need", NeurIPS.`;
 const cbtn=h("button",{class:"btn"},"Copy citation");cbtn.onclick=()=>{try{navigator.clipboard.writeText(cite).then(()=>cbtn.textContent="Copied",()=>sel())}catch(e){sel()}};
 const ctext=h("p",{class:"cite",id:"citetext"},cite);const sel=()=>{const r=document.createRange();r.selectNodeContents(ctext);const s=getSelection();s.removeAllRanges();s.addRange(r);cbtn.textContent="Selected, press Ctrl+C"};
+
+const RUBRIC_DATA=[
+  {t:"Tokens & Embeddings",tag:"Representation",c:"tok",
+   model:"Discrete vocabulary tokens are mapped into a learned continuous geometric manifold E where distances reflect functional grammatical and semantic similarity.",
+   trap:"Assuming token IDs have mathematical magnitude or order (e.g. believing ID 4 > ID 3 carries semantic weight), rather than acting as arbitrary row indexes.",
+   check:"Why is (E['cat'] − E['dog']) mathematically meaningful, whereas (ID['cat'] − ID['dog']) is completely meaningless?",
+   target:"Student explains that integer IDs are arbitrary memory pointers into a lookup table, whereas embeddings are learned coordinate vectors shaped by training loss."},
+  {t:"Attention Projections",tag:"Geometry & Math",c:"q",
+   model:"Three independent linear projections split each token vector into Question (Q), Address (K), and Content (V), scaled by 1/√d_k to preserve variance.",
+   trap:"Assuming Q and K are symmetric, or confusing attention probability shares (A) with the output representation (O).",
+   check:"If all key vectors double in magnitude without dividing by √d_k, what happens to the softmax distribution and backpropagation gradients?",
+   target:"Student recognizes that amplified dot products push softmax into saturated near-one-hot states (0 or 1), causing gradients for non-winning tokens to vanish."},
+  {t:"Residual Highway & Norm",tag:"Stability & Depth",c:"out",
+   model:"Residual additions (x + Sublayer(x)) provide an unbroken identity highway that lets learning signals flow directly through deep stacks without vanishing.",
+   trap:"Conflating LayerNorm with BatchNorm (believing normalization averages across different sequence tokens or across the batch).",
+   check:"Does LayerNorm calculate mean and variance across the sequence length, or across the d_model feature channels of a single token?",
+   target:"Student articulates that LayerNorm is computed strictly per-token across its d_model feature dimension, making it invariant to batch size and sentence length."},
+  {t:"Causal Masking & KV Cache",tag:"Inference & Speed",c:"att",
+   model:"Upper-triangular masking enables parallel multi-position training without data leakage; KV caching eliminates O(n²) redundant recomputation at runtime.",
+   trap:"Believing that generation requires caching Queries (Q), or thinking training loops sequentially one token at a time like generation.",
+   check:"At generation step 500, why do we append new K and V rows to the cache but discard the previous 499 Query vectors?",
+   target:"Student clarifies that only the active newly generated token queries the past (q_t), whereas past tokens never query future tokens."}
+];
+
+const rubricBody=h("div",{class:"plan",style:"margin-top:10px"});
+let rIdx=0;
+function drawRubric(){
+  const d=RUBRIC_DATA[rIdx];
+  rubricBody.innerHTML=`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+    <span class="tag" style="border-color:var(--${d.c});color:var(--${d.c})">${d.tag}</span>
+    <b>${d.t}</b>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:6px">
+    <div style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px">
+      <small style="font-family:var(--fm);color:var(--q);text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;font-weight:700">✓ Target Mental Model</small>
+      <p style="margin:4px 0 0;font-size:13.5px">${d.model}</p>
+    </div>
+    <div style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px">
+      <small style="font-family:var(--fm);color:var(--att);text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;font-weight:700">✕ Common Student Trap</small>
+      <p style="margin:4px 0 0;font-size:13.5px">${d.trap}</p>
+    </div>
+  </div>
+  <div style="background:var(--panel);border-left:3.5px solid var(--sc);border-radius:0 10px 10px 0;padding:10px 12px;margin-top:10px">
+    <div style="font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);font-weight:700">Oral Diagnostic Question (10-Second Check):</div>
+    <p style="margin:4px 0 6px;font-weight:600;font-size:14px">“${d.check}”</p>
+    <div style="font-size:13px;color:var(--ink2)"><b>Passing Criterion:</b> ${d.target}</div>
+  </div>`;
+  rubricTabs.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-pressed",i===rIdx));
+}
+const rubricTabs=h("div",{class:"seg",role:"group","aria-label":"Diagnostic topics",style:"flex-wrap:wrap;margin-top:6px"},
+  ...RUBRIC_DATA.map((d,i)=>{
+    const b=h("button",{"aria-pressed":i===0},d.t);
+    b.onclick=()=>{rIdx=i;drawRubric()};
+    return b;
+  })
+);
+const rubricCard=h("div",{class:"tcard act",style:"border:1.5px solid var(--emb);background:color-mix(in srgb,var(--emb) 8%,var(--panel2))"},
+  h("div",{style:"display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px"},
+    h("div",{},
+      h("b",{style:"font-size:18px"},"Diagnostic Rubric: Assessing True Structural Mastery"),
+      h("p",{class:"note",style:"margin:2px 0 0"},"A quick pedagogical tool for oral exams and office hours to distinguish structural comprehension from formula memorization.")
+    )
+  ),
+  rubricTabs,
+  rubricBody
+);
+setTimeout(drawRubric,0);
+
 const teach=h("section",{class:"papers",id:"teachers"},h("div",{class:"phead"},h("span",{class:"dhkick"},"For teachers and lecturers"),h("h2",{},"Teaching with this page"),h("p",{},"Everything here runs in the browser with no sign-up. Use the detail switch on the bottom bar to match your class: Beginner for school and first-year groups, Expert for university courses.")),
  h("div",{class:"tgrid"},
   h("div",{class:"tcard"},h("b",{},"Learning objectives"),h("p",{class:"note"},"After this lesson students can:"),h("ol",{},...OBJ.map(o=>h("li",{},o)))),
@@ -2231,6 +2375,7 @@ const teach=h("section",{class:"papers",id:"teachers"},h("div",{class:"phead"},h
    h("li",{},"Each student writes a new note mixing classmates' Facts in proportion to the points. Compare with chapter E.")),
    h("p",{class:"note"},"Variation: forbid looking to the right (causal mask), then discuss why a writer needs that rule.")),
  h("div",{class:"tcard"},h("b",{},"Exercises with answers"),...EX.map(([q,a],i)=>h("details",{class:"faq"},h("summary",{},`${i+1}. ${q}`),h("p",{},a)))),
+ rubricCard,
  h("div",{class:"tgrid"},
   h("div",{class:"tcard"},h("b",{},"What this page simplifies"),h("ul",{},...SIMP.map(x=>h("li",{},x)))),
   h("div",{class:"tcard"},h("b",{},"How to cite"),ctext,h("div",{class:"ctrl"},cbtn),h("p",{class:"note"},"Please also cite the original paper (number 1 in the list below) when you reference the architecture itself."))));
@@ -2478,8 +2623,10 @@ const TR=[["Interpretability","att","What algorithm is a trained Transformer act
  ["Position and length generalisation","pos","Why do models fail on inputs longer than they were trained on?","Train on 4-word sentences, test on 6, and compare sine waves, RoPE and ALiBi.",[["RoFormer: Rotary Position Embedding (Su et al., 2021)","https://arxiv.org/abs/2104.09864"],["Train Short, Test Long: ALiBi (Press et al., 2021)","https://arxiv.org/abs/2108.12409"]]],
  ["Alignment and preference learning","q","How do we make a model helpful and safe with little human data?","Fine-tune a small open model with DPO on a few hundred ranked pairs.",[["Training language models to follow instructions (Ouyang et al., 2022)","https://arxiv.org/abs/2203.02155"],["Direct Preference Optimization (Rafailov et al., 2023)","https://arxiv.org/abs/2305.18290"]]],
  ["Scaling and compute","emb","Given a fixed budget, how big should the model be and how much data?","Train 4 sizes of a small GPT and plot loss against compute on log axes.",[["Scaling Laws for Neural Language Models (Kaplan et al., 2020)","https://arxiv.org/abs/2001.08361"],["Training Compute-Optimal LLMs, Chinchilla (Hoffmann et al., 2022)","https://arxiv.org/abs/2203.15556"]]],
- ["Beyond dense attention","k","Can experts or state-space models replace parts of the Transformer?","Replace the FFN with 4 small experts and a router; compare quality per FLOP.",[["Switch Transformers (Fedus et al., 2021)","https://arxiv.org/abs/2101.03961"],["Mamba: Linear-Time Sequence Modeling (Gu and Dao, 2023)","https://arxiv.org/abs/2312.00752"]]]];
-const map=h("div",{class:"rcard wide"},h("span",{class:"rkick"},"D · Research map"),h("h3",{},"Six active research directions, each with a first step"),
+ ["Beyond dense attention","k","Can experts or state-space models replace parts of the Transformer?","Replace the FFN with 4 small experts and a router; compare quality per FLOP.",[["Switch Transformers (Fedus et al., 2021)","https://arxiv.org/abs/2101.03961"],["Mamba: Linear-Time Sequence Modeling (Gu and Dao, 2023)","https://arxiv.org/abs/2312.00752"]]],
+ ["Reasoning and test-time compute","att","How does spending more tokens on chain-of-thought and RL unlock multi-step reasoning?","Measure problem-solving accuracy on a logic puzzle when forcing direct answer vs allowing 10 intermediate scratchpad tokens.",[["DeepSeek-R1: Incentivizing Reasoning in LLMs (DeepSeek-AI, 2025)","https://arxiv.org/abs/2501.12948"],["Quiet-STaR: Language Models Can Teach Themselves to Think (Zelikman et al., 2024)","https://arxiv.org/abs/2403.09629"]]],
+ ["Multimodal & vision-language attention","v","How do vision patch tokens and text tokens cross-attend in a shared latent space?","Take a 16x16 image patch, project to d_model, prepend to text tokens, and inspect cross-modal attention maps.",[["Flamingo: a Visual Language Model for Few-Shot Learning (Alayrac et al., 2022)","https://arxiv.org/abs/2204.14198"],["Visual Instruction Tuning, LLaVA (Liu et al., 2023)","https://arxiv.org/abs/2304.08485"]]]];
+const map=h("div",{class:"rcard wide"},h("span",{class:"rkick"},"D · Research map"),h("h3",{},"Eight active research directions, each with a first step"),
   h("div",{class:"rmap"},...TR.map(([t,c,q,ex,ps])=>h("div",{class:"rtrack",style:`--c:var(--${c})`},h("b",{},t),h("p",{class:"rq"},q),h("p",{},h("span",{class:"rlab"},"Laptop-size experiment "),ex),h("div",{class:"rps"},...ps.map(([a,u])=>A(a,u)))))),
   h("p",{class:"note"},"Tools worth learning: ",A("The Annotated Transformer","https://nlp.seas.harvard.edu/annotated-transformer/"),", ",A("nanoGPT","https://github.com/karpathy/nanoGPT"),", ",A("TransformerLens","https://github.com/TransformerLensOrg/TransformerLens"),", ",A("Hugging Face courses","https://huggingface.co/learn"),"."));
 
