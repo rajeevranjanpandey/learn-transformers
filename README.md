@@ -2,7 +2,7 @@
 
 > **An interactive, visual, and mathematically rigorous course exploring the Transformer neural network architecture — from raw tokens to GPT, BERT, and modern reasoning models.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://rajeevranjanpandey.github.io/transformer-block-by-block/)
+[![Live Demo](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://rajeevranjanpandey.github.io/learn-transformers/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Vanilla%20JS)-orange?style=for-the-badge)](index.html)
 [![Pure Browser Engine](https://img.shields.io/badge/Runtime-In--Browser%20Matrix%20Math-purple?style=for-the-badge)](index.html)
@@ -33,7 +33,7 @@ Instead of treating the Transformer (Vaswani et al., 2017) as an opaque black bo
 
 ### 1. Online Access (Zero Installation)
 Visit the live website directly from any modern desktop or mobile browser:
-👉 **[https://rajeevranjanpandey.github.io/transformer-block-by-block/](https://rajeevranjanpandey.github.io/transformer-block-by-block/)**
+👉 **[https://rajeevranjanpandey.github.io/learn-transformers/](https://rajeevranjanpandey.github.io/learn-transformers/)**
 
 ### 2. Difficulty View Toggles
 Use the bottom toolbar to calibrate mathematical density to your background:
@@ -51,8 +51,8 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 ### 4. Running Locally / Offline
 Clone this repository and open `index.html` in any web browser — no build steps, bundlers, or package managers required:
 ```bash
-git clone https://github.com/rajeevranjanpandey/transformer-block-by-block.git
-cd transformer-block-by-block
+git clone https://github.com/rajeevranjanpandey/learn-transformers.git
+cd learn-transformers
 # Open directly in browser
 open index.html
 # Or serve via Python:
@@ -154,7 +154,7 @@ If you use this educational interactive guide in academic courses, workshops, or
   author = {Pandey, Rajeev},
   title = {Transformer, Block by Block: An Interactive Visual Deep Learning Guide},
   year = {2026},
-  howpublished = {\url{https://rajeevranjanpandey.github.io/transformer-block-by-block/}},
+  howpublished = {\url{https://rajeevranjanpandey.github.io/learn-transformers/}},
   note = {Interactive educational reference based on Vaswani et al. (2017)}
 }
 ```

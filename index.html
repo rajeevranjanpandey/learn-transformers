@@ -6,7 +6,7 @@
 <meta property="og:title" content="Transformer, Block by Block — Interactive Deep Learning Architecture Guide">
 <meta property="og:description" content="Visual, interactive deep dive into modern Transformer architecture. Every step computed in real numbers with pictures first.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rajeevranjanpandey.github.io/transformer-block-by-block/">
+<meta property="og:url" content="https://rajeevranjanpandey.github.io/learn-transformers/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Transformer, Block by Block">
 <meta name="twitter:description" content="Interactive visual guide from zero to GPT and BERT with real numbers and tensor dimensions.">
@@ -148,7 +148,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in
 .chip.hot{box-shadow:0 0 0 2px var(--ink)}
 .note{font-size:13.5px;color:var(--ink2);max-width:46ch}
 .callout{font-size:13.5px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;max-width:40ch}
-.tag{display:inline-flex;align-items:center;align-self:flex-start;font-family:var(--fm);font-size:10px;font-weight:600;line-height:1.2;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--ink3);white-space:nowrap}
+.tag{display:inline-flex;align-items:center;align-self:flex-start;font-family:var(--fm);font-size:9.5px;font-weight:600;line-height:1.2;text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--ink3);white-space:nowrap;max-width:100%;box-sizing:border-box}
 .tag.yes{color:var(--q);border-color:color-mix(in srgb,var(--q) 45%,var(--line));background:color-mix(in srgb,var(--q) 8%,var(--panel))}
 .tag.no{color:var(--att);border-color:color-mix(in srgb,var(--att) 45%,var(--line));background:color-mix(in srgb,var(--att) 8%,var(--panel))}
 .lane{border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -190,12 +190,13 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in
 .rnnrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .hbox{width:62px;border:1.5px solid var(--ink3);border-radius:8px;padding:4px;font-family:var(--fm);font-size:11px;text-align:center;transition:opacity .4s}
 .sig{height:6px;border-radius:3px;background:var(--emb);margin-top:3px;transition:width .5s}
-.tile{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;background:var(--panel2);min-width:0;transition:transform .2s,border-color .2s,box-shadow .2s}
+.tile{border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px;display:flex;flex-direction:column;cursor:pointer;background:var(--panel2);min-width:0;min-height:144px;box-sizing:border-box;transition:transform .2s,border-color .2s,box-shadow .2s}
 .tile:hover{transform:translateY(-2px);border-color:var(--ink3);box-shadow:0 6px 18px rgba(0,0,0,.06)}
-.tile b{font-size:14px;line-height:1.3}
+.tile .tag{align-self:flex-start;margin-bottom:6px}
+.tile b{font-size:13.5px;line-height:1.25;margin-bottom:auto;word-break:break-word}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px;width:100%}
-.pic{height:44px;display:flex;align-items:flex-end;gap:3px}
-.pic i{display:block;border-radius:2px;background:var(--c)}
+.pic{height:38px;display:flex;align-items:flex-end;gap:4px;margin-top:auto;padding-top:8px}
+.pic i{display:block;border-radius:3px 3px 0 0;background:var(--c);flex:1;max-width:14px}
 svg text{fill:var(--ink2);font-family:var(--fm);font-size:11px}
 .cell{font-size:12px;min-width:38px;padding:5px 3px}
 .mat{padding:5px}
@@ -1226,13 +1227,13 @@ scene({id:"23",t:"Inference",
 function drawMask(n){const g=$("mgrid");if(!g)return;g.innerHTML="";g.append(Mat({n:"M_causal",d:Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>j>i?-Infinity:0)),c:"mask",card:"causal",sym:"M"}))}
 
 // ----- Scene 24
-const LATER=[["dropout","Dropout","2017 training detail",["--tok",30,"--tok",10,"--tok",30,"--tok",10]],["warmup","Learning-rate warmup","2017 training detail",["--ink3",8,"--ink3",20,"--ink3",34,"--ink3",28,"--ink3",22]],["adam","Adam optimizer","2017 training detail",["--ink3",30,"--ink3",22,"--ink3",16,"--ink3",12]],["beam","Beam search","2017 decoding detail",["--att",34,"--att",26,"--att",14]],["labelsmooth","Label smoothing","2017 training detail",["--att",6,"--att",6,"--att",34,"--att",6]],["rope","RoPE (rotary position)","later improvement",["--pos",20,"--pos",30,"--pos",38,"--pos",30]],["rmsnorm","RMSNorm","later improvement",["--out",22,"--out",22,"--out",22]],["swiglu","SwiGLU","later improvement",["--out",10,"--out",28,"--out",36]],["gqa","Grouped-query attention","later improvement",["--q",22,"--q",22,"--k",30,"--q",22,"--q",22,"--k",30]],["moe","Mixture of experts","later improvement",["--ink3",12,"--out",34,"--ink3",12,"--ink3",12]],["ctx","Context-length cost","later improvement",["--sc",4,"--sc",12,"--sc",26,"--sc",40]]];
+const LATER=[["dropout","Dropout","2017 detail",["--tok",30,"--tok",10,"--tok",30,"--tok",10]],["warmup","Learning-rate warmup","2017 detail",["--ink3",8,"--ink3",20,"--ink3",34,"--ink3",28,"--ink3",22]],["adam","Adam optimizer","2017 detail",["--ink3",30,"--ink3",22,"--ink3",16,"--ink3",12]],["beam","Beam search","2017 decode",["--att",34,"--att",26,"--att",14]],["labelsmooth","Label smoothing","2017 detail",["--att",6,"--att",6,"--att",34,"--att",6]],["rope","RoPE (rotary position)","modern update",["--pos",20,"--pos",30,"--pos",38,"--pos",30]],["rmsnorm","RMSNorm","modern update",["--out",22,"--out",22,"--out",22]],["swiglu","SwiGLU","modern update",["--out",10,"--out",28,"--out",36]],["gqa","Grouped-query attention","modern update",["--q",22,"--q",22,"--k",30,"--q",22,"--q",22,"--k",30]],["moe","Mixture of experts","modern update",["--ink3",12,"--out",34,"--ink3",12,"--ink3",12]],["ctx","Context-length cost","modern update",["--sc",4,"--sc",12,"--sc",26,"--sc",40]]];
 scene({id:"24",t:"What changed after the original paper",
  cap:["Some tricks were already in the 2017 paper, outside the block itself.","Others came later and change parts of the block.","Each tile is optional. Hover one for its picture and math."],
  why:"Modern models are the 2017 design plus these changes, so each one is easy to place once you know the base.",
  track:[["2017 block","+ training details","same block"],["2017 block","+ later changes","modern block"],["modern block","same shapes","[n, d_model]"]],
  build(c){c.append(h("div",{class:"tiles"},...LATER.map(([k,t,tag,bars],i)=>h("div",{class:"tile",card:k,tabindex:0,b:tag.startsWith("2017")?1:2},
-   h("span",{class:`tag${tag.startsWith("later")?" no":""}`},tag),h("b",{},t),h("div",{class:"pic"},...Array.from({length:bars.length/2},(_,j)=>h("i",{style:`--c:var(${bars[j*2]});width:12px;height:${bars[j*2+1]}px`})))))))},
+   h("span",{class:`tag${tag.startsWith("modern")||tag.startsWith("later")?" no":""}`},tag),h("b",{},t),h("div",{class:"pic"},...Array.from({length:bars.length/2},(_,j)=>h("i",{style:`--c:var(${bars[j*2]});width:12px;height:${bars[j*2+1]}px`})))))))},
  check:{q:"Which of these change the attention math inside the block?",a:"RoPE (position is applied by rotating Q and K) and grouped-query attention (heads share K and V). The 2017 training details leave the block unchanged."}});
 // ----- Step 22b: backpropagation, shown on the real trained model
 const BP=(()=>{const h0=D.hlast[0],k=h0.reduce((bi,v,i)=>Math.abs(v)>Math.abs(h0[bi])?i:bi,0),tgt=6;
@@ -1904,7 +1905,7 @@ DEEP["14"]=()=>{const box=(x,y,w,t,c)=>`<rect x="${x}" y="${y}" width="${w}" hei
     h("div",{},h("div",{class:"dsub"},"The two recipes"),mtBox([["","one sublayer","used by"],["Post-norm","x ← LN(x + Sublayer(x))","2017 Transformer, BERT, this page"],["Pre-norm","x ← x + Sublayer(LN(x))","GPT-2, GPT-3, Llama and most LLMs"]]),
      pts([["Why switch?","With pre-norm the shortcut is an untouched highway from the first block to the last, so gradients reach early layers at a steady size. Deep stacks train more easily."],["Warmup:","Xiong et al. (2020) showed post-norm needs a learning-rate warmup to train stably, while pre-norm can train without one."],["One extra LN:","pre-norm models add a final LayerNorm after the last block, because the highway itself is never normalised."],["Trade-off:","some studies find well-tuned post-norm reaches slightly better quality, so both are still studied."]],"out"))))};
 CARDS.prenorm={t:"Pre-norm (Pre-LN) · later improvement",p:"Normalise the input of each sublayer instead of the sum. The shortcut path stays untouched from bottom to top.",f:"pre-norm: x ← x + Sublayer(LN(x))<br>post-norm (2017): x ← LN(x + Sublayer(x))",i:"x [n, d_model]",o:"LN moves inside the branch",out:"x [n, d_model]",ex:"<p>Same parts, same shapes, different order. Pre-norm models also add one final LayerNorm after the last block.</p><p>Used by GPT-2, GPT-3, Llama and most large language models.</p>",x:"Deep post-norm stacks need a careful learning-rate warmup, or training can diverge.",go:"14"};
-LATER.splice(LATER.findIndex(l=>l[0]==="rmsnorm"),0,["prenorm","Pre-norm (LN first)","later improvement",["--out",30,"--ink3",8,"--q",22,"--ink3",8,"--out",30]]);
+LATER.splice(LATER.findIndex(l=>l[0]==="rmsnorm"),0,["prenorm","Pre-norm (LN first)","modern update",["--out",30,"--ink3",8,"--q",22,"--ink3",8,"--out",30]]);
 WHY["14"]=[WHY["14"][0],WHY["14"][1],WHY["14"][2]+" (This page normalises after the shortcut, like the 2017 paper. Most models today normalise before each sublayer instead; see 'Go deeper'.)"];
 
 // ---------- Step 22d: from text predictor to chat assistant
