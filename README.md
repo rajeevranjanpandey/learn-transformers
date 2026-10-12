@@ -43,6 +43,8 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 
 ### 3. Interactive Playgrounds
 - **Attention as Arrows (Step 7)**: Drag the green Query arrow in real time to witness dot-product projections, scaled softmax re-weighting, and chained value vector additions live.
+- **The Attention Formula Hand Calculation (Chapter E)**: Deconstructs the core $\text{Attention}(Q, K, V) = \text{softmax}(Q \times K^T / \sqrt{d_k}) \times V$ equation piece by piece with explicit matrix multiplication operations, annotated tensor meanings, and calculator-verifiable numbers.
+- **RoPE Rotary Playground (Step 6b)**: Interactive dials displaying pairwise 2D vector rotations for queries and keys across position gaps $m - n$, demonstrating why dot products only depend on relative token distance.
 - **Attention on Real Sentences (Chapter F)**: Switch context endings ("tired" vs. "wide") to observe how ambiguous pronouns (*"it"*) alter their attention distribution between subjects.
 - **Gradient Descent Playground (Step 22c)**: Drop optimization marbles across loss landscapes to visualize learning rate overshoot, momentum escape, and local minima traps.
 - **In-Browser Ablation Lab**: Systematically toggle Positional Encoding, Cross-Attention, or Feed-Forward networks to quantify exact performance drops on trained data.
@@ -113,7 +115,7 @@ The course is organized into five structured progression parts spanning **31 vis
 2. **Zero "Hand-Waving"**: Every formula links directly to its mathematical definition, tensor shape change, and computed numbers.
 3. **Interactive Misconception Rubric**: Includes targeted oral diagnostic questions for educators to quickly evaluate deep structural understanding versus superficial equation memorization.
 4. **Reproducible Python Baseline (`train.py`)**: Downloadable self-contained PyTorch script that reproduces the exact weights and loss trajectory on any CPU within 60 seconds.
-5. **High Accessibility & Performance**: Built purely with accessible semantic HTML5, SVG graphics, responsive CSS, and Vanilla JavaScript. Fast load times, responsive mobile rendering, and printer-friendly PDF worksheet export.
+5. **High Accessibility & Performance**: Built purely with accessible semantic HTML5, SVG graphics, responsive CSS, and Vanilla JavaScript. Features centered tensor projections, wide-screen side-by-side multi-head visualizations, fast load times, and printer-friendly PDF worksheet export.
 
 ---
 

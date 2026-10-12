@@ -875,6 +875,10 @@ footer .btn{padding:5px 10px;font-size:13px}
 /* try: room between the guesses in each word card */
 #try .trystep{gap:8px}#try .geobar.sm{height:24px}#try .geobar.sm em{line-height:24px;font-size:12px}
 #try .trystep .chip{margin-bottom:4px}
+.fp[style*="ink2"] .ft{border-bottom:0;font-size:24px}.fnote{margin:6px 0 0;max-width:none}
+/* whitespace pass 3: centre every picture in its step, heads side by side */
+.stage>.flow,.stage>[data-b]>.flow{justify-content:center}
+@media (min-width:1300px){#sec-12 .stage>.flow>.fcol{flex-direction:row;flex-wrap:wrap;align-items:flex-start}}
 </style>
 <div id="prog"></div>
 <div class="wrap">
@@ -2255,12 +2259,13 @@ I.append(chap("D","The whole idea in one picture","Follow the glowing step. Each
   h("div",{class:"levels"},...[["Beginner","Read the coloured boxes and the one-line captions.","tok"],["Curious","Press ▶ on any step to watch the numbers move.","att"],["Technical","Hover any block for the formula, shapes and a worked example.","q"]].map(([a,b,c])=>h("div",{class:"lvl",style:`--c:var(--${c})`},h("b",{},a),h("span",{},b))))));
 // E. the attention formula, piece by piece, with real numbers for one word
 {const q=D.h.Q[0],K=D.h.K,V=D.h.V,sc=D.h.S[0],scs=D.h.Sc[0],ex=scs.map(Math.exp),sm=ex.reduce((a,b)=>a+b,0),w=D.h.A[0],o=D.h.O[0];
- const P=[["softmax(","att","4 · turn scores into shares that add to 1"],["Q","q","1 · each word's question"],["Kᵀ","k","2 · every word's address"],["/ √d<sub>k</sub>","sc","3 · keep scores calm"],[")","att",""],["V","v","5 · the content to mix"]];
+ const P=[["softmax(","att","4 · turn scores into shares that add to 1"],["Q","q","1 · each word's question"],["×","ink2",""],["Kᵀ","k","2 · every word's address"],["/ √d<sub>k</sub>","sc","3 · keep scores calm"],[")","att",""],["×","ink2",""],["V","v","5 · the content to mix"]];
+ const fnote=h("p",{class:"note fnote"},"The × signs are matrix multiplications. Papers usually write softmax(QKᵀ/√d_k)V and leave them out, but they mean the same thing: Q times Kᵀ, then the shares times V.");
  const formula=h("div",{class:"bigf"},h("span",{class:"fpre"},"Attention(Q, K, V) ="),...P.map(([t,c,l])=>h("span",{class:"fp",style:`--c:var(--${c})`},h("span",{class:"ft",html:t}),l?h("span",{class:"fl"},l):null)));
  const row=(vals,c,lab)=>h("div",{class:"wrow"},...vals.map((v,j)=>h("span",{class:"wv",style:`--c:var(--${c})`},h("small",{},lab?lab[j]:""),typeof v==="string"?v:f(v))));
  const st=(n,c,t,expl,body,go)=>h("div",{class:"wstep",style:`--c:var(--${c})`},h("div",{class:"wh"},h("span",{class:"wn"},n),h("b",{},t)),h("p",{html:expl}),body,h("a",{class:"wlink",href:"#sec-"+go},"see step "+go+" →"));
  I.append(chap("E","The one formula, worked by hand","This single line is the heart of every Transformer. Here it is computed for the word 'the' with the page's real numbers. Every number below can be checked with a calculator.",
-  formula,
+  formula,fnote,
   h("div",{class:"wgrid"},
    st(1,"q","Ask a question","The word 'the' turns its embedding into a 2-number question.",h("div",{},row(q,"q",["q₁","q₂"]),h("code",{},`Q['the'] = X['the'] × Wq`)),"6"),
    st(2,"sc","Compare with every word","Dot product with each key: multiply matching numbers and add. Big means a good match.",h("div",{},row(sc,"sc",TOK4),h("code",{html:`'cat': ${dot(q,K[1])}`})),"7"),
