@@ -63,7 +63,7 @@ python3 -m http.server 8080
 
 ## 📚 What Is Covered? (Step-by-Step Architecture)
 
-The course is organized into five structured progression parts spanning **30 visual modules**:
+The course is organized into five structured progression parts spanning **31 visual modules**:
 
 ### Part 1: From Text to Numbers
 - **Step 0: The Job** — Sequence-to-sequence mapping and why token order alters semantic meaning.
@@ -75,6 +75,7 @@ The course is organized into five structured progression parts spanning **30 vis
 
 ### Part 2: Attention Mechanism
 - **Step 6: The Three Roles ($Q, K, V$)** — Query questions, Key addresses, and Value communication vectors.
+- **Step 6b: RoPE (Rotary Position Embedding)** — Modern position injection by rotating $Q$ and $K$ vectors in pairwise 2D subspaces.
 - **Step 7: Match Scores ($S = QK^T$)** — Vector dot-products and directional alignment.
 - **Step 8: Scale ($\div \sqrt{d_k}$)** — Controlling variance to prevent extreme softmax saturation.
 - **Step 9a & 9b: Masks (Padding & Causal)** — Enforcing batch safety and future-token isolation ($-\infty$).
