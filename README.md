@@ -45,9 +45,11 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 - **Attention as Arrows (Step 7)**: Drag the green Query arrow in real time to witness dot-product projections, scaled softmax re-weighting, and chained value vector additions live.
 - **The Attention Formula Hand Calculation (Chapter E)**: Deconstructs the core $\text{Attention}(Q, K, V) = \text{softmax}(Q \times K^T / \sqrt{d_k}) \times V$ equation piece by piece with explicit matrix multiplication operations, annotated tensor meanings, and calculator-verifiable numbers.
 - **RoPE Rotary Playground (Step 6b)**: Interactive dials displaying pairwise 2D vector rotations for queries and keys across position gaps $m - n$, demonstrating why dot products only depend on relative token distance.
+- **Looped Transformer & Adaptive Depth Playground (Step 16b)**: Experiment with iterative state refinement ($h_{k+1} = B(h_k)$), convergence delta tracking across passes, and dynamic exit thresholds ($\epsilon$).
 - **Attention on Real Sentences (Chapter F)**: Switch context endings ("tired" vs. "wide") to observe how ambiguous pronouns (*"it"*) alter their attention distribution between subjects.
 - **Gradient Descent Playground (Step 22c)**: Drop optimization marbles across loss landscapes to visualize learning rate overshoot, momentum escape, and local minima traps.
 - **In-Browser Ablation Lab**: Systematically toggle Positional Encoding, Cross-Attention, or Feed-Forward networks to quantify exact performance drops on trained data.
+- **12-Step Core Path**: One-click toggle that isolates the essential 12 foundational steps for fast onboarding while folding away advanced modules.
 - **Try Your Own Sentence**: Input custom 4-word sequences into the browser's trained Transformer and inspect its generation confidence scores.
 
 ### 4. Running Locally / Offline
@@ -65,7 +67,7 @@ python3 -m http.server 8080
 
 ## 📚 What Is Covered? (Step-by-Step Architecture)
 
-The course is organized into five structured progression parts spanning **31 visual modules**:
+The course is organized into five structured progression parts spanning **32 visual modules**:
 
 ### Part 1: From Text to Numbers
 - **Step 0: The Job** — Sequence-to-sequence mapping and why token order alters semantic meaning.
@@ -90,6 +92,7 @@ The course is organized into five structured progression parts spanning **31 vis
 - **Step 14: Layer Normalization ($LN$)** — Per-token mean-centering and variance stabilization (Post-LN vs. Pre-LN).
 - **Step 15: Position-wise Feed-Forward Network ($FFN$)** — Channel expansion ($d_{\text{ff}}$), ReLU / SwiGLU gating, and projection.
 - **Step 16: Full Encoder Stack ($\times N$)** — Multi-layer hierarchical feature refinement.
+- **Step 16b: Looped Transformer (Recurrent Depth)** — Reusing a single shared block $B(h)$ across dynamic refinement iterations; depth becomes compute at runtime.
 
 ### Part 4: The Decoder & Full Model
 - **Step 17: Masked Decoder Self-Attention** — Strict autoregressive past-token conditioning.

@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Transformer, Block by Block — Interactive Deep Learning Architecture Guide</title>
 <meta name="description" content="An interactive visual course explaining the Transformer neural network architecture from zero to GPT and BERT. Interactive Q/K/V attention, tensor math, and step-by-step visualizations.">
-<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing, RoPE">
+<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing, RoPE, Looped Transformer, Recurrent Depth">
 <meta name="author" content="Rajeev Pandey">
 <meta property="og:title" content="Transformer, Block by Block — Interactive Deep Learning Architecture Guide">
 <meta property="og:description" content="Visual, interactive deep dive into modern Transformer architecture. Every step computed in real numbers with pictures first.">
@@ -879,6 +879,37 @@ footer .btn{padding:5px 10px;font-size:13px}
 /* whitespace pass 3: centre every picture in its step, heads side by side */
 .stage>.flow,.stage>[data-b]>.flow{justify-content:center}
 @media (min-width:1300px){#sec-12 .stage>.flow>.fcol{flex-direction:row;flex-wrap:wrap;align-items:flex-start}}
+/* looped transformer */
+.lpwrap{width:100%}.lpsv{width:100%;max-width:700px;display:block;margin:0 auto;font-family:var(--fb)}
+.lpt{font-size:12px;fill:var(--ink2)}.lpt.b{fill:var(--ink);font-weight:700}.lpt.h{font-size:13px;font-weight:700;fill:var(--ink)}.lpt.w{font-family:var(--fm);font-size:11px;fill:color-mix(in srgb,var(--att) 70%,var(--ink))}
+.lpt.n{font-size:11px}.lpt.lp{font-family:var(--fm);font-weight:700;font-size:15px;fill:color-mix(in srgb,var(--att) 75%,var(--ink))}.lpt.c{font-family:var(--fm);font-weight:700;fill:var(--att)}
+.lpdot{fill:var(--att);transition:cx .1s linear,cy .1s linear}
+.lpres{width:100%;display:flex;flex-direction:column;gap:8px}.lpres .callout{max-width:none}
+.lpbars{display:flex;gap:6px;align-items:flex-end;height:130px;border-bottom:1.5px solid var(--ink3);padding:0 4px}
+.lpb{flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:2px;transition:opacity .3s}.lpb i{display:block;width:100%;max-width:40px;background:var(--att);border-radius:4px 4px 0 0}
+.lpb em{font-style:normal;font-family:var(--fm);font-size:11px}.lpb span{font-size:10px;color:var(--ink2);order:-1;margin-top:4px;white-space:nowrap}
+.lpbars .lpb span{position:relative;top:18px}
+.lpcmp{display:flex;flex-direction:column;gap:6px}.lprow{font-size:12.5px;display:flex;flex-direction:column;gap:2px}
+.lpbar{position:relative;height:22px;background:var(--panel);border:1px solid var(--line);border-radius:5px;overflow:hidden}.lpbar i{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--c) 55%,var(--panel));transition:width .4s}.lpbar em{position:relative;font-style:normal;font-family:var(--fm);font-size:12px;padding-left:6px;line-height:22px}
+.lpchart{width:100%;max-width:420px;font-family:var(--fm)}
+.lpbars{height:auto;align-items:flex-end;border-bottom:0}.lpb{flex-direction:column;justify-content:flex-end;height:130px}
+.lpb i{border-bottom:1.5px solid var(--ink3)}.lpb span{order:0!important;top:0!important;margin-top:4px}
+/* phones: keep wide diagrams readable, swipe sideways inside the picture */
+@media (max-width:700px){.lpwrap,.fbpic{overflow-x:auto;-webkit-overflow-scrolling:touch}.lpsv,.fbsv{min-width:640px}
+ .lpwrap::after,.fbpic::after{content:"swipe sideways to see the whole picture →";display:block;text-align:left;font-size:11px;color:var(--ink3);min-width:640px}}
+/* core path */
+.corestar{margin-left:10px;font-family:var(--fm);font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--sc) 22%,var(--panel));color:color-mix(in srgb,var(--sc) 55%,var(--ink));vertical-align:4px}
+.coreshow,.coreskip{display:none}
+body.core section.step:not(.core-step) .coreshow{display:inline-flex}
+body.core section.step:not(.core-step) .coreskip{display:block;margin:0;font-size:13.5px;color:var(--ink2)}
+body.core section.step:not(.core-step):not(.peek) .card2>*:not(.shd):not(.coreskip){display:none}
+body.core section.step:not(.core-step):not(.peek){opacity:.75}
+body.core section.step:not(.core-step):not(.peek) .shd .btn.pri{display:none}
+body.core section.step.peek .coreskip{display:none}
+body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opacity:.4}
+#map .mchip.iscore .k::before{content:"★ ";color:color-mix(in srgb,var(--sc) 70%,var(--ink))}
+.corebar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}.corebar .note{margin:0;flex:1 1 300px;max-width:none}
+.corebtn[aria-pressed="true"]{background:var(--sc);border-color:var(--sc);color:#151922;font-weight:700}
 </style>
 <div id="prog"></div>
 <div class="wrap">
@@ -892,7 +923,7 @@ footer .btn{padding:5px 10px;font-size:13px}
   <div id="intro"></div>
   <section class="deephero" id="details">
     <div class="dhtop"><div class="dharrow" aria-hidden="true">↓</div><div><div class="dhkick">Part two of the course</div><h2>Now, every step in detail</h2>
-      <p>31 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
+      <p>32 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
       <a class="btn dhgo" href="#sec-0">Start at step 0 →</a></div>
     <div class="partcards" id="partcards"></div>
   </section>
@@ -903,7 +934,7 @@ footer .btn{padding:5px 10px;font-size:13px}
 </div>
 <footer><span class="trk" id="trk"></span>
   <span class="seg" id="lvlseg" role="group" aria-label="Detail level"><button data-lvl="beginner">Beginner</button><button data-lvl="standard" aria-pressed="true">Standard</button><button data-lvl="expert">Expert</button></span>
-  <button class="btn" id="quizbtn">Quiz 0/31</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
+  <button class="btn" id="quizbtn">Quiz 0/32</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
   <span class="sizes" title="Switch shapes in steps 16, 19 and 20">Show sizes for <span class="seg"><button id="szTiny" aria-pressed="true">Tiny example</button><button id="szReal" aria-pressed="false">2017 paper</button></span></span></footer>
 <script>
 const TRAIN_PY="import torch, math, json, random\ntorch.manual_seed(3); random.seed(3)\nV=[\"<pad>\",\"<s>\",\"<\/s>\",\"the\",\"cat\",\"sat\",\"on\",\"mat\",\"a\",\"dog\"]; ix={w:i for i,w in enumerate(V)}\ncorpus=[[d,n,\"sat\",\"on\"] for d in [\"the\",\"a\"] for n in [\"cat\",\"dog\",\"mat\"]]\ndef PE(n): return torch.tensor([[math.sin(p),math.cos(p),math.sin(p/100),math.cos(p/100)] for p in range(n)])\nP=lambda *s: torch.nn.Parameter(torch.randn(*s)*0.5)\nclass Att(torch.nn.Module):\n    def __init__(s): super().__init__(); s.q=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.k=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.v=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.Wo=P(4,4)\n    def forward(s,xq,xkv,causal=False):\n        outs=[]\n        for h in range(2):\n            Q=xq@s.q[h];K=xkv@s.k[h];Vv=xkv@s.v[h];S=Q@K.T/math.sqrt(2)\n            if causal: S=S.masked_fill(torch.triu(torch.ones_like(S),1).bool(),-1e9)\n            outs.append(torch.softmax(S,-1)@Vv)\n        return torch.cat(outs,-1)@s.Wo\nclass FF(torch.nn.Module):\n    def __init__(s): super().__init__(); s.W1=P(4,8); s.b1=torch.nn.Parameter(torch.zeros(8)); s.W2=P(8,4); s.b2=torch.nn.Parameter(torch.zeros(4))\n    def forward(s,x): return torch.relu(x@s.W1+s.b1)@s.W2+s.b2\nLN=lambda x:(x-x.mean(-1,keepdim=True))/torch.sqrt(x.var(-1,unbiased=False,keepdim=True)+1e-5)\nclass M(torch.nn.Module):\n    def __init__(s):\n        super().__init__(); s.E=P(10,4); s.ea=torch.nn.ModuleList([Att(),Att()]); s.ef=torch.nn.ModuleList([FF(),FF()])\n        s.ds=torch.nn.ModuleList([Att(),Att()]); s.dc=torch.nn.ModuleList([Att(),Att()]); s.df=torch.nn.ModuleList([FF(),FF()]); s.Wout=P(4,10)\n    def forward(s,src,tgt):\n        x=s.E[src]+PE(len(src))\n        for a,f in zip(s.ea,s.ef): x=LN(x+a(x,x)); x=LN(x+f(x))\n        y=s.E[tgt]+PE(len(tgt))\n        for a,c,f in zip(s.ds,s.dc,s.df): y=LN(y+a(y,y,True)); y=LN(y+c(y,x)); y=LN(y+f(y))\n        lg=y@s.Wout; lg=lg.clone(); lg[:,0]=-1e9; lg[:,1]=-1e9; return lg\nm=M(); opt=torch.optim.Adam(m.parameters(),lr=0.02,weight_decay=0)\nmain=[ix[w] for w in [\"the\",\"cat\",\"sat\",\"on\"]]\ndef batch_loss():\n    L=0\n    for s in corpus:\n        ids=[ix[w] for w in s]; L=L+torch.nn.functional.cross_entropy(m(torch.tensor(ids),torch.tensor([1]+ids[:3])),torch.tensor(ids))\n    return L/len(corpus)\ndef preds():\n    with torch.no_grad(): return m(torch.tensor(main),torch.tensor([1]+main[:3])).argmax(-1).tolist()\ncurve=[];snaps=[];STEPS=1500\nfor st in range(STEPS+1):\n    L=batch_loss()\n    if st%25==0: curve.append([st,round(L.item(),3)])\n    if st in (0,30,80,200,STEPS): snaps.append({\"step\":st,\"loss\":round(L.item(),3),\"pred\":[V[i] for i in preds()]})\n    if st<STEPS: opt.zero_grad(); L.backward(); opt.step()\nprint(snaps)\nr2=lambda t:[[round(float(v),2) for v in row] for row in t.detach()] if t.dim()==2 else [round(float(v),2) for v in t.detach()]\natt=lambda a:{\"heads\":[{\"q\":r2(a.q[h]),\"k\":r2(a.k[h]),\"v\":r2(a.v[h])} for h in range(2)],\"Wo\":r2(a.Wo)}\nff=lambda f:{\"W1\":r2(f.W1),\"b1\":r2(f.b1),\"W2\":r2(f.W2),\"b2\":r2(f.b2)}\nout={\"E\":r2(m.E),\"encP\":[{\"att\":att(a),\"ff\":ff(f)} for a,f in zip(m.ea,m.ef)],\"decP\":[{\"self\":att(a),\"cross\":att(c),\"ff\":ff(f)} for a,c,f in zip(m.ds,m.dc,m.df)],\"Wout\":r2(m.Wout),\"curve\":curve,\"snaps\":snaps,\"corpus\":[\" \".join(s) for s in corpus],\"steps\":STEPS}\njson.dump(out,open(\"trained.json\",\"w\"))\n";
@@ -2121,13 +2152,74 @@ DEEP["6b"]=()=>{let qi=2,ki=1,m=2,n=1;const th=1;
      h("p",{class:"note"},"Move both sliders by the same amount: the red dot stays put. That is the relative-position property."))),
    h("div",{class:"dsub"},"Many speeds, like the hands of a clock (example with d = 8, four pairs, all turned to position 4)"),h("div",{class:"rrow"},...freq),
    pts([["Same idea as step 4:","each pair turns at its own speed, from fast to very slow, just like the sine waves in step 4. The speeds use the same 10000 base."],["Where it sits:","inside every attention layer, on Q and K only, after they are made (step 6) and before Q · Kᵀ (step 7). V is never rotated, and nothing is added to the word embeddings."],["No extra weights:","the angles are fixed by position, so nothing new has to be learned."],["A common myth:","RoPE alone does not work far beyond the training length. Models stretched to longer texts use extra methods such as Position Interpolation (Chen et al., 2023) or YaRN (Peng et al., 2023)."],["Used by:","most open large language models today, including the Llama family. This page's tiny model keeps the 2017 sine waves; the numbers here apply the rotation to its real Q and K to show the mechanics."]],"pos"))};
+// ===== Step 16b: Looped Transformer, one block run again and again (depth becomes compute) =====
+const LOOP=(()=>{const cnt=o=>Array.isArray(o)?o.reduce((s,v)=>s+cnt(v),0):typeof o==="number"?1:o&&typeof o==="object"?Object.values(o).reduce((s,v)=>s+cnt(v),0):0;
+  const W=cnt(D.encP[0]);let H=D.X;const passes=[];
+  for(let k=1;k<=12;k++){const n=encBlock(H,D.encP[0]).n2;passes.push({h:n,d:Math.sqrt(n.flat().reduce((s,v,i)=>s+(v-H.flat()[i])**2,0))});H=n}
+  return{W,passes}})();
+// architecture picture: standard stack vs one looped block
+function loopArch(){const box=(x,y,w,hh,t,c,extra="")=>`<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="9" fill="color-mix(in srgb,var(--${c}) 15%,var(--panel))" stroke="var(--${c})" stroke-width="1.6" ${extra}/><text x="${x+w/2}" y="${y+hh/2+4}" text-anchor="middle" class="lpt b">${t}</text>`;
+  const C=["emb","q","k","pos"];let s=`<svg viewBox="0 0 700 300" class="lpsv" role="img" aria-label="Left: a stack of four different blocks with four sets of weights. Right: one block that the hidden state passes through again and again, with an exit check."><defs><marker id="lpm" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink2)"/></marker><marker id="lpm2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--att)"/></marker></defs>`;
+  s+=`<g class="lpleft"><text x="130" y="18" text-anchor="middle" class="lpt h">Standard stack (step 16)</text>${box(70,250,120,30,"X (input)","tok")}`;
+  for(let i=0;i<4;i++)s+=box(70,196-i*50,120,34,`Block ${i+1}`,C[i])+`<text x="200" y="${217-i*50}" class="lpt w">weights W${i+1}</text><line x1="130" y1="${i?246-i*50:250}" x2="130" y2="${232-i*50}" stroke="var(--ink2)" stroke-width="1.6" marker-end="url(#lpm)"/>`;
+  s+=`<text x="130" y="296" text-anchor="middle" class="lpt n">4 blocks = 4 sets of weights</text></g>`;
+  s+=`<g class="lpright"><text x="470" y="18" text-anchor="middle" class="lpt h">Looped Transformer</text>
+   ${box(410,250,120,30,"X (input)","tok")}<line x1="470" y1="250" x2="470" y2="214" stroke="var(--ink2)" stroke-width="1.6" marker-end="url(#lpm)"/>
+   ${box(400,150,140,60,"one shared block B","q",'id="lpblock"')}
+   <path d="M540 165 C 610 165, 610 200, 540 200" fill="none" stroke="var(--att)" stroke-width="2.5" marker-end="url(#lpm2)"/>
+   <text x="608" y="188" class="lpt lp">× L</text><text x="556" y="226" class="lpt n">h ← B(h)</text>
+   <line x1="470" y1="150" x2="470" y2="112" stroke="var(--ink2)" stroke-width="1.6" marker-end="url(#lpm)"/>
+   ${box(405,72,130,36,"changed little?","sc")}<text x="545" y="94" class="lpt n">no → loop again</text>
+   <line x1="470" y1="72" x2="470" y2="44" stroke="var(--ink2)" stroke-width="1.6" marker-end="url(#lpm)"/>
+   <text x="470" y="40" text-anchor="middle" class="lpt b">yes → output</text>
+   <circle id="lpdot" r="6" cx="590" cy="182" class="lpdot"/><text id="lpcount" x="392" y="185" text-anchor="end" class="lpt c"></text>
+   <text x="470" y="296" text-anchor="middle" class="lpt n">1 block = 1 set of weights, used L times</text></g></svg>`;
+  return s}
+const lpBars=(n,ids)=>{const mx=LOOP.passes[0].d;return h("div",{class:"lpbars",id:ids},...LOOP.passes.slice(0,n).map((p,i)=>h("div",{class:"lpb"},h("em",{},f(p.d)),h("i",{style:`height:${Math.max(2,p.d/mx*90)}px`}),h("span",{},"pass "+(i+1)))))};
+scene({id:"16b",t:"Looped Transformer: depth becomes compute",
+ cap:["A normal model stacks N different blocks, each with its own weights. Depth costs memory.","A looped Transformer keeps ONE block and sends the hidden state through it again and again. Each pass refines the same rows of numbers.","Depth is now a number of passes chosen at run time. More passes means more thinking with the same weights; stop when a pass barely changes anything."],
+ why:"Weights cost memory; passes only cost time. Looping lets a small model spend more computation on a hard input without storing more weights.",
+ track:[["X [4,4]","block B, pass 1","h₁ [4,4]"],["h_k [4,4]","h_{k+1} = B(h_k)","h_{k+1} [4,4]"],["h_L","stop when the change is tiny","output [4,4]"]],
+ build(c){c.append(h("div",{class:"lpwrap",b:1,html:loopArch()}),
+   FB(3,h("div",{class:"lpres"},h("div",{class:"dsub"},"Real numbers: this page's encoder block 1, applied to X again and again. Bar = how much the hidden state changed in that pass."),lpBars(10,"lpbars16"),
+    h("div",{class:"callout",card:"loop"},`Pass 1 changes the numbers by ${f(LOOP.passes[0].d)}; by pass 6 the change is ${f(LOOP.passes[5].d)} and by pass 9 it is ${f(LOOP.passes[8].d)}. The state has settled, so more passes would add nothing: time to exit.`))))},
+ async on2(x){const st=document.querySelector("#sec-16b .stage"),dot=st&&st.querySelector("#lpdot"),cn=st&&st.querySelector("#lpcount");if(!dot)return;
+  const pts=[[540,200],[470,195],[540,165],[590,182]];
+  for(let k=1;k<=4;k++){cn.textContent="pass "+k;for(const [x0,y0] of pts){dot.setAttribute("cx",x0);dot.setAttribute("cy",y0);if(!await x.wait(110))return}}cn.textContent="pass 4 … L"},
+ async on3(x){const bs=[...document.querySelectorAll("#lpbars16 .lpb")];bs.forEach(b=>b.style.opacity=.15);for(const b of bs){b.style.opacity=1;if(!await x.wait(160))return}},
+ check:{q:`One shared block has ${LOOP.W} weights and runs 8 passes. How many weights are stored, and how much compute is used compared with one pass?`,a:`${LOOP.W} weights, because the same block is reused, and about 8× the compute of one pass. A stack of 8 different blocks would store 8 × ${LOOP.W} = ${8*LOOP.W} weights for the same compute.`}});
+CARDS.loop={t:"Looped Transformer",p:"Reuse one block L times instead of stacking L different blocks. The hidden state is refined on every pass.",
+ f:"h<sub>0</sub> = X,   h<sub>k+1</sub> = B(h<sub>k</sub>)   (or B(h<sub>k</sub> + X), re-adding the input)<br>stop at L passes, or early when ‖h<sub>k+1</sub> − h<sub>k</sub>‖ < ε",
+ i:"X [n, d_model]",o:"same block B, L times",out:"h_L [n, d_model]",
+ ex:`<p>Weights stored: ${LOOP.W} (one block), whatever L is.</p><p>Change per pass with this page's block 1: ${LOOP.passes.slice(0,8).map(p=>f(p.d)).join(", ")} …</p><p>The change falls to about 0 by pass 9: the state reached a fixed point.</p>`,
+ x:"Without looping, thinking longer means adding layers, and every layer adds weights and memory.",go:"16b"};
+MATHKEY["16b"]="loop";
+WHERE["16b"]=[["B","one Transformer block (attention + FFN), with one set of weights"],["h_k","the hidden state after k passes, [n, d_model]"],["L","number of passes: depth chosen at run time"],["ε","the 'changed little' threshold for stopping early"],["‖·‖","size of the change between two passes"]];
+WHY["16b"]=["Reusing one block lets the model think for more passes on hard inputs without storing more weights.","Every extra step of thinking would need a new layer, and memory would grow with depth.",`Example: ${LOOP.W} weights, 1 or 12 passes; the change shrinks from ${f(LOOP.passes[0].d)} to ${f(LOOP.passes[8].d)} by pass 9.`];
+ANALOGY["16b"]="Instead of passing your essay to eight different editors, you have one good editor read it again and again. Each read improves it a little. When a read finds almost nothing to fix, you stop. Hard essays get more reads; easy ones fewer.";
+DEEP["16b"]=()=>{let L=6,eps=.1;const mx=LOOP.passes[0].d;
+  const lsl=h("input",{type:"range",min:1,max:12,step:1,value:L,"aria-label":"Number of passes"}),lv=h("b",{}),esl=h("input",{type:"range",min:.01,max:1,step:.01,value:eps,"aria-label":"Exit threshold"}),ev=h("b",{});
+  const cmp=h("div",{class:"lpcmp"}),chart=h("div",{}),say=h("p",{class:"geosay"});
+  function draw(){lv.textContent=L+" passes";ev.textContent="ε = "+eps.toFixed(2);
+    const stackW=L*LOOP.W,loopW=LOOP.W,mxW=12*LOOP.W;
+    cmp.innerHTML="";cmp.append(...[["Stack of "+L+" blocks","weights stored",stackW,mxW,"att"],["Looped, "+L+" passes","weights stored",loopW,mxW,"q"],["Stack of "+L+" blocks","compute (block runs)",L,12,"att"],["Looped, "+L+" passes","compute (block runs)",L,12,"q"]].map(([a,b,v,m,c])=>h("div",{class:"lprow"},h("span",{},h("b",{},a)," · ",b),h("div",{class:"lpbar"},h("i",{style:`width:${v/m*100}%;--c:var(--${c})`}),h("em",{},v.toLocaleString())))));
+    const ex=LOOP.passes.findIndex(p=>p.d<eps),W=360,Hh=150,xs=i=>30+i*(W-40)/11,ys=v=>Hh-20-v/mx*(Hh-34);
+    chart.innerHTML=`<svg viewBox="0 0 ${W} ${Hh+14}" class="lpchart" role="img" aria-label="Change per pass, falling towards zero"><line x1="30" y1="${Hh-20}" x2="${W-6}" y2="${Hh-20}" class="rda"/><line x1="30" y1="${ys(eps)}" x2="${W-6}" y2="${ys(eps)}" stroke="var(--sc)" stroke-dasharray="4 3"/><text x="${W-8}" y="${ys(eps)-4}" text-anchor="end" class="gdt">ε</text>
+     <polyline points="${LOOP.passes.map((p,i)=>xs(i)+","+ys(p.d)).join(" ")}" fill="none" stroke="var(--att)" stroke-width="2.5"/>${LOOP.passes.map((p,i)=>`<circle cx="${xs(i)}" cy="${ys(p.d)}" r="${i===ex?6:3.5}" fill="${i===ex?"var(--q)":i<L?"var(--att)":"var(--line)"}"/>`).join("")}
+     <text x="${W/2}" y="${Hh+10}" text-anchor="middle" class="gdt">pass 1 → 12</text></svg>`;
+    say.innerHTML=ex<0?`The change never drops below ε, so all ${L} passes run.`:ex+1>L?`With only ${L} passes the change is still above ε; the state would settle at pass <b>${ex+1}</b> (green).`:`With ε = ${eps.toFixed(2)} the model can stop after pass <b>${ex+1}</b> (green): the next pass would change the numbers by less than ε. ${ex+1<L?`That saves ${L-ex-1} of your ${L} passes.`:""}`}
+  lsl.oninput=()=>{L=+lsl.value;draw()};esl.oninput=()=>{eps=+esl.value;draw()};setTimeout(draw,0);
+  return deepWrap("Weights versus passes, and when to stop","Choose how many passes to run. A stack needs a new block (and new weights) for every layer; a looped model reuses one block, so memory stays flat while compute grows. The right-hand chart uses the real change per pass from this page's block.",
+   h("div",{class:"dgrid"},h("div",{},h("div",{class:"slrow"},h("label",{},"Depth L"),lsl,lv),cmp),
+    h("div",{},h("div",{class:"slrow"},h("label",{},"Exit threshold"),esl,ev),chart,say)),
+   pts([["Same idea, three names:","Universal Transformers (Dehghani et al., ICLR 2019) shared one block across depth and let each token decide when to stop (adaptive computation time). Later work calls these looped or recurrent-depth Transformers."],["Why it helps reasoning:","Saunshi et al. (ICLR 2025) show that a few layers looped many times can match much deeper models on reasoning-style tasks; looping works like thinking in hidden numbers instead of in words."],["At scale:","Geiping et al. (NeurIPS 2025) trained a 3.5-billion-weight recurrent-depth model with a small prelude, one looped core block and a coda. Running more loops at test time improved its reasoning scores."],["Trade-offs:","training must backpropagate through every pass, so memory and time grow with L; storing facts still needs weights, so looping helps thinking more than memorising."],["About these numbers:","this page's block was not trained to loop. It still settles to a fixed point after about 9 passes, which shows the mechanics; a trained looped model learns to make each pass useful."]],"q"))};
 // ===== Flow engine: every step on one page, top to bottom =====
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,speed=RM?0:1;
-const ACC={"0":"tok","1":"sc","2":"tok","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","16":"out","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","24":"tok"};
-const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","16":"encoder × N","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","24":"later changes"};
+const ACC={"0":"tok","1":"sc","2":"tok","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","16":"out","16b":"q","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","24":"tok"};
+const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","16":"encoder × N","16b":"looped block","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","24":"later changes"};
 const PARTS=[["1","From text to numbers","Words become rows of numbers that know their position.",["0","1","2","3","4","5"]],
  ["2","Attention","Each token decides whom to listen to, then listens.",["6","6b","7","8","9a","9b","10","11","12"]],
- ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","16"]],
+ ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","16","16b"]],
  ["4","Decoder and the full model","Write the output one token at a time while reading the input.",["17","18","19","20","21"]],
  ["5","Learning and using it","Train every position at once, then generate in a loop.",["22","22b","22c","22d","23","23b","24"]]];
 const byId=Object.fromEntries(SC.map(s=>[s.id,s]));const secs={};
@@ -2555,7 +2647,7 @@ const G=[["Token","A piece of text (word, part of a word or byte) the model read
 ["Greedy decoding","Always pick the most likely next token.","21"],["Sampling / temperature / top-k","Pick randomly by probability; temperature flattens or sharpens; top-k keeps only the k best.","21"],
 ["Teacher forcing","Training trick: feed the true previous tokens and predict every next token at once.","22"],["Cross-entropy loss","−log of the probability given to the true next token. Lower is better.","22"],
 ["Gradient","The direction to nudge each weight so the loss goes down.","22"],["Backpropagation","Sends the error backwards through the model with the chain rule, giving every weight its gradient.","22b"],["Gradient descent","Repeatedly move each weight a small step downhill on the loss.","22b"],
-["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2"],["Inference","Using the trained model: predict one token, append it, repeat.","23"],
+["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Looped Transformer","Runs the hidden state through one shared block again and again. Depth becomes the number of passes, chosen at run time, instead of the number of different layers.","16b"],["Universal Transformer","A 2018 design that shares one block across depth and lets each token decide when to stop looping.","16b"],["Adaptive computation","Stopping the loop early when a pass barely changes the hidden state, so easy inputs use fewer passes.","16b"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2"],["Inference","Using the trained model: predict one token, append it, repeat.","23"],
 ["KV cache","Stores past keys and values so each new token only computes its own.","23b"],["Grouped-query attention","Several query heads share one key/value head, shrinking the cache.","24"],["Mixture of experts","Many FFNs; a router sends each token to only a few.","24"]];
 const gp=h("div",{class:"gloss",id:"gloss",role:"dialog","aria-label":"Glossary"});const gi=h("input",{type:"search",placeholder:"Search terms, e.g. softmax, mask, cache",id:"gsearch","aria-label":"Search glossary"}),gl=h("div",{class:"glist"});
 const gclose=h("button",{class:"btn"},"✕ Close");gclose.onclick=()=>gp.classList.remove("open");
@@ -2627,6 +2719,19 @@ const p10=()=>practice("Turn 3 scores into softmax shares, by hand",()=>{const z
   map.querySelectorAll(".maprow").forEach((r,i)=>{const pt=r.querySelector(".pt");if(!pt||!PARTS[i])return;const steps=h("div",{class:"msteps"},...r.querySelectorAll(".mchip"));
     r.querySelectorAll(".marr").forEach(a=>a.remove());r.innerHTML="";r.style.setProperty("--c",acc(PARTS[i][3][0]));
     r.append(h("div",{class:"mhead"},h("span",{class:"mpn"},PARTS[i][0]),h("div",{},h("b",{},PARTS[i][1]),h("p",{},PARTS[i][2]))),steps)})})();
+// ---------- core path: 12 essential steps for newcomers; the rest fold away
+window.CORE=["0","2","3","4","5","6","7","10","11","13","21","22"];
+(function(){const KEY="core",on=()=>document.body.classList.contains("core");
+  document.querySelectorAll("section.step").forEach(sec=>{const id=sec.id.slice(4);
+    if(CORE.includes(id)){sec.classList.add("core-step");const h3=sec.querySelector(".shd h3");h3&&h3.append(h("span",{class:"corestar",title:"Part of the core path"},"★ core"))}
+    else{const hd=sec.querySelector(".shd"),b=h("button",{class:"btn coreshow"},"Show this step");b.onclick=()=>{sec.classList.toggle("peek");b.textContent=sec.classList.contains("peek")?"Fold it away":"Show this step"};hd&&hd.append(b);
+      hd&&hd.after(h("p",{class:"coreskip"},"Not in the core path. You can skip it now and come back later."))}});
+  document.querySelectorAll("#map .mchip,#side a[data-go]").forEach(a=>{if(CORE.includes(a.dataset.go))a.classList.add("iscore")});
+  const btns=[];const set=v=>{document.body.classList.toggle("core",v);btns.forEach(b=>{b.setAttribute("aria-pressed",v);b.textContent=v?"★ Core path on: showing 12 key steps (show all)":"★ Core path: just the 12 key steps"});try{localStorage.setItem("tbb_"+KEY,v?"1":"")}catch(e){}};
+  const mk=cls=>{const b=h("button",{class:"btn corebtn "+cls});b.onclick=()=>set(!on());btns.push(b);return b};
+  const top=document.querySelector(".dhtop");top&&top.append(mk("dh"));
+  const map=$("map");map&&map.prepend(h("div",{class:"corebar"},mk("mp"),h("span",{class:"note"},"New to the topic? The core path keeps the 12 steps you need for the big idea and folds the advanced ones away. Every step can still be opened.")));
+  let saved=false;try{saved=localStorage.getItem("tbb_"+KEY)==="1"}catch(e){}set(saved)})();
 // ===== For Master's students: ablation lab, reproduce, research map, question builder, roadmap =====
 (function(){
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -2701,7 +2806,7 @@ const TR=[["Interpretability","att","What algorithm is a trained Transformer act
  ["Beyond dense attention","k","Can experts or state-space models replace parts of the Transformer?","Replace the FFN with 4 small experts and a router; compare quality per FLOP.",[["Switch Transformers (Fedus et al., 2021)","https://arxiv.org/abs/2101.03961"],["Mamba: Linear-Time Sequence Modeling (Gu and Dao, 2023)","https://arxiv.org/abs/2312.00752"]]]];
 const map=h("div",{class:"rcard wide"},h("span",{class:"rkick"},"D · Research map"),h("h3",{},"Six active research directions, each with a first step"),
   h("div",{class:"rmap"},...TR.map(([t,c,q,ex,ps])=>h("div",{class:"rtrack",style:`--c:var(--${c})`},h("b",{},t),h("p",{class:"rq"},q),h("p",{},h("span",{class:"rlab"},"Laptop-size experiment "),ex),h("div",{class:"rps"},...ps.map(([a,u])=>A(a,u)))))),
-  h("p",{class:"note"},"Tools worth learning: ",A("The Annotated Transformer","https://nlp.seas.harvard.edu/annotated-transformer/"),", ",A("nanoGPT","https://github.com/karpathy/nanoGPT"),", ",A("TransformerLens","https://github.com/TransformerLensOrg/TransformerLens"),", ",A("Hugging Face courses","https://huggingface.co/learn"),"."));
+  h("p",{class:"note"},"Every paper and link on this map was checked in October 2026. Tools worth learning: ",A("The Annotated Transformer","https://nlp.seas.harvard.edu/annotated-transformer/"),", ",A("nanoGPT","https://github.com/karpathy/nanoGPT"),", ",A("TransformerLens","https://github.com/TransformerLensOrg/TransformerLens"),", ",A("Hugging Face courses","https://huggingface.co/learn"),"."));
 
 // ---------- D. research question builder
 const opt=(id,l,arr)=>{const s=h("select",{id,"aria-label":l},...arr.map(a=>h("option",{},a)));return s};
@@ -2733,13 +2838,13 @@ const put=()=>{const pp=$("papers");if(!pp)return setTimeout(put,200);pp.parentN
 })();
 // ===== Play the whole model: auto-tour of every step =====
 (function(){
-const ORDER=PARTS.flatMap(p=>p[3]);let run=0,paused=false,idx=0;
+let ORDER=PARTS.flatMap(p=>p[3]);let run=0,paused=false,idx=0;
 const bar=h("div",{class:"tour",role:"region","aria-label":"Whole-model tour"}),lab=h("span",{class:"tlab"}),prog=h("div",{class:"tprog"},h("i",{}));
 const pb=h("button",{class:"btn"},"⏸ Pause"),nb=h("button",{class:"btn"},"Next ⏭"),sb=h("button",{class:"btn stopb"},"■ Stop tour (Esc)");
 const sub=h("p",{class:"tsub","aria-live":"polite"});bar.append(h("b",{},"▶ Whole-model tour"),lab,prog,pb,nb,sb,sub);
 window.onBeat=(id,k)=>{if(bar.classList.contains("open")&&id===ORDER[idx]&&k>=1&&k<=3)sub.innerHTML=`<b>${["Setup","Motion","Result"][k-1]}.</b> ${byId[id].cap[k-1]}`};document.body.append(bar);
 const sleep=ms=>new Promise(r=>setTimeout(r,RM?Math.min(ms,50):ms));
-async function tour(from=0){const me=++run;paused=false;pb.textContent="⏸ Pause";bar.classList.add("open");
+async function tour(from=0){ORDER=PARTS.flatMap(p=>p[3]).filter(id=>!document.body.classList.contains("core")||window.CORE.includes(id));const me=++run;paused=false;pb.textContent="⏸ Pause";bar.classList.add("open");
  for(idx=from;idx<ORDER.length;idx++){if(me!==run)return;const id=ORDER[idx],el=$("sec-"+id);
   lab.textContent=`Step ${id} · ${byId[id].t} (${idx+1} of ${ORDER.length})`;prog.firstChild.style.width=((idx+1)/ORDER.length*100)+"%";
   el.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});await sleep(700);if(me!==run)return;
@@ -2755,4 +2860,5 @@ const add=()=>{const top=document.querySelector(".dhtop");if(!top)return setTime
 const ctas=document.querySelector(".hero .cta-main");if(ctas){const b=h("button",{class:"btn cta-big cta-play"},h("span",{class:"pl","aria-hidden":"true"},"▶"),"Play the whole model");b.onclick=()=>tour(0);ctas.append(b)}
 })();
 </script>
+
 </body></html>
