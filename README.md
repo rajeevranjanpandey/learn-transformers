@@ -40,11 +40,12 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 - 🟢 **Beginner**: Focuses on high-level intuition, classroom analogies, and visual tensor flow. Formulas are hidden.
 - 🟡 **Standard**: The balanced sweet spot. Combines conceptual explanation, interactive step animation, and key tensor shapes.
 - 🔴 **Expert**: Unfolds deep-dive mathematical panels (`∑ The math`), explicit vector coordinates, symbol definitions, and research trivia.
-- ✦ **Maths & ML Warm-Up (Chapter W)**: 6 foundational interactive cards (neural network dials & learning, vectors, dot products & alignment, matrix multiplication, $e^x$, training vs. inference) for complete newcomers before Step 0.
+- ✦ **Maths & ML Warm-Up (Chapter W)**: 7 foundational interactive cards (neural network dials & learning, vectors, dot products & alignment, vector magnitude & cosine similarity, row × matrix multiplication, $e^x$, training vs. inference) for complete newcomers before Step 0.
 
 ### 3. Interactive Playgrounds
 - **Attention as Arrows (Step 7)**: Drag the green Query arrow in real time to witness dot-product projections, scaled softmax re-weighting, and chained value vector additions live.
 - **The Attention Formula Hand Calculation (Chapter E)**: Deconstructs the core $\text{Attention}(Q, K, V) = \text{softmax}(Q \times K^T / \sqrt{d_k}) \times V$ equation piece by piece with explicit matrix multiplication operations, annotated tensor meanings, and calculator-verifiable numbers.
+- **Vector Magnitude & Cosine Similarity (Chapter W)**: Rotate and scale 2D vectors $a$ and $b$ live to visualize how cosine similarity measures directional alignment independently of arrow length.
 - **RoPE Rotary Playground (Step 6b)**: Interactive dials displaying pairwise 2D vector rotations for queries and keys across position gaps $m - n$, demonstrating why dot products only depend on relative token distance.
 - **Mixture of Experts Playground (Step 15b)**: Interactive router gating tokens to top-$k$ experts with an active vs. total parameter scaling slider (from 2 up to 256 experts).
 - **Looped Transformer & Adaptive Depth Playground (Step 16b)**: Experiment with iterative state refinement ($h_{k+1} = B(h_k)$), convergence delta tracking across passes, and dynamic exit thresholds ($\epsilon$).
