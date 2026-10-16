@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Transformer, Block by Block — Interactive Deep Learning Architecture Guide</title>
 <meta name="description" content="An interactive visual course explaining the Transformer neural network architecture from zero to GPT and BERT. Interactive Q/K/V attention, tensor math, and step-by-step visualizations.">
-<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing, RoPE, Looped Transformer, Recurrent Depth">
+<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing, RoPE, Looped Transformer, Recurrent Depth, Mixture of Experts, MoE, Multi-head Latent Attention, MLA">
 <meta name="author" content="Rajeev Pandey">
 <meta property="og:title" content="Transformer, Block by Block — Interactive Deep Learning Architecture Guide">
 <meta property="og:description" content="Visual, interactive deep dive into modern Transformer architecture. Every step computed in real numbers with pictures first.">
@@ -910,6 +910,87 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 #map .mchip.iscore .k::before{content:"★ ";color:color-mix(in srgb,var(--sc) 70%,var(--ink))}
 .corebar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}.corebar .note{margin:0;flex:1 1 300px;max-width:none}
 .corebtn[aria-pressed="true"]{background:var(--sc);border-color:var(--sc);color:#151922;font-weight:700}
+/* MoE + MLA */
+.moewrap{width:100%}.moesv{width:100%;max-width:700px;display:block;margin:0 auto;font-family:var(--fm)}
+.moet{fill:var(--panel);stroke:var(--tok);stroke-width:1.5}.moer{fill:color-mix(in srgb,var(--sc) 14%,var(--panel));stroke:var(--sc);stroke-width:1.6}
+.mot{font-size:12px;fill:var(--ink2)}.mot.b{fill:var(--ink);font-weight:700;font-size:13px}
+.moetab{width:100%;display:flex;flex-direction:column;gap:6px}.moer2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}.moer2>b{width:40px;font-family:var(--fm)}
+.moer2 .chip{background:color-mix(in srgb,var(--c) 15%,var(--panel));border:1px solid var(--c)}.mono{font-family:var(--fm);font-size:12px;color:var(--ink2)}
+.mlagrid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;width:100%}@media (max-width:760px){.mlagrid{grid-template-columns:minmax(0,1fr)}}
+.mlacol{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel2);display:flex;flex-direction:column;gap:5px}.mlacol .note{margin:6px 0 0}
+.mlarow{display:flex;gap:4px;align-items:center;flex-wrap:wrap}.mlal{width:40px;font-family:var(--fm);font-size:12px;color:var(--ink2)}
+.mlac{font-family:var(--fm);font-size:12px;padding:4px 6px;border-radius:4px;min-width:40px;text-align:center;background:color-mix(in srgb,var(--c) 18%,var(--panel))}
+.mlac.c-k{--c:var(--k)}.mlac.c-v{--c:var(--v)}
+@media (max-width:700px){.moewrap{overflow-x:auto}.moesv{min-width:600px}}
+#sec-15b .callout{max-width:none;flex:1 1 300px}#sec-23c .callout{max-width:none;flex:none}
+/* MLA, three-part story */
+.mlwrap{display:flex;flex-direction:column;gap:14px;width:100%}
+.mlbox{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel2);display:flex;flex-direction:column;gap:10px}
+.mlhd{display:flex;gap:8px;align-items:center;font-size:14.5px}.mln{width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:12px;font-weight:700}
+.mlbox .note{margin:0;max-width:none}
+.mlshelf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.mlshelf.small{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:8px}
+@media (max-width:860px){.mlshelf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mlitem{display:flex;flex-direction:column;gap:4px;align-items:flex-start;transition:opacity .3s}.mlw{font-family:var(--fm);font-size:12px;font-weight:700}
+.mlcells{display:flex;flex-wrap:wrap;gap:3px}.mlac.c-emb{--c:var(--emb)}
+.mlflow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.mlstage{display:flex;flex-direction:column;gap:4px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.mlstage.mlstore{border:2px solid var(--v)}.mlstage small,.mlarrow small{font-size:11px;color:var(--ink2)}
+.mlcap{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+.mlarrow{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700}
+.funnel{display:block;width:44px;height:26px;background:var(--ink3);clip-path:polygon(0 0,100% 30%,100% 70%,0 100%)}.funnel.rev{clip-path:polygon(0 30%,100% 0,100% 100%,0 70%)}
+.mlpay{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}@media (max-width:760px){.mlpay{grid-template-columns:minmax(0,1fr)}}
+.mlbar{height:22px;border-radius:6px;background:var(--panel);border:1px solid var(--line);overflow:hidden}.mlbar i{display:block;height:100%;background:color-mix(in srgb,var(--c) 55%,var(--panel))}
+#sec-23c .callout{max-width:none}
+.prereq{font-size:13px;color:var(--ink2);padding:6px 10px;border-left:3px solid var(--c);background:color-mix(in srgb,var(--c) 6%,var(--panel));border-radius:0 6px 6px 0}
+.prereq a{color:var(--ink);font-weight:700}
+/* beginner warm-up */
+.wgrid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wgrid2>.wcard:first-child{grid-column:1/-1}
+@media (max-width:900px){.wgrid2{grid-template-columns:minmax(0,1fr)}}
+.wcard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--panel2);display:flex;flex-direction:column;gap:10px;min-width:0}
+.wch{display:flex;gap:10px;align-items:flex-start}.wch b{font-size:16px}.wch p{margin:3px 0 0;font-size:14px;color:var(--ink2)}
+.wn{flex:none;width:28px;height:28px;border-radius:50%;background:var(--sc);color:#151922;display:grid;place-items:center;font-weight:700}
+.wused{margin:0;font-size:12.5px;color:var(--ink2)}.wused a{color:var(--ink);font-weight:700}
+.wcard .note{margin:0;max-width:none}
+.nnpic svg{width:100%;max-width:560px;display:block;margin:0 auto}.nnbox{fill:var(--panel);stroke:var(--tok);stroke-width:1.5}.nnbox.out{stroke:var(--out)}.nnsum{fill:color-mix(in srgb,var(--sc) 20%,var(--panel));stroke:var(--sc);stroke-width:1.5}
+.nnln{stroke:var(--ink3);stroke-width:2}.nnw{fill:color-mix(in srgb,var(--att) 70%,var(--ink));font-weight:700}.nnpic text{fill:var(--ink)}
+.nndials{display:flex;gap:18px;flex-wrap:wrap}.nndial{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--ink2)}.nndial b{font-family:var(--fm);font-size:16px;color:var(--ink)}
+.nnknob{width:64px;height:64px;border-radius:50%;background:conic-gradient(from -135deg,color-mix(in srgb,var(--c) 30%,var(--panel)) 0 270deg,transparent 270deg);border:2px solid var(--c);position:relative}
+.nnknob i{position:absolute;left:50%;top:50%;width:3px;height:26px;background:var(--ink);transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(var(--a));transition:transform .2s;border-radius:2px}
+.nnrides{display:flex;flex-direction:column;gap:8px}.nnride{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 10px;align-items:center;font-size:12.5px}.nnv{grid-column:2;font-family:var(--fm);font-size:11.5px;color:var(--ink2)}
+.nnbar{position:relative;height:16px;background:var(--panel);border:1px solid var(--line);border-radius:4px}.nnbar .pred{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--emb) 45%,var(--panel));transition:width .15s}.nnbar .true{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--att)}
+.wvec{display:flex;flex-direction:column;gap:6px}.wvrow{display:grid;grid-template-columns:40px 190px minmax(0,1fr);gap:8px;align-items:center}.wvrow .sbars{transform:scale(.8);transform-origin:left center}
+.wdpwrap{display:flex;flex-direction:column;gap:4px}.wtag{display:inline-block;width:120px;font-size:12px;font-weight:700}.wtag.q{color:color-mix(in srgb,var(--q) 70%,var(--ink))}.wtag.k{color:color-mix(in srgb,var(--k) 70%,var(--ink))}
+.wdp{display:flex;flex-direction:column;gap:4px}.wdpr{display:flex;gap:8px;align-items:center;font-family:var(--fm);font-size:14px;padding:4px 8px;border-radius:6px;transition:background .3s}.wdpr.hot{background:color-mix(in srgb,var(--sc) 22%,var(--panel))}
+.wdpr .wa{color:color-mix(in srgb,var(--q) 70%,var(--ink))}.wdpr .wb{color:color-mix(in srgb,var(--k) 70%,var(--ink))}.wdps{font-size:14px}
+.wmmwrap{display:flex;flex-direction:column;gap:8px}.wmt .hc{background:color-mix(in srgb,var(--sc) 25%,var(--panel))}.wmmo{font-size:13.5px}
+.wex p{margin:0;font-family:var(--fm)}.wexbars{display:flex;gap:10px;align-items:flex-end;height:150px;margin-top:6px}.wexb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--ink2)}
+.wexb i{display:block;width:34px;background:color-mix(in srgb,var(--att) 45%,var(--panel));border-radius:4px 4px 0 0}.wexb.on i{background:var(--att)}.wexb em{font-style:normal;font-family:var(--fm)}
+.prereq.warm{border-left-color:var(--sc);background:color-mix(in srgb,var(--sc) 8%,var(--panel))}
+/* part recaps */
+.recap{margin:6px 0 22px 66px;border:2px solid var(--c);border-radius:14px;padding:14px 16px;background:color-mix(in srgb,var(--c) 6%,var(--panel));display:flex;flex-direction:column;gap:8px}
+@media (max-width:900px){.recap{margin-left:0}}
+.rch{display:flex;gap:10px;align-items:center;font-size:16px}.rcn{width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700}
+.recap p{margin:0;font-size:14.5px}.rcq{font-size:14px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.rcans{color:var(--ink2);padding-left:10px;border-left:3px solid var(--c)}
+/* first-visit welcome */
+.welcome{grid-column:1/-1;border:2px solid var(--sc);border-radius:14px;padding:12px 16px;background:color-mix(in srgb,var(--sc) 10%,var(--panel));display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:14.5px;margin:6px 0 10px}
+.welcome .ctrl{margin:0}
+@media print{#ch-W,.welcome,.recap{display:none!important}}
+@media (max-width:700px){.wvrow{grid-template-columns:40px minmax(0,1fr)}.wvrow .sbars{grid-column:1/-1}.nnride{grid-template-columns:minmax(0,1fr)}.nnv{grid-column:1}.wmt{font-size:11px}}
+
+.wplain{display:grid;gap:8px;margin:6px 0 12px}
+.wplain>div{background:var(--panel2,rgba(127,127,127,.06));border-radius:8px;padding:8px 12px}
+.wplain p{margin:2px 0 0;font-size:.95em;line-height:1.5}
+.wpl{font-size:.72em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--emb)}
+.wtastebox{margin:10px 0}
+.wtaste input[type=range]{width:70px;vertical-align:middle}
+.wtaste td,.wtaste th{white-space:nowrap}
+.winf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.wphase{border:1px solid var(--line,rgba(127,127,127,.3));border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:3px}
+.wphase.t{border-left:4px solid var(--q)}.wphase.i{border-left:4px solid var(--emb)}
+.wphase small{opacity:.7}
+.winf+.ctrl input{width:70px}
+@media(max-width:560px){.winf{grid-template-columns:1fr}.wtaste{overflow-x:auto}.wtaste input[type=range]{width:54px}}
+.wcard .rpick{margin-right:12px}
 </style>
 <div id="prog"></div>
 <div class="wrap">
@@ -917,13 +998,13 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
     <div class="kicker">A visual course · from zero to GPT and BERT</div>
     <h1>Transformer, <span class="hl2">Block by Block</span></h1>
     <p>The idea behind modern AI language models, explained with pictures first and the math right underneath. Start with what a Transformer is and why it exists, then follow every step with real numbers.</p>
-    <div class="ctas"><div class="cta-main"><a class="btn pri cta-big" href="#ch-A">Start from the beginning <span aria-hidden="true">→</span></a></div><nav class="cta-jump" aria-label="Jump to"><span class="cj-lab">Jump to</span><a href="#ch-F"><i style="--c:var(--att)"></i>Try attention yourself</a><a href="#details"><i style="--c:var(--emb)"></i>Every step in detail</a><a href="#teachers"><i style="--c:var(--q)"></i>For teachers</a></nav></div>
+    <div class="ctas"><div class="cta-main"><a class="btn pri cta-big" href="#ch-W">Start from the beginning <span aria-hidden="true">→</span></a></div><nav class="cta-jump" aria-label="Jump to"><span class="cj-lab">Jump to</span><a href="#ch-F"><i style="--c:var(--att)"></i>Try attention yourself</a><a href="#details"><i style="--c:var(--emb)"></i>Every step in detail</a><a href="#teachers"><i style="--c:var(--q)"></i>For teachers</a></nav></div>
 </div>
     <div id="heroArt"></div></header>
   <div id="intro"></div>
   <section class="deephero" id="details">
     <div class="dhtop"><div class="dharrow" aria-hidden="true">↓</div><div><div class="dhkick">Part two of the course</div><h2>Now, every step in detail</h2>
-      <p>32 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
+      <p>34 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
       <a class="btn dhgo" href="#sec-0">Start at step 0 →</a></div>
     <div class="partcards" id="partcards"></div>
   </section>
@@ -934,7 +1015,7 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 </div>
 <footer><span class="trk" id="trk"></span>
   <span class="seg" id="lvlseg" role="group" aria-label="Detail level"><button data-lvl="beginner">Beginner</button><button data-lvl="standard" aria-pressed="true">Standard</button><button data-lvl="expert">Expert</button></span>
-  <button class="btn" id="quizbtn">Quiz 0/32</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
+  <button class="btn" id="quizbtn">Quiz 0/34</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
   <span class="sizes" title="Switch shapes in steps 16, 19 and 20">Show sizes for <span class="seg"><button id="szTiny" aria-pressed="true">Tiny example</button><button id="szReal" aria-pressed="false">2017 paper</button></span></span></footer>
 <script>
 const TRAIN_PY="import torch, math, json, random\ntorch.manual_seed(3); random.seed(3)\nV=[\"<pad>\",\"<s>\",\"<\/s>\",\"the\",\"cat\",\"sat\",\"on\",\"mat\",\"a\",\"dog\"]; ix={w:i for i,w in enumerate(V)}\ncorpus=[[d,n,\"sat\",\"on\"] for d in [\"the\",\"a\"] for n in [\"cat\",\"dog\",\"mat\"]]\ndef PE(n): return torch.tensor([[math.sin(p),math.cos(p),math.sin(p/100),math.cos(p/100)] for p in range(n)])\nP=lambda *s: torch.nn.Parameter(torch.randn(*s)*0.5)\nclass Att(torch.nn.Module):\n    def __init__(s): super().__init__(); s.q=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.k=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.v=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.Wo=P(4,4)\n    def forward(s,xq,xkv,causal=False):\n        outs=[]\n        for h in range(2):\n            Q=xq@s.q[h];K=xkv@s.k[h];Vv=xkv@s.v[h];S=Q@K.T/math.sqrt(2)\n            if causal: S=S.masked_fill(torch.triu(torch.ones_like(S),1).bool(),-1e9)\n            outs.append(torch.softmax(S,-1)@Vv)\n        return torch.cat(outs,-1)@s.Wo\nclass FF(torch.nn.Module):\n    def __init__(s): super().__init__(); s.W1=P(4,8); s.b1=torch.nn.Parameter(torch.zeros(8)); s.W2=P(8,4); s.b2=torch.nn.Parameter(torch.zeros(4))\n    def forward(s,x): return torch.relu(x@s.W1+s.b1)@s.W2+s.b2\nLN=lambda x:(x-x.mean(-1,keepdim=True))/torch.sqrt(x.var(-1,unbiased=False,keepdim=True)+1e-5)\nclass M(torch.nn.Module):\n    def __init__(s):\n        super().__init__(); s.E=P(10,4); s.ea=torch.nn.ModuleList([Att(),Att()]); s.ef=torch.nn.ModuleList([FF(),FF()])\n        s.ds=torch.nn.ModuleList([Att(),Att()]); s.dc=torch.nn.ModuleList([Att(),Att()]); s.df=torch.nn.ModuleList([FF(),FF()]); s.Wout=P(4,10)\n    def forward(s,src,tgt):\n        x=s.E[src]+PE(len(src))\n        for a,f in zip(s.ea,s.ef): x=LN(x+a(x,x)); x=LN(x+f(x))\n        y=s.E[tgt]+PE(len(tgt))\n        for a,c,f in zip(s.ds,s.dc,s.df): y=LN(y+a(y,y,True)); y=LN(y+c(y,x)); y=LN(y+f(y))\n        lg=y@s.Wout; lg=lg.clone(); lg[:,0]=-1e9; lg[:,1]=-1e9; return lg\nm=M(); opt=torch.optim.Adam(m.parameters(),lr=0.02,weight_decay=0)\nmain=[ix[w] for w in [\"the\",\"cat\",\"sat\",\"on\"]]\ndef batch_loss():\n    L=0\n    for s in corpus:\n        ids=[ix[w] for w in s]; L=L+torch.nn.functional.cross_entropy(m(torch.tensor(ids),torch.tensor([1]+ids[:3])),torch.tensor(ids))\n    return L/len(corpus)\ndef preds():\n    with torch.no_grad(): return m(torch.tensor(main),torch.tensor([1]+main[:3])).argmax(-1).tolist()\ncurve=[];snaps=[];STEPS=1500\nfor st in range(STEPS+1):\n    L=batch_loss()\n    if st%25==0: curve.append([st,round(L.item(),3)])\n    if st in (0,30,80,200,STEPS): snaps.append({\"step\":st,\"loss\":round(L.item(),3),\"pred\":[V[i] for i in preds()]})\n    if st<STEPS: opt.zero_grad(); L.backward(); opt.step()\nprint(snaps)\nr2=lambda t:[[round(float(v),2) for v in row] for row in t.detach()] if t.dim()==2 else [round(float(v),2) for v in t.detach()]\natt=lambda a:{\"heads\":[{\"q\":r2(a.q[h]),\"k\":r2(a.k[h]),\"v\":r2(a.v[h])} for h in range(2)],\"Wo\":r2(a.Wo)}\nff=lambda f:{\"W1\":r2(f.W1),\"b1\":r2(f.b1),\"W2\":r2(f.W2),\"b2\":r2(f.b2)}\nout={\"E\":r2(m.E),\"encP\":[{\"att\":att(a),\"ff\":ff(f)} for a,f in zip(m.ea,m.ef)],\"decP\":[{\"self\":att(a),\"cross\":att(c),\"ff\":ff(f)} for a,c,f in zip(m.ds,m.dc,m.df)],\"Wout\":r2(m.Wout),\"curve\":curve,\"snaps\":snaps,\"corpus\":[\" \".join(s) for s in corpus],\"steps\":STEPS}\njson.dump(out,open(\"trained.json\",\"w\"))\n";
@@ -2141,14 +2222,14 @@ DEEP["6b"]=()=>{let qi=2,ki=1,m=2,n=1;const th=1;
     info.innerHTML=`query '${TOK4[qi]}' at m = ${m} turns ${m} rad · key '${TOK4[ki]}' at n = ${n} turns ${n} rad · gap m − n = <b>${m-n}</b> · score q·k = <b>${f(sc)}</b>`;
     const W=300,H=130,ds=Array.from({length:21},(_,i)=>i-10),vals=ds.map(d=>dotp(RQ[qi],ROT(RK[ki],-d*th))),mx=Math.max(...vals.map(Math.abs),.01),xs=d=>20+(d+10)/20*(W-30),ys=v=>H/2-v/mx*(H/2-14);
     chart.innerHTML=`<svg viewBox="0 0 ${W} ${H+14}" class="rchart" role="img" aria-label="Score against gap m minus n"><line x1="20" y1="${H/2}" x2="${W-10}" y2="${H/2}" class="rda"/><line x1="${xs(0)}" y1="6" x2="${xs(0)}" y2="${H-6}" class="rda"/>
-     <polyline points="${ds.map((d,i)=>xs(d)+","+ys(vals[i])).join(" ")}" fill="none" stroke="var(--sc)" stroke-width="2.5"/><circle cx="${xs(Math.max(-10,Math.min(10,m-n)))}" cy="${ys(dotp(RQ[qi],ROT(RK[ki],-(m-n)*th)))}" r="5" fill="var(--att)"/>
+     <path d="${Array.from({length:201},(_,i)=>{const d=-10+i/10;return (i?"L":"M")+xs(d).toFixed(1)+" "+ys(dotp(RQ[qi],ROT(RK[ki],-d*th))).toFixed(1)}).join("")}" fill="none" stroke="var(--sc)" stroke-width="2" opacity=".55"/>${ds.map((d,i)=>`<circle cx="${xs(d)}" cy="${ys(vals[i])}" r="2.8" fill="var(--sc)"/>`).join("")}<circle cx="${xs(Math.max(-10,Math.min(10,m-n)))}" cy="${ys(dotp(RQ[qi],ROT(RK[ki],-(m-n)*th)))}" r="5" fill="var(--att)"/>
      <text x="${W/2}" y="${H+10}" text-anchor="middle" class="gdt">gap m − n (from −10 to +10)</text></svg>`}
   const shift=h("button",{class:"btn pri"},"Move both 5 places later");shift.onclick=()=>{m=Math.min(20,m+5);n=Math.min(20,n+5);sm.s.value=m;sm.b.textContent=m;sn.s.value=n;sn.b.textContent=n;draw()};
   const freq=[0,1,2,3].map(i=>{const t=Math.pow(10000,-2*i/8);return h("div",{class:"rcell"},h("div",{html:ropeDial([{v:[1,0],c:"pos",dash:true},{v:ROT([1,0],4*t),c:"pos"}],{size:90,arc:[0,4*t],aria:`pair ${i}`})}),h("b",{},`pair ${i}`),h("span",{},`θ = ${t<.01?t.toExponential(0):t.toFixed(t<1?3:0)} · at pos 4: ${(4*t).toFixed(t<.01?3:2)} rad`))});
   setTimeout(draw,0);
   return deepWrap("RoPE playground: only the gap matters","Pick a query word and a key word with real numbers, place them anywhere, and watch the score. Dashed arrows are the original Q (green) and K (purple); solid arrows are after rotation. Both are drawn at the same length so you can compare directions; the score also uses their real lengths.",
    h("div",{class:"ctrl"},pick("Query word",qi,v=>qi=v),pick("Key word",ki,v=>ki=v),shift),
-   h("div",{class:"dgrid"},h("div",{},dial,info,sm.el,sn.el),h("div",{},h("div",{class:"dsub"},"Score for every gap m − n (yellow). Red dot = current gap."),chart,
+   h("div",{class:"dgrid"},h("div",{},dial,info,sm.el,sn.el),h("div",{},h("div",{class:"dsub"},"Score for every gap m − n. Dots = whole-number gaps (real word positions); the faint wave between them shows the rotation is smooth. Red dot = current gap."),chart,
      h("p",{class:"note"},"Move both sliders by the same amount: the red dot stays put. That is the relative-position property."))),
    h("div",{class:"dsub"},"Many speeds, like the hands of a clock (example with d = 8, four pairs, all turned to position 4)"),h("div",{class:"rrow"},...freq),
    pts([["Same idea as step 4:","each pair turns at its own speed, from fast to very slow, just like the sine waves in step 4. The speeds use the same 10000 base."],["Where it sits:","inside every attention layer, on Q and K only, after they are made (step 6) and before Q · Kᵀ (step 7). V is never rotated, and nothing is added to the word embeddings."],["No extra weights:","the angles are fixed by position, so nothing new has to be learned."],["A common myth:","RoPE alone does not work far beyond the training length. Models stretched to longer texts use extra methods such as Position Interpolation (Chen et al., 2023) or YaRN (Peng et al., 2023)."],["Used by:","most open large language models today, including the Llama family. This page's tiny model keeps the 2017 sine waves; the numbers here apply the rotation to its real Q and K to show the mechanics."]],"pos"))};
@@ -2204,8 +2285,8 @@ DEEP["16b"]=()=>{let L=6,eps=.1;const mx=LOOP.passes[0].d;
     const stackW=L*LOOP.W,loopW=LOOP.W,mxW=12*LOOP.W;
     cmp.innerHTML="";cmp.append(...[["Stack of "+L+" blocks","weights stored",stackW,mxW,"att"],["Looped, "+L+" passes","weights stored",loopW,mxW,"q"],["Stack of "+L+" blocks","compute (block runs)",L,12,"att"],["Looped, "+L+" passes","compute (block runs)",L,12,"q"]].map(([a,b,v,m,c])=>h("div",{class:"lprow"},h("span",{},h("b",{},a)," · ",b),h("div",{class:"lpbar"},h("i",{style:`width:${v/m*100}%;--c:var(--${c})`}),h("em",{},v.toLocaleString())))));
     const ex=LOOP.passes.findIndex(p=>p.d<eps),W=360,Hh=150,xs=i=>30+i*(W-40)/11,ys=v=>Hh-20-v/mx*(Hh-34);
-    chart.innerHTML=`<svg viewBox="0 0 ${W} ${Hh+14}" class="lpchart" role="img" aria-label="Change per pass, falling towards zero"><line x1="30" y1="${Hh-20}" x2="${W-6}" y2="${Hh-20}" class="rda"/><line x1="30" y1="${ys(eps)}" x2="${W-6}" y2="${ys(eps)}" stroke="var(--sc)" stroke-dasharray="4 3"/><text x="${W-8}" y="${ys(eps)-4}" text-anchor="end" class="gdt">ε</text>
-     <polyline points="${LOOP.passes.map((p,i)=>xs(i)+","+ys(p.d)).join(" ")}" fill="none" stroke="var(--att)" stroke-width="2.5"/>${LOOP.passes.map((p,i)=>`<circle cx="${xs(i)}" cy="${ys(p.d)}" r="${i===ex?6:3.5}" fill="${i===ex?"var(--q)":i<L?"var(--att)":"var(--line)"}"/>`).join("")}
+    chart.innerHTML=`<svg viewBox="0 0 ${W} ${Hh+14}" class="lpchart" role="img" aria-label="Change made by each pass, one bar per pass, falling towards zero"><line x1="30" y1="${Hh-20}" x2="${W-6}" y2="${Hh-20}" class="rda"/><line x1="30" y1="${ys(eps)}" x2="${W-6}" y2="${ys(eps)}" stroke="var(--sc)" stroke-dasharray="4 3"/><text x="${W-8}" y="${ys(eps)-4}" text-anchor="end" class="gdt">ε</text>
+     ${LOOP.passes.map((p,i)=>`<line x1="${xs(i)}" y1="${Hh-20}" x2="${xs(i)}" y2="${ys(p.d)}" stroke="${i<L?"var(--att)":"var(--line)"}" stroke-width="3"/>`).join("")}${LOOP.passes.map((p,i)=>`<circle cx="${xs(i)}" cy="${ys(p.d)}" r="${i===ex?6:3.5}" fill="${i===ex?"var(--q)":i<L?"var(--att)":"var(--line)"}"/>`).join("")}
      <text x="${W/2}" y="${Hh+10}" text-anchor="middle" class="gdt">pass 1 → 12</text></svg>`;
     say.innerHTML=ex<0?`The change never drops below ε, so all ${L} passes run.`:ex+1>L?`With only ${L} passes the change is still above ε; the state would settle at pass <b>${ex+1}</b> (green).`:`With ε = ${eps.toFixed(2)} the model can stop after pass <b>${ex+1}</b> (green): the next pass would change the numbers by less than ε. ${ex+1<L?`That saves ${L-ex-1} of your ${L} passes.`:""}`}
   lsl.oninput=()=>{L=+lsl.value;draw()};esl.oninput=()=>{eps=+esl.value;draw()};setTimeout(draw,0);
@@ -2213,15 +2294,118 @@ DEEP["16b"]=()=>{let L=6,eps=.1;const mx=LOOP.passes[0].d;
    h("div",{class:"dgrid"},h("div",{},h("div",{class:"slrow"},h("label",{},"Depth L"),lsl,lv),cmp),
     h("div",{},h("div",{class:"slrow"},h("label",{},"Exit threshold"),esl,ev),chart,say)),
    pts([["Same idea, three names:","Universal Transformers (Dehghani et al., ICLR 2019) shared one block across depth and let each token decide when to stop (adaptive computation time). Later work calls these looped or recurrent-depth Transformers."],["Why it helps reasoning:","Saunshi et al. (ICLR 2025) show that a few layers looped many times can match much deeper models on reasoning-style tasks; looping works like thinking in hidden numbers instead of in words."],["At scale:","Geiping et al. (NeurIPS 2025) trained a 3.5-billion-weight recurrent-depth model with a small prelude, one looped core block and a coda. Running more loops at test time improved its reasoning scores."],["Trade-offs:","training must backpropagate through every pass, so memory and time grow with L; storing facts still needs weights, so looping helps thinking more than memorising."],["About these numbers:","this page's block was not trained to loop. It still settles to a fixed point after about 9 passes, which shows the mechanics; a trained looped model learns to make each pass useful."]],"q"))};
+// ===== Step 15b: Mixture of Experts · Step 23c: Multi-head Latent Attention · three new tiles for step 24 =====
+// ---------- MoE on the page's real FFN: its 8 hidden units become 4 experts of 2 units each
+const MOE=(()=>{const P=D.encP[0].ff,X=D.B1.n1,NE=4,K=2;
+  const Wr=[[.9,-.4,.2,-.6],[-.3,.8,-.5,.1],[.4,.3,-.9,.5],[-.7,-.2,.6,.8]]; // illustrative router weights [d_model, NE]
+  const expert=(x,e)=>{const cols=[2*e,2*e+1],hdn=cols.map(c=>Math.max(0,x.reduce((s,v,i)=>s+v*P.W1[i][c],0)+P.b1[c]));return [0,1,2,3].map(j=>hdn.reduce((s,v,k)=>s+v*P.W2[cols[k]][j],0))};
+  const rows=X.map(x=>{const logits=[0,1,2,3].map(e=>x.reduce((s,v,i)=>s+v*Wr[i][e],0)),p=softmaxRaw(logits),top=p.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]).slice(0,K),z=top.reduce((s,t)=>s+t[0],0);
+    const gates=top.map(([v,i])=>({e:i,g:v/z})),out=[0,1,2,3].map(j=>R(gates.reduce((s,{e,g})=>s+g*expert(x,e)[j],0)+P.b2[j]));return{x,p,gates,out}});
+  const cnt=o=>Array.isArray(o)?o.reduce((s,v)=>s+cnt(v),0):typeof o==="number"?1:0;
+  const ffnW=cnt(P.W1)+cnt(P.b1)+cnt(P.W2)+cnt(P.b2),perE=(4*2+2+2*4);
+  return{rows,NE,K,Wr,ffnW,perE}})();
+const EXC=["emb","q","k","pos"];
+function moeSvg(){const ty=[50,100,150,200],ey=[40,95,150,205];let s=`<svg viewBox="0 0 640 250" class="moesv" role="img" aria-label="Four tokens, a router, and four experts. Each token is sent to its top two experts; thicker lines mean a bigger gate.">`;
+  MOE.rows.forEach((r,t)=>{r.gates.forEach(({e,g})=>{s+=`<path class="moel" data-b="2" d="M150 ${ty[t]} C 320 ${ty[t]}, 330 ${ey[e]+15}, 470 ${ey[e]+15}" fill="none" stroke="var(--${EXC[e]})" stroke-width="${1.5+g*7}" opacity=".8"/>`})});
+  TOK4.forEach((w,t)=>s+=`<rect x="40" y="${ty[t]-16}" width="110" height="32" rx="8" class="moet"/><text x="95" y="${ty[t]+5}" text-anchor="middle" class="mot b">${w}</text>`);
+  s+=`<rect x="255" y="20" width="90" height="210" rx="12" class="moer"/><text x="300" y="120" text-anchor="middle" class="mot b">router</text><text x="300" y="138" text-anchor="middle" class="mot">picks top ${MOE.K}</text>`;
+  ey.forEach((y,e)=>s+=`<rect x="470" y="${y}" width="130" height="30" rx="8" fill="color-mix(in srgb,var(--${EXC[e]}) 16%,var(--panel))" stroke="var(--${EXC[e]})" stroke-width="1.6"/><text x="535" y="${y+20}" text-anchor="middle" class="mot b">expert ${e+1}</text>`);
+  return s+`<text x="95" y="245" text-anchor="middle" class="mot">tokens</text><text x="535" y="245" text-anchor="middle" class="mot">experts (small FFNs)</text></svg>`}
+scene({id:"15b",t:"Mixture of Experts: many small FFNs, only a few used per word",
+ cap:["A normal FFN (step 15) runs all its weights on every word. Bigger knowledge means more work for every single word.","Mixture of Experts splits the FFN into several smaller experts. A tiny router scores the experts for each word and sends it to the top 2.","Each word now uses only 2 of the 4 experts. The model can hold far more weights in total while the work per word stays small."],
+ why:"Most knowledge is only needed for some words. Routing each word to a few specialists lets a model grow its total knowledge without growing the cost of every word.",
+ track:[["N1 row [1,4]","router: softmax(x · W_r)","4 expert scores"],["4 scores","keep top 2, renormalise","2 gates"],["2 experts","Σ gate × expert(x)","FFN output [1,4]"]],
+ build(c){c.append(h("div",{class:"moewrap",b:1,html:moeSvg()}),
+   FB(3,h("div",{class:"moetab"},h("div",{class:"dsub"},"Router choice for each word (gates add to 100%)"),
+     ...MOE.rows.map((r,t)=>h("div",{class:"moer2"},h("b",{},TOK4[t]),...r.gates.map(({e,g})=>h("span",{class:"chip",style:`--c:var(--${EXC[e]})`},`expert ${e+1} · ${Math.round(g*100)}%`)),h("span",{class:"mono"},`→ ${vec(r.out)}`)))),
+    h("div",{class:"callout",card:"moe"},`The 4 experts hold ${4*MOE.perE} weights between them; each word uses only 2 experts, ${2*MOE.perE} weights (half), plus the small router. Real models go much further: Mixtral 8x7B holds 47 billion weights but uses about 13 billion per word; DeepSeek-V3 holds 671 billion and uses 37 billion.`)))},
+ check:{q:"A model has 8 experts and routes each word to 2. Does it need memory for 2 experts or for 8?",a:"For all 8: every expert must be loaded because any word might need it. The saving is in computation per word, not in memory."}});
+CARDS.moe={t:"Mixture of Experts (MoE)",p:"Replace one big FFN with several smaller experts and a router that sends each word to only the top k of them.",
+ f:"g = softmax(x · W<sub>r</sub>)   (one score per expert)<br>keep the top k scores, renormalise them to sum to 1<br>MoE(x) = Σ<sub>i ∈ top-k</sub> g<sub>i</sub> · Expert<sub>i</sub>(x)",
+ i:"x [1, d_model]",o:"router + k of E experts",out:"[1, d_model]",
+ ex:`<p>'the': gates ${MOE.rows[0].gates.map(({e,g})=>`expert ${e+1} ${Math.round(g*100)}%`).join(", ")} → ${vec(MOE.rows[0].out)}.</p><p>The experts here are the page's real FFN cut into 4 slices of 2 hidden units; the router weights are illustrative.</p>`,
+ x:"Without experts, adding knowledge means a bigger FFN, and every word pays for all of it.",go:"15b"};
+MATHKEY["15b"]="moe";
+WHERE["15b"]=[["x","one word's row after attention and LayerNorm"],["W_r","router weights [d_model, E]: one column per expert"],["E, k","number of experts, and how many each word uses"],["g_i","gate: how much expert i's answer counts"],["Expert_i","a small FFN of its own"]];
+WHY["15b"]=["Routing each word to a few experts lets total knowledge grow while the work per word stays small.","Every extra bit of knowledge would make every word slower to process.",`Example: 'the' goes to ${MOE.rows[0].gates.map(({e})=>"expert "+(e+1)).join(" and ")}.`];
+ANALOGY["15b"]="A school has many specialist tutors. A receptionist reads each student's question and sends it to the two tutors best suited to answer. The school can hire many tutors, but each question only takes two tutors' time.";
+DEEP["15b"]=()=>{let E=8,K=2,S=1;const es=h("input",{type:"range",min:2,max:256,step:1,value:E,"aria-label":"Number of experts"}),ks=h("input",{type:"range",min:1,max:8,step:1,value:K,"aria-label":"Experts per word"});
+  const ev=h("b",{}),kv=h("b",{}),bars=h("div",{class:"lpcmp"}),say=h("p",{class:"geosay"});
+  const draw=()=>{K=Math.min(K,E);ks.value=K;ev.textContent=E+" experts";kv.textContent="top "+K;const tot=E*S,act=K*S,mx=256;
+    bars.innerHTML="";bars.append(...[["Weights stored (memory)",tot,"att"],["Weights used per word (compute)",act,"q"]].map(([a,v,c])=>h("div",{class:"lprow"},h("span",{},h("b",{},a)),h("div",{class:"lpbar"},h("i",{style:`width:${Math.max(.6,v/mx*100)}%;--c:var(--${c})`}),h("em",{},`${v} expert-size units`)))));
+    say.innerHTML=`Only <b>${(act/tot*100).toFixed(act/tot<.1?1:0)}%</b> of the expert weights work on each word. Memory still holds all ${E} experts.`};
+  es.oninput=()=>{E=+es.value;draw()};ks.oninput=()=>{K=+ks.value;draw()};setTimeout(draw,0);
+  const pre=(t,e,k)=>{const b=h("button",{class:"btn"},t);b.onclick=()=>{E=e;K=k;es.value=e;draw()};return b};
+  return deepWrap("Total weights versus active weights","Move the sliders: more experts add knowledge (memory) without adding work per word, as long as each word still uses only a few.",
+   h("div",{class:"dgrid"},h("div",{},h("div",{class:"slrow"},h("label",{},"Experts E"),es,ev),h("div",{class:"slrow"},h("label",{},"Used per word k"),ks,kv),h("div",{class:"ctrl"},pre("Switch (1 of many)",64,1),pre("Mixtral (2 of 8)",8,2),pre("DeepSeek-V3 (8 of 256)",256,8)),bars,say),
+    h("div",{},pts([["Load balancing:","a router may send almost every word to the same favourite experts. Training adds a balancing rule so all experts get used; DeepSeek-V3 does it by nudging a per-expert bias instead of an extra loss."],["Shared expert:","DeepSeek-V3 also keeps one expert that every word always uses, for common knowledge, next to 256 routed ones."],["Memory is not saved:","all experts sit in memory, so MoE models need large GPUs even though each word is cheap."],["History:","sparsely gated experts (Shazeer et al., 2017) → Switch Transformers, one expert per word (2021) → Mixtral and DeepSeek."]],"emb"))))};
+
+// ---------- MLA: cache one small latent per token instead of every head's K and V
+const MLA=(()=>{const Wd=[[.5,-.2],[.1,.6],[-.4,.3],[.2,.4]]; // illustrative down-projection [d_model 4 → latent 2]
+  const c=D.X.map(x=>[0,1].map(j=>R(x.reduce((s,v,i)=>s+v*Wd[i][j],0))));return{Wd,c}})();
+const cacheNums=(kind,cfg)=>kind==="mha"?2*cfg.h*cfg.dh:kind==="gqa"?2*cfg.g*cfg.dh:cfg.dc+cfg.dr;
+scene({id:"23c",t:"Multi-head Latent Attention: zip the notes before storing them",
+ cap:["The problem. While writing, the model keeps every earlier word's keys and values (step 23b). Each word adds a big bundle to this cache, and long chats fill the GPU.","The idea. Before storing a word, squeeze it into a small summary (the latent). When attention needs keys and values, unzip them from the summary.","The payoff. The cache stores small summaries instead of big bundles: here 2 numbers per word instead of 8, and about 57 times fewer in large models."],
+ why:"Long conversations run out of cache memory long before they run out of weights. Storing a small summary per word lets the same GPU handle much longer texts.",
+ track:[["word x [1,4]","squeeze: x · W_down","summary c [1,2], stored"],["summary c","unzip: c · W_up","K and V for each head"],["cache","small summaries only","4× less memory here"]],
+ build(c){const H=D.B1.m.heads,bundle=t=>[...H[0].K[t],...H[1].K[t],...H[0].V[t],...H[1].V[t]];
+  const cells=(arr,cl)=>h("div",{class:"mlcells"},...arr.map(v=>h("span",{class:"mlac c-"+cl},f(v))));
+  // 1 · the problem: a shelf that grows by 8 numbers per word
+  const prob=h("div",{class:"mlbox",b:1},h("div",{class:"mlhd"},h("span",{class:"mln"},"1"),h("b",{},"The problem: the cache grows by a big bundle for every word")),
+   h("div",{class:"mlshelf",id:"mlshelfA"},...TOK4.map((w,t)=>h("div",{class:"mlitem"},h("span",{class:"mlw"},w),cells(bundle(t),"k")))),
+   h("p",{class:"note"},"Each word stores 8 numbers: keys and values for each of the 2 heads. Real models store tens of thousands per word, in every layer."));
+  // 2 · the idea: squeeze into a summary, unzip when needed
+  const sx=D.X[0],sc=MLA.c[0];
+  const idea=h("div",{class:"mlbox",b:2},h("div",{class:"mlhd"},h("span",{class:"mln"},"2"),h("b",{},"The idea: store a small summary, unzip it when needed")),
+   h("div",{class:"mlflow"},
+    h("div",{class:"mlstage"},h("span",{class:"mlcap"},"word 'the'"),cells(sx,"emb")),
+    h("div",{class:"mlarrow"},h("span",{},"squeeze"),h("i",{class:"funnel"}),h("small",{},"× W_down")),
+    h("div",{class:"mlstage mlstore"},h("span",{class:"mlcap"},"summary c (stored)"),cells(sc,"v"),h("small",{},"only this goes in the cache")),
+    h("div",{class:"mlarrow"},h("span",{},"unzip"),h("i",{class:"funnel rev"}),h("small",{},"× W_up")),
+    h("div",{class:"mlstage"},h("span",{class:"mlcap"},"keys and values for both heads"),cells(bundle(0),"k"),h("small",{},"rebuilt only when attention reads it")))),
+  // 3 · the payoff: two shelves side by side
+  pay=h("div",{class:"mlbox",b:3},h("div",{class:"mlhd"},h("span",{class:"mln"},"3"),h("b",{},"The payoff: the same 4 words, two caches")),
+   h("div",{class:"mlpay"},
+    h("div",{},h("div",{class:"dsub"},"Standard cache · 32 numbers"),h("div",{class:"mlbar"},h("i",{style:"width:100%;--c:var(--k)"}))),
+    h("div",{},h("div",{class:"dsub"},"MLA cache · 8 numbers"),h("div",{class:"mlbar"},h("i",{style:"width:25%;--c:var(--v)"})),h("div",{class:"mlshelf small"},...TOK4.map((w,t)=>h("div",{class:"mlitem"},h("span",{class:"mlw"},w),cells(MLA.c[t],"v")))))),
+   h("div",{class:"callout",card:"mla"},"In a large model with 128 heads of size 128, each word needs 2 × 128 × 128 = 32,768 cached numbers per layer. DeepSeek's MLA stores 512 + 64 = 576: about 57× fewer. The summary numbers here use an illustrative squeeze matrix, because the tiny model was not trained with MLA."));
+  c.append(h("div",{class:"mlwrap"},prob,idea,pay))},
+ async on2(x){const st=document.querySelector("#sec-23c .stage");if(!st)return;const items=[...st.querySelectorAll("#mlshelfA .mlitem")];items.forEach(i=>i.style.opacity=.15);for(const i of items){i.style.opacity=1;if(!await x.wait(260))return}},
+ check:{q:"MLA stores less per word. Why doesn't the model lose the information attention needs?",a:"Because the squeeze and unzip matrices are learned during training, so the model learns to pack what attention needs into the small summary."}});
+CARDS.mla={t:"Multi-head Latent Attention (MLA)",p:"Cache one small latent vector per word and rebuild every head's keys and values from it.",
+ f:"c = x · W<sub>down</sub>   (cached, size d<sub>c</sub>)<br>K<sub>h</sub> = c · W<sub>up,K,h</sub>,   V<sub>h</sub> = c · W<sub>up,V,h</sub><br>cache per word: d<sub>c</sub> (+ a small RoPE key)  instead of  2 × heads × d<sub>head</sub>",
+ i:"x [1, d_model]",o:"down-project, cache, up-project",out:"K, V per head",
+ ex:`<p>'the': x = ${vec(D.X[0])} → c = ${vec(MLA.c[0])} (2 numbers cached).</p><p>Standard cache for 'the': 8 numbers (2 heads × K and V × 2).</p>`,
+ x:"Without it, the KV cache grows with heads × head size × words, and long contexts run out of GPU memory.",go:"23c"};
+MATHKEY["23c"]="mla";
+WHERE["23c"]=[["x","the word's row"],["W_down","learned matrix that squeezes x into the latent"],["c","the latent: the only thing cached per word"],["W_up,K,h, W_up,V,h","learned matrices that rebuild head h's key and value"],["d_c","latent size; 512 in DeepSeek-V2 and V3"]];
+WHY["23c"]=["Caching one small latent per word cuts the KV cache many times over, so longer contexts fit in memory.","Long chats would run out of GPU memory, or each GPU would serve fewer users.","Example: 32,768 numbers per word per layer shrink to 576 in a DeepSeek-style setup."];
+ANALOGY["23c"]="Packing for a long trip: instead of carrying every outfit as it is, you vacuum-pack each one into a small flat bag. The suitcase holds many more outfits, and you puff each one back out when you need to wear it.";
+DEEP["23c"]=()=>{let T=4096;const cfg={h:128,dh:128,g:8,dc:512,dr:64},L=60,bytes=2;
+  const ts=h("input",{type:"range",min:1,max:128,step:1,value:32,"aria-label":"Context length in thousands of tokens"}),tv=h("b",{}),bars=h("div",{class:"lpcmp"});
+  const draw=()=>{T=+ts.value*1024;tv.textContent=(+ts.value)+"k tokens";const rows=[["Multi-head (every head)","mha","att"],["Grouped-query (8 groups)","gqa","k"],["MLA (latent 512 + RoPE 64)","mla","q"]],gb=k=>cacheNums(k,cfg)*L*T*bytes/1e9,mx=gb("mha");
+    bars.innerHTML="";bars.append(...rows.map(([n,k,c])=>h("div",{class:"lprow"},h("span",{},h("b",{},n)," · ",cacheNums(k,cfg).toLocaleString()," numbers per word per layer"),h("div",{class:"lpbar"},h("i",{style:`width:${Math.max(.5,gb(k)/mx*100)}%;--c:var(--${c})`}),h("em",{},gb(k).toFixed(gb(k)<10?1:0)+" GB")))))};
+  ts.oninput=draw;setTimeout(draw,0);
+  return deepWrap("How much memory the cache needs","An illustrative large model: 60 layers, 128 heads of size 128, numbers stored in 16-bit. Slide the context length and compare the three ways of caching.",
+   h("div",{class:"dgrid"},h("div",{},h("div",{class:"slrow"},h("label",{},"Context length"),ts,tv),bars),
+    h("div",{},pts([["Grouped-query (step 24 tile):","several query heads share one K/V head, so fewer K and V are stored."],["MLA goes further:","all heads share one learned latent, rebuilt into per-head K and V."],["The RoPE detail:","rotation (step 6b) does not survive the squeeze, so MLA keeps a small extra key of 64 numbers that carries the position."],["Speed trick:","the up-projection can be merged into the query and output matrices, so the full K and V never need to be built in memory."],["Source:","DeepSeek-V2 (2024) introduced MLA; DeepSeek-V3 (2024) uses it with Mixture of Experts (step 15b)."]],"k"))))};
+
+// ---------- three new tiles for step 24
+LATER.push(["hybrid","Hybrid attention","later improvement",["--sc",10,"--sc",10,"--att",34,"--sc",10,"--sc",10,"--att",34]],
+ ["specdec","Speculative decoding","later improvement",["--ink3",14,"--ink3",14,"--ink3",14,"--q",30]],
+ ["mtp","Multi-token prediction","later improvement",["--out",30,"--out",22,"--out",14]]);
+CARDS.hybrid={t:"Hybrid attention · later improvement",p:"Most layers use cheap attention (a sliding window of nearby words, or a linear-time variant); every few layers one full-attention layer sees everything.",f:"cost of full attention ∝ n²;  window of w words ∝ n · w;  linear attention ∝ n",i:"long sequence",o:"mostly cheap layers + a few full ones",out:"same shapes",ex:"<p>Qwen3-Next mixes three linear-attention layers (Gated DeltaNet) with one gated full-attention layer.</p><p>Sliding windows were used earlier, for example in Longformer and Mistral 7B.</p>",x:"With only full attention, cost grows with length × length, so very long texts become slow and expensive.",go:"24"};
+CARDS.specdec={t:"Speculative decoding · later improvement",p:"A small fast draft model guesses several next words; the big model checks them all in one parallel pass and keeps the ones it agrees with.",f:"draft k tokens → big model scores all k at once → accept the agreeing prefix, resample the first disagreement",i:"prompt",o:"draft + verify",out:"same text, fewer slow steps",ex:"<p>If 3 of 4 drafted words are accepted, one big-model pass produced 4 words instead of 1.</p><p>Leviathan et al. (ICML 2023) proved the output distribution is exactly the big model's.</p>",x:"Without it, the big model must run once per word, which is slow for long answers.",go:"23"};
+CARDS.mtp={t:"Multi-token prediction · later improvement",p:"During training the model also predicts the 2nd and 3rd next words, not just the next one, giving it a richer learning signal.",f:"L = L(next word) + λ · Σ L(word t+2, t+3, …)",i:"positions 1…n",o:"extra prediction heads",out:"several targets per position",ex:"<p>Gloeckle et al. (ICML 2024) found it helps larger models, especially on code.</p><p>DeepSeek-V3 trains with it, and the extra heads can also draft words for speculative decoding.</p>",x:"Training on the next word only gives one small signal per position.",go:"24"};
 // ===== Flow engine: every step on one page, top to bottom =====
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,speed=RM?0:1;
-const ACC={"0":"tok","1":"sc","2":"tok","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","16":"out","16b":"q","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","24":"tok"};
-const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","16":"encoder × N","16b":"looped block","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","24":"later changes"};
+const ACC={"0":"tok","1":"sc","2":"tok","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","15b":"q","16":"out","16b":"q","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","23c":"k","24":"tok"};
+const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","15b":"mixture of experts","16":"encoder × N","16b":"looped block","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","23c":"latent attention","24":"later changes"};
 const PARTS=[["1","From text to numbers","Words become rows of numbers that know their position.",["0","1","2","3","4","5"]],
  ["2","Attention","Each token decides whom to listen to, then listens.",["6","6b","7","8","9a","9b","10","11","12"]],
- ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","16","16b"]],
+ ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","15b","16","16b"]],
  ["4","Decoder and the full model","Write the output one token at a time while reading the input.",["17","18","19","20","21"]],
- ["5","Learning and using it","Train every position at once, then generate in a loop.",["22","22b","22c","22d","23","23b","24"]]];
+ ["5","Learning and using it","Train every position at once, then generate in a loop.",["22","22b","22c","22d","23","23b","23c","24"]]];
 const byId=Object.fromEntries(SC.map(s=>[s.id,s]));const secs={};
 function stopStep(id){const sec=secs[id];if(!sec)return;sec.tok++;sec.playing=false;if(sec.play)sec.play.textContent="▶ Play this step";playSec(id,true)}let litSym=null,cardKey=null,curId="0";
 // one colour per part for navigation; the 10-colour code stays inside the pictures
@@ -2628,7 +2812,7 @@ window.onAnswered=(id,chk)=>{if(chk.querySelector(".selfq"))return;const mk=(t,v
   const row=h("div",{class:"selfq"},h("span",{},"Did you know it?"),mk("✓ I knew it",1,"yes"),mk("✗ Not yet",0,"no"));if(id in quiz)row.querySelectorAll("button")[quiz[id]?0:1].classList.add("on");chk.querySelector(".ans").after(row)};
 qbtn.onclick=()=>{const f=document.querySelector(".finale");f&&f.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})};
 // ---------- glossary
-const G=[["Token","A piece of text (word, part of a word or byte) the model reads.","2"],["Vocabulary","The fixed list of all tokens the model knows. Ours has 10.","2"],["Token id","The row number of a token in the vocabulary. A label, not a meaning.","2"],
+const G=[["Weight (parameter)","One learned number inside the model, like a dial. Training turns the dials. Inference only reads them. Real models have billions.","W"],["Model","The full set of weights plus the fixed recipe for using them. Here, the recipe is the Transformer.","W"],["Neural network","Layers of weights. Numbers go in, get multiplied by the weights and added up, and an answer comes out.","W"],["Vector","A list of numbers. Each word becomes one vector so the computer can work with it.","W"],["Matrix","A table of numbers, rows and columns. A stack of word vectors, or a table of weights.","W"],["Transpose (ᵀ)","Flipping a matrix so its rows become columns. Kᵀ lets every query meet every key in one multiplication.","7"],["Layer / block","One repeated unit of the model. A Transformer stacks the same kind of block many times, each with its own weights.","16"],["Hidden state","A word's vector partway through the model, after some blocks have updated it.","16"],["Large language model (LLM)","A very large decoder-only Transformer trained to predict the next token on huge amounts of text.","20"],["Pretraining","The first, longest training stage. The model learns general language by predicting the next token on huge text collections.","22"],["Fine-tuning","Further training of a pretrained model on a smaller, focused dataset so it does one job well.","22d"],["Context window","The most tokens the model can look at at once. Anything beyond it is not seen.","23"],["Prompt","The text you give the model at inference time. It is the start of the sequence the model continues.","23"],["Epoch","One full pass over all the training examples.","22"],["Overfitting","When a model memorises its training examples instead of learning the pattern, so it does worse on new inputs.","22"],["Token","A piece of text (word, part of a word or byte) the model reads.","2"],["Vocabulary","The fixed list of all tokens the model knows. Ours has 10.","2"],["Token id","The row number of a token in the vocabulary. A label, not a meaning.","2"],
 ["Embedding (E)","A learned table that turns each id into a row of d_model numbers. Shape [vocab, d_model].","3"],["d_model","How many numbers describe each token. 4 here, 512 in the 2017 paper.","3"],
 ["Positional encoding (PE)","Sine and cosine patterns added to each token so the model knows word order.","4"],["RoPE","Rotary position embedding: turns each query and key by an angle set by its position, so attention scores depend on the distance between words. Used by most LLMs today.","6b"],
 ["X","The input matrix: one row per token, token meaning plus position. Shape [seq, d_model].","5"],["Batch","Several sentences processed together. Adds a first dimension: [batch, seq, d_model].","5"],
@@ -2647,13 +2831,13 @@ const G=[["Token","A piece of text (word, part of a word or byte) the model read
 ["Greedy decoding","Always pick the most likely next token.","21"],["Sampling / temperature / top-k","Pick randomly by probability; temperature flattens or sharpens; top-k keeps only the k best.","21"],
 ["Teacher forcing","Training trick: feed the true previous tokens and predict every next token at once.","22"],["Cross-entropy loss","−log of the probability given to the true next token. Lower is better.","22"],
 ["Gradient","The direction to nudge each weight so the loss goes down.","22"],["Backpropagation","Sends the error backwards through the model with the chain rule, giving every weight its gradient.","22b"],["Gradient descent","Repeatedly move each weight a small step downhill on the loss.","22b"],
-["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Looped Transformer","Runs the hidden state through one shared block again and again. Depth becomes the number of passes, chosen at run time, instead of the number of different layers.","16b"],["Universal Transformer","A 2018 design that shares one block across depth and lets each token decide when to stop looping.","16b"],["Adaptive computation","Stopping the loop early when a pass barely changes the hidden state, so easy inputs use fewer passes.","16b"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2"],["Inference","Using the trained model: predict one token, append it, repeat.","23"],
-["KV cache","Stores past keys and values so each new token only computes its own.","23b"],["Grouped-query attention","Several query heads share one key/value head, shrinking the cache.","24"],["Mixture of experts","Many FFNs; a router sends each token to only a few.","24"]];
+["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Mixture of Experts (MoE)","Many small FFNs (experts) in one block; a router sends each word to only the top few, so total weights grow but work per word does not.","15b"],["Router","The tiny layer in an MoE block that scores the experts for each word and picks the top k.","15b"],["Multi-head Latent Attention (MLA)","Caches one small learned latent per word and rebuilds every head's keys and values from it, shrinking the KV cache.","23c"],["Speculative decoding","A small draft model guesses several words; the big model checks them in one pass and keeps the ones it agrees with.","24"],["Multi-token prediction","Training the model to predict the next few words, not just the next one.","24"],["Hybrid attention","Mixing cheap attention layers (sliding window or linear) with a few full-attention layers to handle long texts.","24"],["Looped Transformer","Runs the hidden state through one shared block again and again. Depth becomes the number of passes, chosen at run time, instead of the number of different layers.","16b"],["Universal Transformer","A 2018 design that shares one block across depth and lets each token decide when to stop looping.","16b"],["Adaptive computation","Stopping the loop early when a pass barely changes the hidden state, so easy inputs use fewer passes.","16b"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2"],["Inference","Using a model after training. The weights are frozen and the model only computes answers for new inputs. For a Transformer this means predicting one token, appending it, and repeating.","23"],["Training","The learning phase. The model sees examples with known answers and gradient descent adjusts its weights to make its predictions less wrong.","22"],
+["KV cache","Stores past keys and values so each new token only computes its own.","23b"],["Grouped-query attention","Several query heads share one key/value head, shrinking the cache.","24"]];
 const gp=h("div",{class:"gloss",id:"gloss",role:"dialog","aria-label":"Glossary"});const gi=h("input",{type:"search",placeholder:"Search terms, e.g. softmax, mask, cache",id:"gsearch","aria-label":"Search glossary"}),gl=h("div",{class:"glist"});
 const gclose=h("button",{class:"btn"},"✕ Close");gclose.onclick=()=>gp.classList.remove("open");
 gp.append(h("div",{class:"ghead"},h("b",{},"📖 Glossary"),gclose),gi,gl);document.body.append(gp);
 function drawG(){const q=gi.value.trim().toLowerCase();gl.innerHTML="";const rows=G.filter(([t,d])=>!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q));
-  rows.forEach(([t,d,id])=>gl.append(h("div",{class:"gi"},h("b",{},t),h("p",{},d),h("a",{href:"#sec-"+id,class:"glink",style:`--c:${acc(id)}`},"step "+id+" →"))));if(!rows.length)gl.append(h("p",{class:"note"},"No match. Try a shorter word."))}
+  rows.forEach(([t,d,id])=>gl.append(h("div",{class:"gi"},h("b",{},t),h("p",{},d),id==="W"?h("a",{href:"#ch-W",class:"glink"},"warm-up →"):h("a",{href:"#sec-"+id,class:"glink",style:`--c:${acc(id)}`},"step "+id+" →"))));if(!rows.length)gl.append(h("p",{class:"note"},"No match. Try a shorter word."))}
 gi.addEventListener("input",drawG);gl.addEventListener("click",e=>{if(e.target.closest(".glink")&&innerWidth<900)gp.classList.remove("open")});
 $("glossbtn").onclick=()=>{gp.classList.toggle("open");drawG();if(gp.classList.contains("open"))setTimeout(()=>gi.focus(),50)};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")gp.classList.remove("open")});
@@ -2732,6 +2916,10 @@ window.CORE=["0","2","3","4","5","6","7","10","11","13","21","22"];
   const top=document.querySelector(".dhtop");top&&top.append(mk("dh"));
   const map=$("map");map&&map.prepend(h("div",{class:"corebar"},mk("mp"),h("span",{class:"note"},"New to the topic? The core path keeps the 12 steps you need for the big idea and folds the advanced ones away. Every step can still be opened.")));
   let saved=false;try{saved=localStorage.getItem("tbb_"+KEY)==="1"}catch(e){}set(saved)})();
+// ---------- "builds on" strip for advanced steps, so a newcomer knows what to read first
+(function(){const PRE={"6b":["4","6"],"9a":["7"],"9b":["9a"],"12":["11"],"14":["13"],"15b":["15"],"16b":["16"],"22b":["22"],"22c":["22b"],"22d":["22"],"23b":["6","23"],"23c":["6","23b"],"24":["16","23b"]};
+  Object.entries(PRE).forEach(([id,req])=>{const sec=$("sec-"+id),st=sec&&sec.querySelector(".story");if(!st)return;
+    st.before(h("div",{class:"prereq"},h("b",{},"Builds on: "),...req.flatMap((r,i)=>[i?" and ":"",h("a",{href:"#sec-"+r},`step ${r} (${SHORT[r]})`)]),h("span",{}," · new to this? read those first.")))})})();
 // ===== For Master's students: ablation lab, reproduce, research map, question builder, roadmap =====
 (function(){
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -2835,6 +3023,105 @@ const sec=h("section",{class:"papers",id:"research"},h("div",{class:"phead"},h("
   lab,h("div",{class:"rgrid"},repro,rq),map,road);
 const put=()=>{const pp=$("papers");if(!pp)return setTimeout(put,200);pp.parentNode.insertBefore(sec,pp.nextSibling);
   const j=document.querySelector(".cta-jump");if(j&&!j.querySelector('[href="#research"]'))j.append(h("a",{href:"#research"},h("i",{style:"--c:var(--k)"}),"For researchers"))};put();
+})();
+// ===== For complete beginners: warm-up chapter, neural network in one picture, part recaps, first-visit guide =====
+(function(){
+
+// taste match: why the dot product
+function TASTE(){const items=["pizza","football","music"],you=[2,-1,1];let fr=[2,-2,1];const out=h("div",{class:"wtaste"}),sl=items.map((t,i)=>{const s=h("input",{type:"range",min:-2,max:2,step:1,value:fr[i],"aria-label":"Friend rating for "+t});s.oninput=()=>{fr[i]=+s.value;draw()};return s});
+  function draw(){const prods=you.map((v,i)=>v*fr[i]),tot=prods.reduce((a,b)=>a+b,0),lab=tot>=4?"very similar taste":tot>=1?"a bit similar":tot>=-1?"unrelated":"opposite taste";
+    out.innerHTML="";out.append(h("table",{class:"mt dt"},h("tr",{},h("th",{},""),...items.map(t=>h("th",{},t))),h("tr",{},h("td",{},"You"),...you.map(v=>h("td",{class:"mono"},v))),
+      h("tr",{},h("td",{},"Friend (drag)"),...sl.map(s=>h("td",{},s,h("span",{class:"mono"}," "+s.value)))),h("tr",{},h("td",{},"multiply"),...prods.map(v=>h("td",{class:"mono"},v)))),
+     h("p",{class:"geosay"},`Add them: ${prods.join(" + ").replace(/\+ -/g,"− ")} = `,h("b",{},tot)," → ",h("b",{},lab)))}
+  draw();return h("div",{class:"wtastebox"},h("div",{class:"dsub"},"How well does your friend's taste match yours?"),out)}
+const plain=(pw,ex,why)=>h("div",{class:"wplain"},h("div",{},h("span",{class:"wpl"},"In plain words"),h("p",{},pw)),h("div",{},h("span",{class:"wpl"},"Everyday example"),h("p",{},ex)),h("div",{},h("span",{class:"wpl"},"Why the Transformer needs it"),h("p",{},why)));
+const card=(n,title,pl,used,...kids)=>h("div",{class:"wcard"},h("div",{class:"wch"},h("span",{class:"wn"},n),h("div",{},h("b",{},title))),pl,...kids,used?h("p",{class:"wused"},"Used in ",...used.flatMap(([id,t],i)=>[i?", ":"",h("a",{href:"#sec-"+id},`step ${id} (${t})`)])):null);
+const wait=ms=>new Promise(r=>setTimeout(r,reduceMotion()?0:ms));
+
+// ---------- 0 · a neural network in one picture: dials that learn (taxi fare)
+const RIDES=[[2,20,14],[8,10,21],[5,4,12]];let w=[.5,.5],steps=0,busy=false;
+const dials=h("div",{class:"nndials"}),rides=h("div",{class:"nnrides"}),err=h("p",{class:"geosay"});
+const loss=()=>RIDES.reduce((s,[a,b,y])=>s+(w[0]*a+w[1]*b-y)**2,0)/RIDES.length;
+function drawNN(){dials.innerHTML="";dials.append(...[["$ per km",w[0],"emb"],["$ per minute",w[1],"q"]].map(([t,v,c])=>h("div",{class:"nndial",style:`--c:var(--${c})`},h("div",{class:"nnknob",style:`--a:${Math.min(1,v/2.5)*270-135}deg`},h("i",{})),h("b",{},v.toFixed(2)),h("span",{},"weight: "+t))));
+  rides.innerHTML="";rides.append(...RIDES.map(([a,b,y],i)=>{const p=w[0]*a+w[1]*b,mx=26;return h("div",{class:"nnride"},h("span",{class:"nnl"},`Ride ${i+1}: ${a} km, ${b} min`),
+    h("div",{class:"nnbar"},h("i",{class:"pred",style:`width:${Math.min(100,p/mx*100)}%`}),h("i",{class:"true",style:`left:${y/mx*100}%`})),h("span",{class:"nnv"},`guess $${p.toFixed(1)} · true $${y}`))}));
+  err.innerHTML=`After <b>${steps}</b> learning steps the average error² is <b>${loss().toFixed(2)}</b>. ${loss()<.05?"The dials have found the real prices, $2 per km and $0.50 per minute.":"Press Learn. Each step turns both dials a little in the direction that makes the guesses less wrong."}`}
+const learn=async n=>{if(busy)return;busy=true;for(let k=0;k<n;k++){let g=[0,0];RIDES.forEach(([a,b,y])=>{const e=w[0]*a+w[1]*b-y;g[0]+=2*e*a/3;g[1]+=2*e*b/3});w=[w[0]-.004*g[0],w[1]-.004*g[1]];steps++;drawNN();await wait(120)}busy=false};
+const b1=h("button",{class:"btn pri"},"Learn 1 step"),b10=h("button",{class:"btn"},"Learn 10 steps"),br=h("button",{class:"btn"},"Reset dials");
+b1.onclick=()=>learn(1);b10.onclick=()=>learn(10);br.onclick=()=>{w=[.5,.5];steps=0;drawNN()};drawNN();
+const nn=card("1","What is a neural network? A machine with dials",plain("Numbers go in, each is multiplied by a dial (called a weight), the results are added up, and an answer comes out. Training means turning the dials until the answers are right.","A taxi fare: fare = (price per km × km) + (price per minute × minutes). The two prices are the dials. Below, the machine does not know them yet; press Learn and watch it find them from three past rides.","A Transformer is exactly this, with millions or billions of dials arranged so it can read words."),[["22","training"],["22c","gradient descent"]],
+  h("div",{class:"nnpic",html:`<svg viewBox="0 0 520 120" role="img" aria-label="Inputs km and minutes multiplied by two weights and added to give a fare"><g font-family="inherit" font-size="13"><rect x="10" y="15" width="110" height="34" rx="8" class="nnbox"/><text x="65" y="37" text-anchor="middle">km</text><rect x="10" y="70" width="110" height="34" rx="8" class="nnbox"/><text x="65" y="92" text-anchor="middle">minutes</text>
+   <line x1="120" y1="32" x2="290" y2="60" class="nnln"/><line x1="120" y1="87" x2="290" y2="60" class="nnln"/><text x="200" y="36" text-anchor="middle" class="nnw">× weight 1</text><text x="200" y="98" text-anchor="middle" class="nnw">× weight 2</text>
+   <circle cx="310" cy="60" r="22" class="nnsum"/><text x="310" y="66" text-anchor="middle" font-size="20">+</text><line x1="332" y1="60" x2="400" y2="60" class="nnln"/><rect x="400" y="42" width="110" height="36" rx="8" class="nnbox out"/><text x="455" y="65" text-anchor="middle">fare ($)</text></g></svg>`}),
+  h("div",{class:"dgrid"},h("div",{},dials,h("div",{class:"ctrl"},b1,b10,br)),h("div",{},rides,err)),
+  h("p",{class:"note"},"Every number you will see later on this page is either an input, a dial, or the result of multiplying and adding them."));
+
+// ---------- 1 · a vector is a list of numbers
+const vcard=card("2","A vector: a word written as a list of numbers",plain("A vector is just a short list of numbers. Computers cannot read words, so each word is stored as one.","A student's report card [maths 8, art 3, sport 6, music 9]. Four numbers describe the student; similar students have similar lists.","Every word on this page becomes 4 numbers (real models use thousands). All the later steps work on these lists."),[["3","embedding"],["5","the input matrix"]],
+  h("div",{class:"wvec"},...["the","cat","sat"].map(wd=>{const v=D.E[VOCAB.indexOf(wd)];return h("div",{class:"wvrow"},h("b",{},wd),h("span",{class:"mono"},vec(v)),signBars(v,"emb","",["1","2","3","4"]))})),
+  h("p",{class:"note"},"A tall bar is a big number, a bar below the line is negative. A matrix is simply several of these lists stacked as rows."));
+
+// ---------- 2 · dot product: multiply matching numbers, then add
+const qv=D.h.Q[0],kv=D.h.K[1];const dpRows=h("div",{class:"wdp"}),dpSum=h("div",{class:"wdps"});
+const drawDP=k=>{dpRows.innerHTML="";let s=0;qv.forEach((a,i)=>{const on=i<k;if(on)s+=a*kv[i];dpRows.append(h("div",{class:"wdpr"+(i===k-1?" hot":"")},h("span",{class:"wa"},f(a)),h("span",{},"×"),h("span",{class:"wb"},f(kv[i])),h("span",{},"="),h("b",{},on?f(a*kv[i]):"?")))});
+  dpSum.innerHTML=k>=qv.length?`Add them: <b>${f(R(qv[0]*kv[0]+qv[1]*kv[1]))}</b>. A big positive number means the two lists point the same way: a good match.`:"Press play to multiply each matching pair, then add."};
+const dpb=h("button",{class:"btn pri"},"▶ Play the dot product");dpb.onclick=async()=>{for(let k=0;k<=qv.length;k++){drawDP(k);await wait(700)}};drawDP(0);
+const dcard=card("3","The dot product: one number that says how well two lists match",plain("Multiply the matching numbers of two lists, then add the results. The result is one number. It is big and positive when the lists agree, near zero when they are unrelated, negative when they disagree.","Two friends rate pizza, football and music from −2 to 2. Multiply their ratings item by item and add. A high total means similar taste. Try it below.","Attention must answer, for every pair of words, 'how related are you two?' It needs one number for that, quickly, millions of times. The dot product is the simplest way to get it."),[["7","match scores"]],TASTE(),h("div",{class:"dsub"},"Now the same sum with this page's real numbers, the query of 'the' and the key of 'cat'"),
+  h("div",{class:"wdpwrap"},h("div",{},h("span",{class:"wtag q"},"query of 'the'"),h("span",{class:"mono"},vec(qv))),h("div",{},h("span",{class:"wtag k"},"key of 'cat'"),h("span",{class:"mono"},vec(kv)))),dpRows,dpSum,h("div",{class:"ctrl"},dpb));
+
+// ---------- 3 · a row times a matrix: one dot product per column
+const xr=D.X[0],Wq=D.Wq,mmOut=h("div",{class:"wmmo"});let mmk=-1;
+const mmTab=h("div",{class:"wmm"});
+const drawMM=()=>{mmTab.innerHTML="";const tbl=h("table",{class:"mt dt wmt"},h("tr",{},h("th",{},"x row"),h("th",{},""),h("th",{class:mmk===0?"hc":""},"W column 1"),h("th",{class:mmk===1?"hc":""},"W column 2")),
+   ...xr.map((v,i)=>h("tr",{},h("td",{class:"mono"},f(v)),h("td",{},"×"),...[0,1].map(j=>h("td",{class:"mono"+(mmk===j?" hc":"")},f(Wq[i][j]))))));mmTab.append(tbl);
+  const o=[0,1].map(j=>R(xr.reduce((s,v,i)=>s+v*Wq[i][j],0)));mmOut.innerHTML=`Result: <b class="mono">[${o.map((v,j)=>j<=mmk?f(v):"?").join(", ")}]</b> ${mmk>=0&&mmk<2?`· column ${mmk+1}: ${xr.map((v,i)=>`${f(v)}×${f(Wq[i][mmk])}`).join(" + ")} = <b>${f(o[mmk])}</b>`:""}`};
+const mmb=h("button",{class:"btn pri"},"▶ Play row × matrix");mmb.onclick=async()=>{for(mmk=0;mmk<2;mmk++){drawMM();await wait(1600)}mmk=1;drawMM()};drawMM();
+const mcard=card("4","A row times a matrix: many dot products at once",plain("A matrix is a table of dials. To multiply a word's list by it, do one dot product with each column. Each column gives one new number.","A judge scores a dish with two score sheets. Sheet 1 cares about taste and price, sheet 2 about looks and size. The same dish gives a different score on each sheet.","This is how each word gets its question (Q), label (K) and content (V). The same word list, multiplied by three different tables of dials."),[["6","Q, K, V"],["15","feed-forward"]],
+  h("div",{class:"wmmwrap"},mmTab,mmOut),h("div",{class:"ctrl"},mmb));
+
+// ---------- 4 · e to the power x: always positive, grows fast
+const exs=h("input",{type:"range",min:-3,max:3,step:.1,value:1,"aria-label":"x"}),exOut=h("div",{class:"wex"});
+const drawEX=()=>{const x=+exs.value;exOut.innerHTML="";exOut.append(h("p",{},`x = ${x.toFixed(1)}  →  eˣ = `,h("b",{},Math.exp(x).toFixed(2))),
+  h("div",{class:"wexbars"},...[-2,-1,0,1,2].map(v=>h("div",{class:"wexb"+(Math.abs(v-x)<.05?" on":"")},h("i",{style:`height:${Math.exp(v)/Math.exp(3)*110+2}px`}),h("em",{},Math.exp(v).toFixed(2)),h("span",{},"x="+v)))))};
+exs.oninput=drawEX;drawEX();
+const ecard=card("5","eˣ: turns any score into a positive number",plain("e is a fixed number, about 2.72. eˣ means e multiplied by itself x times. It is never negative, and each step up in x makes the result about 2.7 times bigger.","Like a savings account that grows by the same factor every year. Small differences in years become big differences in money.","Scores from the dot product can be negative. Softmax uses eˣ to make them all positive, then divides by their total so they become shares that add to 100%."),[["10","softmax"]],
+  h("div",{class:"slrow"},h("label",{},"Choose x"),exs),exOut,h("p",{class:"note"},"Notice: x = −2 still gives a small positive number (0.14), and each step up multiplies the result by about 2.7."));
+
+
+// training vs inference
+const ik=h("input",{type:"number",min:0,max:50,value:6,"aria-label":"km"}),im=h("input",{type:"number",min:0,max:90,value:12,"aria-label":"minutes"}),io=h("p",{class:"geosay"});
+const drawInf=()=>{const km=+ik.value||0,mi=+im.value||0,fare=w[0]*km+w[1]*mi;io.innerHTML=`Predicted fare: <b>$${fare.toFixed(2)}</b> (= ${w[0].toFixed(2)} × ${km} + ${w[1].toFixed(2)} × ${mi}). ${steps<15?"The dials are not trained yet, so this guess is poor. Press Learn in card 1 first.":"The dials stay fixed, so nothing is learned from this ride."}`};
+ik.oninput=drawInf;im.oninput=drawInf;setInterval(()=>{if(document.activeElement!==ik&&document.activeElement!==im)drawInf()},700);drawInf();
+const icard=card("6","Training versus inference: learning the dials, then using them",plain("Training is the learning phase. The model sees examples with the right answers and turns its dials. Inference is the using phase. The dials are frozen and the model simply computes answers for new inputs.","A student studies with past exam papers and their answers (training), then sits the real exam and just answers (inference). No more studying happens during the exam.","Training a big Transformer happens once and costs weeks of computing. Every time you chat with one, that is inference, a forward pass through fixed dials, one word at a time."),[["22","training"],["23","inference"]],
+  h("div",{class:"winf"},h("div",{class:"wphase t"},h("b",{},"Training"),h("span",{},"examples + right answers → dials change"),h("small",{},"card 1: press Learn")),h("div",{class:"wphase i"},h("b",{},"Inference"),h("span",{},"new input → fixed dials → answer"),h("small",{},"try it here"))),
+  h("div",{class:"ctrl"},h("label",{class:"rpick"},"New ride: km ",ik),h("label",{class:"rpick"},"minutes ",im)),io);
+const sec=h("section",{class:"chap",id:"ch-W"},h("div",{class:"chead"},h("span",{class:"cn"},"✦"),h("div",{},h("h2",{},"Before you start: six ideas, explained simply"),h("p",{},"No background needed. Each card explains one idea in plain words, gives an everyday example, and lets you try it. Then it says why the Transformer needs it. About two minutes each."))),
+  h("div",{class:"wgrid2"},nn,vcard,dcard,mcard,ecard,icard));
+const A=$("ch-A");A&&A.parentNode.insertBefore(sec,A);
+const j=document.querySelector(".cta-jump");if(j)j.insertBefore(h("a",{href:"#ch-W"},h("i",{style:"--c:var(--sc)"}),"Maths warm-up"),j.children[1]);
+
+// ---------- warm-up links inside the steps that use the maths
+const USE={"3":"2","5":"2","6":"4","7":"3","10":"5","15":"4","22":"1","23":"6"};
+Object.entries(USE).forEach(([id,cn])=>{const st=document.querySelector(`#sec-${id} .story`);if(!st)return;const names=["","a neural network","vectors","the dot product","row × matrix","eˣ","training vs inference"];
+  st.before(h("div",{class:"prereq warm"},h("b",{},(cn==="6"||cn==="1")?"Idea used here: ":"Maths used here: "),h("a",{href:"#ch-W"},names[+cn]),h("span",{},(+cn===6?" · new to the word? see":" · new to it? see")+" warm-up card "+cn+".")))});
+
+// ---------- recap at the end of every part
+const RECAP=[["Text becomes numbers","Words → token ids → rows of learned numbers (embeddings) → plus position → one matrix X with a row per word.","Why must position be added?","Attention reads all words at once, so without position 'dog bites man' and 'man bites dog' would look identical."],
+ ["Attention","Each word asks a question (Q), offers a label (K) and carries content (V). Scores = Q · Kᵀ, scaled, masked and turned into shares by softmax; then the values are mixed by those shares.","What does a big score between 'sat' and 'cat' mean?","'sat' will take a large share of 'cat''s value: it listens to 'cat'."],
+ ["The encoder block","One block = attention + shortcut + LayerNorm + a small feed-forward network. Stack N blocks and each word's row absorbs more context.","Why keep the shortcut (residual)?","It keeps the original information and lets learning signals flow through many stacked blocks."],
+ ["Decoder and the full model","The decoder writes one word at a time: it looks back at its own words (with a mask), reads the input (cross-attention), and turns its last row into probabilities for the next word.","Why can't the decoder look at future words?","When writing, they do not exist yet. Training hides them so it practises under the same conditions."],
+ ["Learning and using it","Training compares predictions with the right words (the loss); backpropagation finds every weight's slope; gradient descent turns the dials. Using the model means: predict a word, add it, repeat.","What changes during training, and what changes during use?","Training changes the weights. Using the model changes only the text; the weights stay fixed."]];
+PARTS.forEach(([n,t,d,ids],i)=>{const last=$("sec-"+ids[ids.length-1]);if(!last||!RECAP[i])return;const anchor=$("cn-"+ids[ids.length-1])||last;const [rt,rs,q,a]=RECAP[i];
+  const ans=h("p",{class:"rcans",hidden:true},a),btn=h("button",{class:"btn"},"Show answer");btn.onclick=()=>{ans.hidden=!ans.hidden;btn.textContent=ans.hidden?"Show answer":"Hide answer"};
+  anchor.after(h("div",{class:"recap",style:`--c:${acc(ids[0])}`},h("div",{class:"rch"},h("span",{class:"rcn"},"✓"),h("b",{},`End of part ${n}: ${rt}`)),h("p",{},h("b",{},"In one sentence: "),rs),h("div",{class:"rcq"},h("b",{},"Check yourself: "),q," ",btn),ans))});
+
+// ---------- first visit: offer the beginner set-up
+let seen=false;try{seen=localStorage.getItem("tbb_welcomed")==="1"}catch(e){}
+if(!seen){const bar=h("div",{class:"welcome",role:"region","aria-label":"Getting started"},h("div",{},h("b",{},"New to Transformers? "),"We suggest: the maths warm-up first, then Beginner mode and the 12-step core path. You can switch back any time."),
+  h("div",{class:"ctrl"},(()=>{const b=h("button",{class:"btn pri"},"Set me up as a beginner");b.onclick=()=>{const lb=document.querySelector('#lvlseg button[data-lvl="beginner"]');lb&&lb.click();const cb=document.querySelector(".corebtn");if(cb&&!document.body.classList.contains("core"))cb.click();close();$("ch-W").scrollIntoView({behavior:"smooth"})};return b})(),
+   (()=>{const b=h("button",{class:"btn"},"I know the basics");b.onclick=close;return b})()));
+  function close(){bar.remove();try{localStorage.setItem("tbb_welcomed","1")}catch(e){}}
+  const hero=document.querySelector(".hero");hero&&hero.after(bar)}
 })();
 // ===== Play the whole model: auto-tour of every step =====
 (function(){

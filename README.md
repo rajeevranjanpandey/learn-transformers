@@ -40,12 +40,15 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 - 🟢 **Beginner**: Focuses on high-level intuition, classroom analogies, and visual tensor flow. Formulas are hidden.
 - 🟡 **Standard**: The balanced sweet spot. Combines conceptual explanation, interactive step animation, and key tensor shapes.
 - 🔴 **Expert**: Unfolds deep-dive mathematical panels (`∑ The math`), explicit vector coordinates, symbol definitions, and research trivia.
+- ✦ **Maths & ML Warm-Up (Chapter W)**: 6 foundational interactive cards (neural network dials & learning, vectors, dot products & alignment, matrix multiplication, $e^x$, training vs. inference) for complete newcomers before Step 0.
 
 ### 3. Interactive Playgrounds
 - **Attention as Arrows (Step 7)**: Drag the green Query arrow in real time to witness dot-product projections, scaled softmax re-weighting, and chained value vector additions live.
 - **The Attention Formula Hand Calculation (Chapter E)**: Deconstructs the core $\text{Attention}(Q, K, V) = \text{softmax}(Q \times K^T / \sqrt{d_k}) \times V$ equation piece by piece with explicit matrix multiplication operations, annotated tensor meanings, and calculator-verifiable numbers.
 - **RoPE Rotary Playground (Step 6b)**: Interactive dials displaying pairwise 2D vector rotations for queries and keys across position gaps $m - n$, demonstrating why dot products only depend on relative token distance.
+- **Mixture of Experts Playground (Step 15b)**: Interactive router gating tokens to top-$k$ experts with an active vs. total parameter scaling slider (from 2 up to 256 experts).
 - **Looped Transformer & Adaptive Depth Playground (Step 16b)**: Experiment with iterative state refinement ($h_{k+1} = B(h_k)$), convergence delta tracking across passes, and dynamic exit thresholds ($\epsilon$).
+- **Multi-head Latent Attention (MLA) Playground (Step 23c)**: 3-stage visual explanation of low-rank KV compression and a context-length memory calculator (up to 128k tokens).
 - **Attention on Real Sentences (Chapter F)**: Switch context endings ("tired" vs. "wide") to observe how ambiguous pronouns (*"it"*) alter their attention distribution between subjects.
 - **Gradient Descent Playground (Step 22c)**: Drop optimization marbles across loss landscapes to visualize learning rate overshoot, momentum escape, and local minima traps.
 - **In-Browser Ablation Lab**: Systematically toggle Positional Encoding, Cross-Attention, or Feed-Forward networks to quantify exact performance drops on trained data.
@@ -67,7 +70,7 @@ python3 -m http.server 8080
 
 ## 📚 What Is Covered? (Step-by-Step Architecture)
 
-The course is organized into five structured progression parts spanning **32 visual modules**:
+The course is organized into five structured progression parts spanning **34 visual modules**:
 
 ### Part 1: From Text to Numbers
 - **Step 0: The Job** — Sequence-to-sequence mapping and why token order alters semantic meaning.
@@ -91,6 +94,7 @@ The course is organized into five structured progression parts spanning **32 vis
 - **Step 13: Residual Addition ($X + MHA$)** — Gradient expressways enabling deep signal propagation.
 - **Step 14: Layer Normalization ($LN$)** — Per-token mean-centering and variance stabilization (Post-LN vs. Pre-LN).
 - **Step 15: Position-wise Feed-Forward Network ($FFN$)** — Channel expansion ($d_{\text{ff}}$), ReLU / SwiGLU gating, and projection.
+- **Step 15b: Mixture of Experts (MoE)** — Dividing feed-forward capacity across specialized experts with dynamic top-$k$ routing.
 - **Step 16: Full Encoder Stack ($\times N$)** — Multi-layer hierarchical feature refinement.
 - **Step 16b: Looped Transformer (Recurrent Depth)** — Reusing a single shared block $B(h)$ across dynamic refinement iterations; depth becomes compute at runtime.
 
@@ -108,7 +112,8 @@ The course is organized into five structured progression parts spanning **32 vis
 - **Step 22d: Chat Tuning & Alignment (SFT & RLHF/DPO)** — Transforming web-text completion into assistant behavior.
 - **Step 23: Autoregressive Inference Loop** — Sequential token generation and stopping conditions.
 - **Step 23b: KV Cache Optimization** — Eliminating $O(n^2)$ computational redundancy during token generation.
-- **Step 24: Modern Innovations** — RMSNorm, RoPE, Grouped-Query Attention (GQA), and Mixture of Experts (MoE).
+- **Step 23c: Multi-head Latent Attention (MLA)** — Low-rank key/value compression caching a shared latent vector ($d_c$) to compress the KV footprint by up to 57×.
+- **Step 24: Modern Innovations** — RMSNorm, RoPE, Grouped-Query Attention (GQA), Mixture of Experts (MoE), Hybrid Attention, Speculative Decoding, and Multi-Token Prediction (MTP).
 
 ---
 
