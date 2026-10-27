@@ -9,6 +9,10 @@
 
 ---
 
+<p align="center">
+  <img src="assets/preview.png" alt="Transformer, Block by Block — Visual Interactive Course" width="100%" />
+</p>
+
 ## 🌟 What Is This Project?
 
 **Transformer, Block by Block** is an interactive, browser-native educational platform and reference implementation designed to demystify modern Artificial Intelligence. 
@@ -47,6 +51,10 @@ Use the bottom toolbar to calibrate mathematical density to your background:
 - **The Attention Formula Hand Calculation (Chapter E)**: Deconstructs the core $\text{Attention}(Q, K, V) = \text{softmax}(Q \times K^T / \sqrt{d_k}) \times V$ equation piece by piece with explicit matrix multiplication operations, annotated tensor meanings, and calculator-verifiable numbers.
 - **Vector Magnitude & Cosine Similarity (Chapter W)**: Rotate and scale 2D vectors $a$ and $b$ live to visualize how cosine similarity measures directional alignment independently of arrow length.
 - **RoPE Rotary Playground (Step 6b)**: Interactive dials displaying pairwise 2D vector rotations for queries and keys across position gaps $m - n$, demonstrating why dot products only depend on relative token distance.
+- **BPE Subword Tokenizer Playground (Step 2b)**: Step-by-step pair frequency merges and cost comparison across whole words, BPE, and character tokens.
+- **Context Length & $n^2$ Scaling Calculator (Step 12b)**: Compare attention compute vs. FFN matrix FLOPs across token lengths and visualize FlashAttention tiling.
+- **Parameter Counter & Architecture Sizer (Step 16c)**: Dial custom $d_{\text{model}}$, layer depths, and vocabulary sizes to compute exact weight allocations, FLOPs, and Chinchilla training budgets.
+- **GPU VRAM & Quantization Planner (Step 23d)**: Interactive memory estimator across FP16, INT8, and 4-bit precision including KV cache sizing across batch and context dimensions.
 - **Mixture of Experts Playground (Step 15b)**: Interactive router gating tokens to top-$k$ experts with an active vs. total parameter scaling slider (from 2 up to 256 experts).
 - **Looped Transformer & Adaptive Depth Playground (Step 16b)**: Experiment with iterative state refinement ($h_{k+1} = B(h_k)$), convergence delta tracking across passes, and dynamic exit thresholds ($\epsilon$).
 - **Multi-head Latent Attention (MLA) Playground (Step 23c)**: 3-stage visual explanation of low-rank KV compression and a context-length memory calculator (up to 128k tokens).
@@ -71,12 +79,13 @@ python3 -m http.server 8080
 
 ## 📚 What Is Covered? (Step-by-Step Architecture)
 
-The course is organized into five structured progression parts spanning **34 visual modules**:
+The course is organized into five structured progression parts spanning **38 visual modules**:
 
 ### Part 1: From Text to Numbers
 - **Step 0: The Job** — Sequence-to-sequence mapping and why token order alters semantic meaning.
 - **Step 1: Why Not Only Recurrence?** — Sequential RNN bottleneck vs. $O(1)$ parallel access.
 - **Step 2: Tokens & Vocabulary** — Subword segmentation, byte fallbacks, and discrete token ID lookups.
+- **Step 2b: Byte Pair Encoding (BPE)** — Frequency-driven subword merging, vocabulary sizing, and out-of-vocabulary elimination.
 - **Step 3: Embeddings ($E$)** — Transforming discrete IDs into continuous metric manifolds.
 - **Step 4: Positional Encoding ($PE$)** — Injecting order through multi-frequency sinusoidal waves and rotary position (RoPE).
 - **Step 5: The Input Matrix ($X$)** — Stacking batch and sequence tensors into unified computing matrices.
@@ -90,6 +99,7 @@ The course is organized into five structured progression parts spanning **34 vis
 - **Step 10: Softmax Shares ($A$)** — Exponentiation and row-wise normalization into percentage distributions.
 - **Step 11: Mix the Values ($O = AV$)** — Blending communicated content along attention coefficients.
 - **Step 12: Multi-Head Attention ($MHA$)** — Parallel representation subspaces merged via $W_o$.
+- **Step 12b: Context Length ($n^2$) & FlashAttention** — Quadratic attention bottleneck, FlashAttention tile streaming, and sliding windows.
 
 ### Part 3: The Encoder Block
 - **Step 13: Residual Addition ($X + MHA$)** — Gradient expressways enabling deep signal propagation.
@@ -98,6 +108,7 @@ The course is organized into five structured progression parts spanning **34 vis
 - **Step 15b: Mixture of Experts (MoE)** — Dividing feed-forward capacity across specialized experts with dynamic top-$k$ routing.
 - **Step 16: Full Encoder Stack ($\times N$)** — Multi-layer hierarchical feature refinement.
 - **Step 16b: Looped Transformer (Recurrent Depth)** — Reusing a single shared block $B(h)$ across dynamic refinement iterations; depth becomes compute at runtime.
+- **Step 16c: Counting Weights ($N$)** — Explicit parameter accounting ($12Ld^2 + Vd$), compute FLOPs per token, and Chinchilla budgets.
 
 ### Part 4: The Decoder & Full Model
 - **Step 17: Masked Decoder Self-Attention** — Strict autoregressive past-token conditioning.
@@ -114,6 +125,7 @@ The course is organized into five structured progression parts spanning **34 vis
 - **Step 23: Autoregressive Inference Loop** — Sequential token generation and stopping conditions.
 - **Step 23b: KV Cache Optimization** — Eliminating $O(n^2)$ computational redundancy during token generation.
 - **Step 23c: Multi-head Latent Attention (MLA)** — Low-rank key/value compression caching a shared latent vector ($d_c$) to compress the KV footprint by up to 57×.
+- **Step 23d: Fitting on a GPU (VRAM & Quantization)** — Precision economics (FP32, BF16, INT8, 4-bit) and dynamic KV cache memory budgets.
 - **Step 24: Modern Innovations** — RMSNorm, RoPE, Grouped-Query Attention (GQA), Mixture of Experts (MoE), Hybrid Attention, Speculative Decoding, and Multi-Token Prediction (MTP).
 
 ---

@@ -1,16 +1,6 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Transformer, Block by Block — Interactive Deep Learning Architecture Guide</title>
-<meta name="description" content="An interactive visual course explaining the Transformer neural network architecture from zero to GPT and BERT. Interactive Q/K/V attention, tensor math, and step-by-step visualizations.">
-<meta name="keywords" content="Transformer, Attention Mechanism, Self-Attention, Deep Learning, Neural Networks, GPT, BERT, LLM, Machine Learning, AI Education, Natural Language Processing, RoPE, Looped Transformer, Recurrent Depth, Mixture of Experts, MoE, Multi-head Latent Attention, MLA, Cosine Similarity">
-<meta name="author" content="Rajeev Pandey">
-<meta property="og:title" content="Transformer, Block by Block — Interactive Deep Learning Architecture Guide">
-<meta property="og:description" content="Visual, interactive deep dive into modern Transformer architecture. Every step computed in real numbers with pictures first.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rajeevranjanpandey.github.io/learn-transformers/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Transformer, Block by Block">
-<meta name="twitter:description" content="Interactive visual guide from zero to GPT and BERT with real numbers and tensor dimensions.">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="An interactive, step-by-step walkthrough of the Transformer with real numbers from a tiny trained model.">
+<title>Transformer, Block by Block</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;600&display=swap">
 </head><body>
@@ -998,6 +988,42 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 .wcosout{font-family:var(--mono,monospace);font-size:.82em;line-height:1.7;margin-top:6px;overflow-wrap:anywhere}
 .wcosbox input[type=range]{width:110px;vertical-align:middle}
 @media(max-width:1100px){.wcosbox{grid-template-columns:minmax(0,1fr)}.wcos{max-width:320px}}
+
+.bperow{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:6px 0}
+.bpew{display:inline-flex;gap:2px;align-items:center;margin-right:6px}
+.bpep{font-family:var(--fm,monospace);font-size:.85em;padding:2px 6px;border-radius:5px;background:color-mix(in srgb,var(--c) 16%,var(--panel));border:1px solid color-mix(in srgb,var(--c) 55%,transparent)}
+.bpet td{vertical-align:middle}.bpet td .bpew{margin:2px 6px 2px 0}
+.bpescroll{overflow-x:auto;max-width:100%}
+.bpenew{display:flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.bpein{width:140px;padding:4px 8px;font:inherit;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:inherit}
+.bpeout{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 12px}
+.bpebars{display:grid;gap:6px;margin:8px 0}
+.bpebar{display:grid;grid-template-columns:130px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.9em}
+.bpebar>div{background:var(--panel2);border-radius:4px;height:14px;overflow:hidden}.bpebar i{display:block;height:100%}
+@media(max-width:600px){.bpebar{grid-template-columns:minmax(0,1fr)}.bpebar b{font-size:.85em}}
+.bpet th,.bpet td{text-align:left!important;padding:4px 10px!important;white-space:nowrap}
+.bpet td:last-child{white-space:normal}
+.bpet .bpew{margin-right:14px}
+.bpecorp .callout,.stage .bperow+.callout{max-width:none}
+.bpescroll .bpet{min-width:640px}.bpet td:last-child{white-space:nowrap}
+
+.sgrids{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin:6px 0}
+.sgcell{display:flex;flex-direction:column;align-items:center;gap:4px;max-width:200px;text-align:center;font-size:.88em}
+.sgcell span{color:var(--ink2)}.sgrid{width:150px;height:auto}
+.sbars{display:grid;gap:6px;margin:8px 0}
+.sbar{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.9em}
+.sbar>div{background:var(--panel2);border-radius:4px;height:14px;overflow:hidden}.sbar i{display:block;height:100%;opacity:.85}
+.sstack{display:flex;border-radius:8px;overflow:hidden;font-size:.85em;color:#fff;font-weight:600}
+.sstack i{font-style:normal;padding:10px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sgpu{font-size:.85em;color:var(--ink2)}
+.sfit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0}
+.sfit>div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:.88em}
+.sfit .ok{border-left:4px solid var(--q)}.sfit .no{border-left:4px solid var(--att)}
+@media(max-width:600px){.sbar{grid-template-columns:minmax(0,1fr)}.sfit{grid-template-columns:minmax(0,1fr)}.sstack{flex-direction:column}.sstack i{flex:none!important}}
+.flow>.sbars,.flow>.sgpu,.flow>.sgrids{flex:1 1 100%;width:100%;min-width:0}.stage .sbars{width:100%}
+.sblock{width:100%;display:flex;flex-direction:column;gap:6px}
+.sblock{display:block}.sblock>*{flex:none;margin-bottom:6px}.sbars{height:auto!important;min-height:min-content}
+@media(max-width:600px){.sbar{grid-template-columns:minmax(0,1fr) auto;row-gap:3px}.sbar>div{grid-column:1/-1;grid-row:2}}
 </style>
 <div id="prog"></div>
 <div class="wrap">
@@ -1011,7 +1037,7 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
   <div id="intro"></div>
   <section class="deephero" id="details">
     <div class="dhtop"><div class="dharrow" aria-hidden="true">↓</div><div><div class="dhkick">Part two of the course</div><h2>Now, every step in detail</h2>
-      <p>34 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
+      <p>38 steps in 5 parts, from raw text to the next word, plus classroom questions, a teacher's guide and ten landmark papers. Each step has a picture, a "why we need it" box, a worked example and the math. Pick a part to jump in, or start at step 0.</p></div>
       <a class="btn dhgo" href="#sec-0">Start at step 0 →</a></div>
     <div class="partcards" id="partcards"></div>
   </section>
@@ -1022,7 +1048,7 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 </div>
 <footer><span class="trk" id="trk"></span>
   <span class="seg" id="lvlseg" role="group" aria-label="Detail level"><button data-lvl="beginner">Beginner</button><button data-lvl="standard" aria-pressed="true">Standard</button><button data-lvl="expert">Expert</button></span>
-  <button class="btn" id="quizbtn">Quiz 0/34</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
+  <button class="btn" id="quizbtn">Quiz 0/38</button><button class="btn" id="glossbtn">📖 Glossary</button><button class="btn" id="keybtn">🎨 Colour key</button><button class="btn" id="themebtn" aria-label="Switch between light and dark background">◐ Dark</button><button class="btn" id="printbtn">🖨 Worksheet</button>
   <span class="sizes" title="Switch shapes in steps 16, 19 and 20">Show sizes for <span class="seg"><button id="szTiny" aria-pressed="true">Tiny example</button><button id="szReal" aria-pressed="false">2017 paper</button></span></span></footer>
 <script>
 const TRAIN_PY="import torch, math, json, random\ntorch.manual_seed(3); random.seed(3)\nV=[\"<pad>\",\"<s>\",\"<\/s>\",\"the\",\"cat\",\"sat\",\"on\",\"mat\",\"a\",\"dog\"]; ix={w:i for i,w in enumerate(V)}\ncorpus=[[d,n,\"sat\",\"on\"] for d in [\"the\",\"a\"] for n in [\"cat\",\"dog\",\"mat\"]]\ndef PE(n): return torch.tensor([[math.sin(p),math.cos(p),math.sin(p/100),math.cos(p/100)] for p in range(n)])\nP=lambda *s: torch.nn.Parameter(torch.randn(*s)*0.5)\nclass Att(torch.nn.Module):\n    def __init__(s): super().__init__(); s.q=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.k=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.v=torch.nn.ParameterList([P(4,2) for _ in range(2)]); s.Wo=P(4,4)\n    def forward(s,xq,xkv,causal=False):\n        outs=[]\n        for h in range(2):\n            Q=xq@s.q[h];K=xkv@s.k[h];Vv=xkv@s.v[h];S=Q@K.T/math.sqrt(2)\n            if causal: S=S.masked_fill(torch.triu(torch.ones_like(S),1).bool(),-1e9)\n            outs.append(torch.softmax(S,-1)@Vv)\n        return torch.cat(outs,-1)@s.Wo\nclass FF(torch.nn.Module):\n    def __init__(s): super().__init__(); s.W1=P(4,8); s.b1=torch.nn.Parameter(torch.zeros(8)); s.W2=P(8,4); s.b2=torch.nn.Parameter(torch.zeros(4))\n    def forward(s,x): return torch.relu(x@s.W1+s.b1)@s.W2+s.b2\nLN=lambda x:(x-x.mean(-1,keepdim=True))/torch.sqrt(x.var(-1,unbiased=False,keepdim=True)+1e-5)\nclass M(torch.nn.Module):\n    def __init__(s):\n        super().__init__(); s.E=P(10,4); s.ea=torch.nn.ModuleList([Att(),Att()]); s.ef=torch.nn.ModuleList([FF(),FF()])\n        s.ds=torch.nn.ModuleList([Att(),Att()]); s.dc=torch.nn.ModuleList([Att(),Att()]); s.df=torch.nn.ModuleList([FF(),FF()]); s.Wout=P(4,10)\n    def forward(s,src,tgt):\n        x=s.E[src]+PE(len(src))\n        for a,f in zip(s.ea,s.ef): x=LN(x+a(x,x)); x=LN(x+f(x))\n        y=s.E[tgt]+PE(len(tgt))\n        for a,c,f in zip(s.ds,s.dc,s.df): y=LN(y+a(y,y,True)); y=LN(y+c(y,x)); y=LN(y+f(y))\n        lg=y@s.Wout; lg=lg.clone(); lg[:,0]=-1e9; lg[:,1]=-1e9; return lg\nm=M(); opt=torch.optim.Adam(m.parameters(),lr=0.02,weight_decay=0)\nmain=[ix[w] for w in [\"the\",\"cat\",\"sat\",\"on\"]]\ndef batch_loss():\n    L=0\n    for s in corpus:\n        ids=[ix[w] for w in s]; L=L+torch.nn.functional.cross_entropy(m(torch.tensor(ids),torch.tensor([1]+ids[:3])),torch.tensor(ids))\n    return L/len(corpus)\ndef preds():\n    with torch.no_grad(): return m(torch.tensor(main),torch.tensor([1]+main[:3])).argmax(-1).tolist()\ncurve=[];snaps=[];STEPS=1500\nfor st in range(STEPS+1):\n    L=batch_loss()\n    if st%25==0: curve.append([st,round(L.item(),3)])\n    if st in (0,30,80,200,STEPS): snaps.append({\"step\":st,\"loss\":round(L.item(),3),\"pred\":[V[i] for i in preds()]})\n    if st<STEPS: opt.zero_grad(); L.backward(); opt.step()\nprint(snaps)\nr2=lambda t:[[round(float(v),2) for v in row] for row in t.detach()] if t.dim()==2 else [round(float(v),2) for v in t.detach()]\natt=lambda a:{\"heads\":[{\"q\":r2(a.q[h]),\"k\":r2(a.k[h]),\"v\":r2(a.v[h])} for h in range(2)],\"Wo\":r2(a.Wo)}\nff=lambda f:{\"W1\":r2(f.W1),\"b1\":r2(f.b1),\"W2\":r2(f.W2),\"b2\":r2(f.b2)}\nout={\"E\":r2(m.E),\"encP\":[{\"att\":att(a),\"ff\":ff(f)} for a,f in zip(m.ea,m.ef)],\"decP\":[{\"self\":att(a),\"cross\":att(c),\"ff\":ff(f)} for a,c,f in zip(m.ds,m.dc,m.df)],\"Wout\":r2(m.Wout),\"curve\":curve,\"snaps\":snaps,\"corpus\":[\" \".join(s) for s in corpus],\"steps\":STEPS}\njson.dump(out,open(\"trained.json\",\"w\"))\n";
@@ -2240,6 +2266,196 @@ DEEP["6b"]=()=>{let qi=2,ki=1,m=2,n=1;const th=1;
      h("p",{class:"note"},"Move both sliders by the same amount: the red dot stays put. That is the relative-position property."))),
    h("div",{class:"dsub"},"Many speeds, like the hands of a clock (example with d = 8, four pairs, all turned to position 4)"),h("div",{class:"rrow"},...freq),
    pts([["Same idea as step 4:","each pair turns at its own speed, from fast to very slow, just like the sine waves in step 4. The speeds use the same 10000 base."],["Where it sits:","inside every attention layer, on Q and K only, after they are made (step 6) and before Q · Kᵀ (step 7). V is never rotated, and nothing is added to the word embeddings."],["No extra weights:","the angles are fixed by position, so nothing new has to be learned."],["A common myth:","RoPE alone does not work far beyond the training length. Models stretched to longer texts use extra methods such as Position Interpolation (Chen et al., 2023) or YaRN (Peng et al., 2023)."],["Used by:","most open large language models today, including the Llama family. This page's tiny model keeps the 2017 sine waves; the numbers here apply the rotation to its real Q and K to show the mechanics."]],"pos"))};
+// ===== Step 2b: BPE, why a model does not read whole words =====
+const BPE_C=[["low",5],["lower",2],["newest",6],["widest",3]];
+const bpeApply=(s,a,b)=>{const o=[];for(let i=0;i<s.length;i++){if(i<s.length-1&&s[i]===a&&s[i+1]===b){o.push(a+b);i++}else o.push(s[i])}return o};
+// learn merges for real on the toy corpus (ties: first pair seen wins)
+const BPE=(()=>{let W=BPE_C.map(([w,n])=>[w.split(""),n]);const M=[];
+  for(let k=0;k<8;k++){const cnt=new Map();W.forEach(([s,n])=>{for(let i=0;i<s.length-1;i++){const p=s[i]+"\u0001"+s[i+1];cnt.set(p,(cnt.get(p)||0)+n)}});
+    let best=null,bc=0;cnt.forEach((v,p)=>{if(v>bc){bc=v;best=p}});const [a,b]=best.split("\u0001");W=W.map(([s,n])=>[bpeApply(s,a,b),n]);M.push({a,b,c:bc,after:W.map(([s])=>s.slice())})}
+  return M})();
+const bpeEnc=(w,k=BPE.length)=>{let s=w.toLowerCase().split("");BPE.slice(0,k).forEach(({a,b})=>s=bpeApply(s,a,b));return s};
+console.assert(bpeEnc("lowest").join("|")==="low|est"&&BPE[0].a+BPE[0].b==="es"&&BPE[0].c===9,"BPE toy merges changed");
+const pieces=(arr,c="tok")=>h("span",{class:"bpew"},...arr.map(p=>h("span",{class:"bpep",style:`--c:var(--${c})`},p)));
+
+scene({id:"2b",t:"BPE: why the model does not read whole words",
+ cap:["Why not give every word its own id? Because the list never ends. English alone has hundreds of thousands of word forms, before names, typos, code and other languages. A word missing from the list becomes [UNK] (unknown) and its meaning is lost.",
+  "Byte pair encoding (BPE) learns its own pieces. Start with single letters, count every pair of neighbours in the training text, merge the most frequent pair into one new token, and repeat until the vocabulary is the size you want.",
+  "After training, the same merges are replayed, in the same order, on any new text. A word the model has never seen still splits into pieces it knows, so nothing is unknown."],
+ why:"The vocabulary decides two costs at once. Every entry adds a row to the embedding table and a score the output layer must compute for every new token. Every extra token in a text adds work to attention. BPE keeps both in check.",
+ track:[["training text","count neighbouring pairs","pair counts"],["most frequent pair","merge into one token, repeat","merge list"],["new text","replay the merges in order","subword tokens → ids"]],
+ build(c){
+  const wl=h("div",{class:"bpecorp",b:1},h("div",{class:"dsub"},"Whole-word vocabulary built from a tiny training text (word × how often it appears)"),
+    h("div",{class:"bperow"},...BPE_C.map(([w,n])=>h("span",{class:"bpew"},h("span",{class:"bpep",style:"--c:var(--tok)"},w),h("small",{}," × "+n)))),
+    h("div",{class:"callout",card:"bpe"},"New text 'lowest' → not in the list → ",h("b",{},"[UNK]"),". The model sees nothing useful, even though it knows 'low' and has seen '-est' twice."));
+  const tb=h("table",{class:"mt bpet",b:2},h("tr",{},h("th",{},"merge"),h("th",{},"most frequent pair"),h("th",{},"count"),h("th",{},"training words after the merge")),
+    ...BPE.map((m,i)=>h("tr",{},h("td",{},i+1),h("td",{class:"mono"},`${m.a} + ${m.b} → ${m.a+m.b}`),h("td",{class:"mono"},m.c),h("td",{},...m.after.map(s=>pieces(s))))));
+  const nw=["lowest","newer","wider","slowest"];
+  c.append(wl,h("div",{class:"dsub",b:2},"BPE on the same text. Pair counts are weighted by how often each word appears (e + s sits in 'newest' 6 times and 'widest' 3 times, so 9)."),h("div",{class:"bpescroll",b:2},tb),
+   FB(3,h("div",{class:"bperow"},...nw.map(w=>h("div",{class:"bpenew",card:"bpe"},h("b",{},w),"→",pieces(bpeEnc(w),"emb")))),
+     h("div",{class:"callout"},"None of these four words was in the training text, yet each splits into known pieces. Real tokenizers do this with about 30,000 to 200,000 learned pieces.")))},
+ check:{q:"Why does BPE count 'e + s' 9 times when it appears in only two different words?",a:"Counts are weighted by how often each word occurs. 'newest' appears 6 times and 'widest' 3 times, so the pair e + s is seen 6 + 3 = 9 times."}});
+
+CARDS.bpe={t:"Byte pair encoding (BPE)",p:"Learns subword pieces by repeatedly merging the most frequent neighbouring pair in the training text.",
+ f:"count(a, b) = Σ<sub>words</sub> freq(word) × (times a and b sit side by side)<br>merge the pair with the largest count: (a, b) → ab, vocabulary V grows by 1<br>embedding + output tables: 2 × V × d_model weights · output work per token: V × d_model",
+ i:"text",o:"merge list",out:"subword tokens",
+ ex:`<p>e + s: 'newest' × 6 + 'widest' × 3 = 9, the largest count, so 'es' becomes merge 1.</p><p>After ${BPE.length} merges: lowest → ${bpeEnc("lowest").join(" · ")}, wider → ${bpeEnc("wider").join(" · ")}.</p>`,
+ x:"Without subword pieces, every unseen word would become [UNK], and covering them all would need millions of rows.",go:"2b"};
+MATHKEY["2b"]="bpe";
+WHERE["2b"]=[["freq(word)","how many times the word appears in the training text"],["(a, b)","two neighbouring symbols, letters at first, merged pieces later"],["V","vocabulary size: base symbols plus one entry per merge"],["d_model","numbers per token; each vocabulary entry costs d_model weights in the embedding table and again in the output layer"]];
+WHY["2b"]=["Subword pieces keep the vocabulary small enough to compute with, yet any word can still be written.","With whole words, unseen words become [UNK] and the vocabulary tables grow to millions of rows.",`Example: 'lowest' was never seen, but splits into ${bpeEnc("lowest").join(" + ")}.`];
+ANALOGY["2b"]="A text-message shorthand that grows over time. Friends notice they type 'see you' constantly, so it becomes 'cu'. Each common pair earns its own short symbol, yet you can still spell out any brand-new word letter by letter.";
+
+DEEP["2b"]=()=>{
+ // playground: step through merges and encode any word
+ let k=0;const inp=h("input",{type:"text",value:"lowest",maxlength:24,"aria-label":"Word to split",class:"bpein"}),out=h("div",{class:"bpeout"}),corp=h("div",{class:"bperow"}),msg=h("p",{class:"geosay"});
+ function draw(){corp.innerHTML="";const after=k?BPE[k-1].after:BPE_C.map(([w])=>w.split(""));corp.append(...after.map((s,i)=>h("span",{},pieces(s),h("small",{}," × "+BPE_C[i][1]))));
+  const m=BPE[k];msg.innerHTML=k<BPE.length?`Merges so far: <b>${k}</b>. Next most frequent pair: <b>${m.a} + ${m.b}</b>, seen ${m.c} times.`:`All ${BPE.length} merges learned. Vocabulary = ${new Set(BPE_C.flatMap(([w])=>w.split(""))).size} letters + ${BPE.length} merged pieces.`;
+  const w=(inp.value||"").replace(/[^a-z]/gi,"");out.innerHTML="";out.append(h("span",{},"'"+w+"' → "),pieces(bpeEnc(w,k),"emb"),h("small",{}," "+bpeEnc(w,k).length+" tokens"))}
+ const nx=h("button",{class:"btn pri"},"Learn next merge"),rs=h("button",{class:"btn"},"Start again");nx.onclick=()=>{if(k<BPE.length)k++;draw()};rs.onclick=()=>{k=0;draw()};inp.oninput=draw;
+ // cost calculator
+ const D_=4096,L_=32,OPT=[["Whole words",1e6,1,"att"],["BPE subwords",5e4,1.3,"emb"],["Single characters",256,5.7,"pos"]];
+ const sl=h("input",{type:"range",min:2,max:4,step:.05,value:3,"aria-label":"Text length in words"}),cost=h("div",{});
+ const big=x=>x>=1e12?(x/1e12).toFixed(1)+" trillion":x>=1e9?(x/1e9).toFixed(1)+" billion":x>=1e6?(x/1e6).toFixed(1)+" million":Math.round(x).toLocaleString();
+ function drawCost(){const words=Math.round(10**+sl.value),rows=OPT.map(([t,V,tpw,c])=>{const n=Math.round(words*tpw),tab=2*V*D_,outW=n*V*D_,att=L_*n*n*D_;return{t,V,n,tab,outW,att,tot:outW+att,c}}),mx=Math.max(...rows.map(r=>r.tot));
+  cost.innerHTML="";cost.append(h("p",{class:"geosay"},"A text of ",h("b",{},words.toLocaleString())," words, model width d_model = 4,096, 32 layers."),
+   h("div",{class:"bpescroll"},h("table",{class:"mt bpet"},h("tr",{},h("th",{},"unit"),h("th",{},"vocabulary V"),h("th",{},"tokens n"),h("th",{},"table weights 2·V·d"),h("th",{},"output work n·V·d"),h("th",{},"attention work 32·n²·d")),
+    ...rows.map(r=>h("tr",{},h("td",{},h("b",{},r.t)),h("td",{class:"mono"},big(r.V)),h("td",{class:"mono"},r.n.toLocaleString()),h("td",{class:"mono"},big(r.tab)),h("td",{class:"mono"},big(r.outW)),h("td",{class:"mono"},big(r.att)))))),
+   h("div",{class:"bpebars"},...rows.map(r=>h("div",{class:"bpebar"},h("span",{},r.t),h("div",{},h("i",{style:`width:${Math.max(1,r.tot/mx*100)}%;background:var(--${r.c})`})),h("b",{class:"mono"},big(r.tot)+" multiply-adds")))))}
+ sl.oninput=drawCost;setTimeout(()=>{draw();drawCost()},0);
+ return deepWrap("BPE playground and the cost of each choice","Learn the merges one at a time and type any word to see how it splits. Then compare what whole words, BPE and single characters cost a real-sized model.",
+  h("div",{class:"ctrl"},nx,rs,h("label",{class:"rpick"},"Try a word ",inp)),msg,corp,out,
+  h("div",{class:"dsub"},"Why the size of the vocabulary is a computing problem"),
+  h("div",{class:"slrow"},h("label",{},"Text length (words)"),sl),cost,
+  pts([["Whole words:","few tokens, but a million rows. The output layer must score all of them for every token it writes, so most of the work goes there, and unseen words are still [UNK]."],
+   ["Single characters:","a tiny vocabulary, but about 5.7 tokens per English word (letters plus the space). Attention compares every token with every other, so its work grows with n². Double the tokens and attention costs four times as much, and the same context window holds far fewer words."],
+   ["BPE:","about 1.3 tokens per English word with a 50,000-entry vocabulary. Neither term explodes, which is why nearly every language model uses it or a close relative."],
+   ["Byte-level BPE:","GPT-2 and many later models start from the 256 possible bytes instead of letters, so any text, emoji or script can be written. 'é' is two bytes (0xC3 0xA9) and may become one or two tokens."],
+   ["Honest limits:","these counts include only the vocabulary layers and the attention scores, with typical token-per-word ratios for English. The other layers also grow with n, which makes long character sequences even more costly."]],"tok"))};
+// ===== Steps 12b, 16c, 23d: text length, counting weights, GPU memory =====
+// Published configs (Hugging Face config.json). Biases and norm weights are left out of the counts (well under 1%).
+const MP=[{k:"gpt2",t:"GPT-2 small",d:768,L:12,H:12,KV:12,ff:3072,mats:2,V:50257,tied:true,pos:1024,pub:"124 million"},
+ {k:"l7",t:"Llama 2 7B",d:4096,L:32,H:32,KV:32,ff:11008,mats:3,V:32000,tied:false,pos:0,pub:"7 billion"},
+ {k:"l70",t:"Llama 2 70B",d:8192,L:80,H:64,KV:8,ff:28672,mats:3,V:32000,tied:false,pos:0,pub:"70 billion"}];
+const mpParts=m=>{const hd=m.d/m.H,att=2*m.d*m.d+2*m.d*m.KV*hd,ffn=m.mats*m.d*m.ff,emb=m.V*m.d*(m.tied?1:2)+m.pos*m.d;return{att,ffn,blk:att+ffn,emb,N:m.L*(att+ffn)+emb,hd}};
+const SUP="⁰¹²³⁴⁵⁶⁷⁸⁹";
+const nice=x=>{const a=Math.abs(x);if(a>=1e18){const e=Math.floor(Math.log10(a));return (x/10**e).toFixed(1)+" × 10"+String(e).split("").map(c=>SUP[c]).join("")}return a>=1e15?(x/1e15).toFixed(1)+" quadrillion":a>=1e12?(x/1e12).toFixed(1)+" trillion":a>=1e9?(x/1e9).toFixed(a>=1e10?0:1)+" billion":a>=1e6?(x/1e6).toFixed(a>=1e7?0:1)+" million":Math.round(x).toLocaleString()};
+const gb=b=>b>=1e12?(b/1e12).toFixed(1)+" TB":b>=1e9?(b/1e9).toFixed(b>=1e10?0:1)+" GB":b>=1e6?(b/1e6).toFixed(1)+" MB":Math.round(b/1e3)+" KB";
+console.assert(Math.abs(mpParts(MP[0]).N/1e6-124.3)<.5&&Math.abs(mpParts(MP[1]).N/1e9-6.74)<.02&&Math.abs(mpParts(MP[2]).N/1e9-68.98)<.05,"weight counts drifted from published sizes");
+const TINY_W=(()=>{const c=o=>Array.isArray(o)?o.reduce((s,v)=>s+c(v),0):typeof o==="number"?1:o&&typeof o==="object"?Object.values(o).reduce((s,v)=>s+c(v),0):0;return c([TRAINED.E,TRAINED.encP,TRAINED.decP,TRAINED.Wout])})();
+const barRow=(lab,v,mx,c,txt)=>h("div",{class:"sbar"},h("span",{},lab),h("div",{},h("i",{style:`width:${Math.max(.6,v/mx*100)}%;background:var(--${c})`})),h("b",{class:"mono"},txt));
+
+// ---------------- 12b: how long can the text be?
+const gridSvg=(n,band)=>{const s=Math.min(14,150/n),W=n*s;let o=`<svg viewBox="0 0 ${W} ${W}" class="sgrid" role="img" aria-label="${n} by ${n} score table">`;
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const on=band?(j<=i&&i-j<band):true;o+=`<rect x="${j*s+.5}" y="${i*s+.5}" width="${s-1}" height="${s-1}" rx="${s>6?2:0}" fill="${on?"var(--sc)":"var(--panel2)"}" opacity="${on?.85:1}"/>`}
+  return o+"</svg>"};
+scene({id:"12b",t:"How long can the text be? Attention grows with n²",
+ cap:["Attention compares every token with every token. A text of n tokens makes an n × n table of scores, for every head in every layer.",
+  "Double the text and the table becomes four times bigger. 1,000 tokens give 1 million scores; 128,000 tokens give about 16.4 billion, per head, per layer.",
+  "Two common fixes. FlashAttention computes exactly the same result in small tiles, so the full table is never stored and memory grows only with n, though the work is still n². Sliding-window attention lets each token look only at the last w tokens, so the work grows with n × w, but distant words are not seen directly."],
+ why:"Context length is not free. The score table is the one part of a Transformer that grows faster than the text, which is why long documents need special tricks.",
+ track:[["n tokens","Q · Kᵀ","n × n scores"],["2n tokens","Q · Kᵀ","4 × as many scores"],["n tokens","tiles or a window","same answer, less memory or less work"]],
+ build(c){const ns=[4,8,16];
+  c.append(h("div",{class:"dsub",b:1},"Every coloured square is one score. Each extra token adds a whole new row and a whole new column."),
+   h("div",{class:"sgrids",b:1},...ns.map(n=>h("div",{class:"sgcell",card:"ctxlen"},h("div",{html:gridSvg(n)}),h("b",{},`n = ${n}`),h("span",{},`${n*n} scores`)))),
+   h("div",{b:2,class:"sblock"},h("div",{class:"sbars",card:"ctxlen"},...[1e3,4e3,32e3,128e3].map(n=>barRow(`${n/1e3}k tokens`,n*n,128e3**2,"sc",nice(n*n)+" scores")))),
+   FB(3,h("div",{class:"sgrids"},h("div",{class:"sgcell",card:"flash"},h("div",{html:gridSvg(12)}),h("b",{},"FlashAttention"),h("span",{},"same scores, worked out tile by tile, never stored whole")),
+     h("div",{class:"sgcell",card:"flash"},h("div",{html:gridSvg(12,4)}),h("b",{},"Sliding window (w = 4)"),h("span",{},"each token sees itself and the 3 before it")))))},
+ check:{q:"A model reads 8,000 tokens instead of 2,000. How much bigger is each score table?",a:"16 times. The text is 4 times longer and the table is n × n, so 4 × 4 = 16."}});
+CARDS.ctxlen={t:"Context length and the n² table",p:"Attention makes one score for every pair of tokens, so the table has n × n entries per head per layer.",
+ f:"scores per head per layer = n²<br>attention work per layer ≈ 4 · n² · d FLOPs (Q·Kᵀ and A·V)<br>the rest of the layer ≈ 24 · n · d² FLOPs · they are equal when n ≈ 6d",
+ i:"[n, d_k]",o:"Q · Kᵀ",out:"[n, n]",ex:"<p>n = 4 (this page): 16 scores.</p><p>n = 128,000: 16.4 billion scores, 33 GB in FP16 for one head of one layer if stored whole.</p>",
+ x:"Without knowing this, it is a mystery why longer context windows took years and new methods to arrive.",go:"12b"};
+CARDS.flash={t:"FlashAttention and sliding windows",p:"FlashAttention gives exactly the same output but streams the scores in tiles that fit in fast on-chip memory. A sliding window changes the model so each token sees only the last w tokens.",
+ f:"FlashAttention: memory O(n) instead of O(n²), work still O(n² · d)<br>sliding window: work O(n · w · d), each token sees w tokens",i:"Q, K, V",o:"tiles or a window",out:"attention output",
+ ex:"<p>Mistral 7B uses a 4,096-token window; information from further back travels through the layers.</p>",x:"Without them, memory for the score table would cap the context length long before compute does.",go:"12b"};
+MATHKEY["12b"]="ctxlen";
+WHERE["12b"]=[["n","number of tokens in the text"],["d","d_model, the width of each token's vector"],["n²","size of the score table for one head in one layer"],["w","window size in sliding-window attention"]];
+WHY["12b"]=["The score table grows with the square of the text length, so long texts get expensive fast.","Without this idea, longer context looks like it should cost only a little more, which it does not.","Example: 4 tokens here make 16 scores; 128,000 tokens make about 16.4 billion."];
+ANALOGY["12b"]="A class where every student must shake hands with every other student. Ten students make 100 pairs to check; a hundred students make 10,000. Doubling the class quadruples the handshakes.";
+DEEP["12b"]=()=>{let m=MP[1];const sl=h("input",{type:"range",min:9,max:20,step:.25,value:12,"aria-label":"Text length as a power of 2"}),out=h("div",{});
+ const pick=h("select",{"aria-label":"Model"},...MP.map((x,i)=>h("option",{value:i},x.t)));pick.value=1;pick.onchange=()=>{m=MP[+pick.value];draw()};
+ function draw(){const n=Math.round(2**+sl.value),d=m.d,att=4*n*n*d,rest=24*n*d*d,tab=n*n*2,all=tab*m.H*m.L;
+  out.innerHTML="";out.append(h("p",{class:"geosay"},h("b",{},n.toLocaleString())," tokens in ",m.t," (d = "+d.toLocaleString()+", "+m.H+" heads, "+m.L+" layers)"),
+   h("div",{class:"sbars"},barRow("attention scores",att,Math.max(att,rest),"sc",nice(att)+" FLOPs"),barRow("rest of the layer",rest,Math.max(att,rest),"out",nice(rest)+" FLOPs")),
+   h("p",{class:"geosay"},att>rest?`Attention is now the bigger cost in each layer. They balance at about n = 6 × d = ${(6*d).toLocaleString()} tokens.`:`The weight matrices still cost more than attention. Attention takes over beyond about n = 6 × d = ${(6*d).toLocaleString()} tokens.`),
+   h("p",{class:"geosay"},`Storing every score table in FP16: one head of one layer = ${gb(tab)}; all heads and layers at once = ${gb(all)}. FlashAttention never stores them whole.`))}
+ sl.oninput=draw;setTimeout(draw,0);
+ return deepWrap("When does attention become the bottleneck?","Slide the text length and compare the attention work with the rest of each layer (the Q, K, V, output and feed-forward matrices). FLOPs count multiplications and additions separately.",
+  h("div",{class:"ctrl"},h("label",{class:"rpick"},"Model ",pick)),h("div",{class:"slrow"},h("label",{},"Text length n (512 to 1 million)"),sl),out,
+  pts([["Why 6 × d:","per layer, the matrices cost about 24 · n · d² FLOPs and attention about 4 · n² · d. They are equal when n = 6d."],["FlashAttention (2022):","exact, not an approximation. It reorders the computation so the n × n table never leaves fast on-chip memory, which also makes it faster in practice."],["Windows and hybrids:","sliding windows, linear attention and mixes of cheap and full layers (the hybrid tile in step 24) trade some reach for less work."],["Inference adds the KV cache:","the keys and values of every past token must be kept, and that memory also grows with n (step 23d)."]],"sc"))};
+
+// ---------------- 16c: where do the billions of weights live?
+scene({id:"16c",t:"Where do the billions of weights live?",
+ cap:["Every weight sits in one of the matrices you have met. In one block, attention has Wq, Wk, Wv and Wo, each d × d, so about 4 · d². The feed-forward network has two d × 4d tables, so about 8 · d². Together about 12 · d² per block.",
+  "Stack L blocks and add the token tables (embedding in, output head out). N ≈ 12 · L · d² + V · d. Doubling the width d makes every block four times bigger.",
+  "The same formula gives real model sizes. Using a model costs about 2 × N FLOPs for each token it reads or writes, one multiply and one add per weight. Training costs about 6 × N × D FLOPs for D training tokens."],
+ why:"Model names like '7B' count these dials. Knowing where they live tells you what grows when a model gets bigger, and what it costs to run and to train.",
+ track:[["one block","4d² + 8d²","≈ 12 · d²"],["L blocks + tables","12 · L · d² + V · d","N weights"],["N weights","2N per token, 6ND to train","compute"]],
+ build(c){const d=768,a=4*d*d,fn=8*d*d,g=mpParts(MP[0]);
+  c.append(h("div",{class:"dsub",b:1},"One GPT-2 small block (d = 768): how its weights split"),
+   h("div",{class:"sstack",b:1,card:"params"},h("i",{style:"flex:1;background:var(--q)"},`attention 4 · d² = ${nice(a)}`),h("i",{style:"flex:2;background:var(--out)"},`feed-forward 8 · d² = ${nice(fn)}`)),
+   h("p",{class:"note",b:1},"Two thirds of every block is the feed-forward network. Attention decides who to listen to; most of the stored knowledge sits in the FFN."),
+   FB(2,h("div",{class:"callout",card:"params"},`GPT-2 small: 12 blocks × ${nice(a+fn)} = ${nice(12*(a+fn))}, plus token table 50,257 × 768 = ${nice(50257*768)} and positions 1,024 × 768 = ${nice(1024*768)}. Total ≈ ${nice(g.N)} weights (published: 124 million).`)),
+   FB(3,h("div",{class:"bpescroll"},h("table",{class:"mt bpet"},h("tr",{},h("th",{},"model"),h("th",{},"d"),h("th",{},"blocks L"),h("th",{},"weights N (our count)"),h("th",{},"published"),h("th",{},"FLOPs per token ≈ 2N")),
+     h("tr",{},h("td",{},h("b",{},"This page")),h("td",{class:"mono"},4),h("td",{class:"mono"},"2 enc + 2 dec"),h("td",{class:"mono"},TINY_W.toLocaleString()),h("td",{},"tiny teaching model"),h("td",{class:"mono"},(2*TINY_W).toLocaleString())),
+     ...MP.map(m=>{const p=mpParts(m);return h("tr",{},h("td",{},h("b",{},m.t)),h("td",{class:"mono"},m.d.toLocaleString()),h("td",{class:"mono"},m.L),h("td",{class:"mono"},nice(p.N)),h("td",{},m.pub),h("td",{class:"mono"},nice(2*p.N)))})))))},
+ check:{q:"A model doubles its width d and keeps the same number of blocks. Roughly how many more weights do its blocks have?",a:"About four times as many. Each block holds about 12 · d², and (2d)² = 4d²."}});
+CARDS.params={t:"Counting weights (N)",p:"Almost all weights sit in the attention matrices (4 · d² per block), the feed-forward matrices (8 · d²) and the token tables (V · d).",
+ f:"N ≈ 12 · L · d² + V · d<br>use: ≈ 2N FLOPs per token · train: ≈ 6 · N · D FLOPs<br>compute-optimal data (Chinchilla, 2022): D ≈ 20 · N tokens",i:"d, L, V",o:"count",out:"N",
+ ex:`<p>GPT-2 small: 12 × 12 × 768² + 50,257 × 768 ≈ ${nice(12*12*768*768+50257*768)} (+ positions ≈ 124M).</p><p>Llama 2 7B uses a 3-matrix FFN of width 11,008, giving ${nice(mpParts(MP[1]).N)}.</p>`,
+ x:"Without this count, '7B' is just a label, and memory and training cost cannot be estimated.",go:"16c"};
+MATHKEY["16c"]="params";
+WHERE["16c"]=[["N","total number of weights"],["d","d_model, the width of each token's vector"],["L","number of blocks"],["V","vocabulary size"],["D","number of training tokens"],["FLOPs","floating-point operations; one multiply-add counts as 2"]];
+WHY["16c"]=["The weight count sets the memory a model needs and the work for every token, so it decides what hardware is required.","Without it, model sizes are labels with no meaning, and costs cannot be planned.",`Example: GPT-2 small, 12 × 12 × 768² + vocabulary ≈ ${nice(mpParts(MP[0]).N)} weights.`];
+ANALOGY["16c"]="A library's size is shelves per room × rooms. Making each room twice as wide and twice as deep gives four times the shelves, which is what doubling d does to every block.";
+DEEP["16c"]=()=>{const ds=[256,512,768,1024,2048,4096,5120,8192,12288],sd=h("input",{type:"range",min:0,max:ds.length-1,step:1,value:5,"aria-label":"Width d"}),sL=h("input",{type:"range",min:2,max:96,step:1,value:32,"aria-label":"Blocks L"}),sV=h("input",{type:"range",min:0,max:3,step:1,value:1,"aria-label":"Vocabulary"}),Vs=[32000,50257,128000,256000],out=h("div",{});
+ function draw(){const d=ds[+sd.value],L=+sL.value,V=Vs[+sV.value],blk=12*d*d,N=L*blk+2*V*d,D=20*N;
+  out.innerHTML="";out.append(h("p",{class:"geosay"},`d = ${d.toLocaleString()}, L = ${L}, V = ${V.toLocaleString()}`),
+   h("div",{class:"sbars"},barRow("all blocks 12·L·d²",L*blk,N,"out",nice(L*blk)),barRow("token tables 2·V·d",2*V*d,N,"tok",nice(2*V*d))),
+   h("div",{class:"kvcount"},...[["Weights N",nice(N)],["FLOPs per token (2N)",nice(2*N)],["Chinchilla data D ≈ 20N",nice(D)+" tokens"],["Training compute 6·N·D",nice(6*N*D)+" FLOPs"],["Memory in BF16 (2 bytes each)",gb(2*N)]].map(([a,b])=>h("div",{},h("span",{},a),h("b",{},b)))))}
+ [sd,sL,sV].forEach(s=>s.oninput=draw);setTimeout(draw,0);
+ return deepWrap("Build your own model size","Pick a width, a depth and a vocabulary. The count assumes a standard block (4d² attention, 8d² FFN) and separate input and output tables.",
+  h("div",{class:"slrow"},h("label",{},"Width d"),sd),h("div",{class:"slrow"},h("label",{},"Blocks L"),sL),h("div",{class:"slrow"},h("label",{},"Vocabulary V (32k, 50k, 128k, 256k)"),sV),out,
+  pts([["Try Llama 2 7B:","d = 4,096 and L = 32 gives about 6.7 billion, close to the real count."],["Why 6ND:","each token needs about 2N FLOPs forward and about 4N backward (backpropagation, step 22b), for every one of D training tokens."],["Scaling laws:","the Chinchilla study (2022) found that for a fixed compute budget, weights and training tokens should grow together, roughly 20 tokens per weight. Many recent models train on far more than that so they are cheaper to use later."],["Mixture of Experts (step 15b):","total weights grow, but each token only uses a few experts, so the 2N rule applies to the active weights only."]],"out"))};
+
+// ---------------- 23d: fitting a model on a GPU
+const PREC=[["FP32",4,"--emb"],["FP16 / BF16",2,"--q"],["INT8",1,"--sc"],["4-bit",.5,"--att"]];
+const kvBytes=(m,n,b=2)=>2*m.L*m.KV*(m.d/m.H)*b*n;
+scene({id:"23d",t:"Fitting a model on a GPU: memory and quantization",
+ cap:["To use a model, every weight must sit in the GPU's memory. Memory for weights = N × bytes per weight.",
+  "Quantization stores each weight with fewer bits. FP32 uses 4 bytes, FP16 or BF16 uses 2, INT8 uses 1 and 4-bit uses half a byte. The same Llama 2 7B shrinks from about 27 GB to under 4 GB.",
+  "The KV cache from step 23b needs room too, and it grows with every token kept. Fewer bits save memory at a small cost in accuracy, which is usually small at 8-bit and more noticeable at 4-bit."],
+ why:"Whether a model runs on a laptop, one GPU or a whole server is decided by this sum. It is the first question anyone asks before trying a model.",
+ track:[["N weights","× bytes per weight","weight memory"],["FP16 → INT8 → 4-bit","fewer bits per weight","2× and 4× smaller"],["+ KV cache","2 · L · KV heads · head size · bytes · tokens","total memory"]],
+ build(c){const p=mpParts(MP[1]),mx=p.N*4;
+  c.append(h("div",{class:"callout",b:1,card:"quant"},`Llama 2 7B has ${nice(p.N)} weights. In FP32 that is ${nice(p.N)} × 4 bytes = ${gb(p.N*4)}.`),
+   h("div",{b:2,class:"sblock"},h("div",{class:"sbars",card:"quant"},...PREC.map(([t,b,c])=>barRow(t,p.N*b,mx,c.slice(2),gb(p.N*b)))),
+     h("div",{class:"sgpu"},h("span",{},"Common GPU memory: laptop 8 GB · gaming card 24 GB · data-centre card 80 GB"))),
+   FB(3,h("div",{class:"callout",card:"quant"},`KV cache for Llama 2 7B in FP16: 2 × 32 layers × 32 heads × 128 numbers × 2 bytes = ${gb(kvBytes(MP[1],1))} per token, so ${gb(kvBytes(MP[1],4096))} for a full 4,096-token context.`),
+     h("div",{class:"callout"},`Llama 2 70B shares each key/value head among 8 query heads (grouped-query attention, step 24), so it needs only ${gb(kvBytes(MP[2],1))} per token despite being 10 times bigger.`)))},
+ check:{q:"A 7-billion-weight model is stored in 4-bit. About how much memory do the weights need?",a:"About 3.5 GB: 7 billion × 0.5 bytes. The KV cache and working memory come on top."}});
+CARDS.quant={t:"Memory and quantization",p:"Weights are stored as numbers with a fixed number of bits. Fewer bits per weight means less memory and faster reading, at a small cost in accuracy.",
+ f:"weight memory = N × bytes per weight<br>KV cache = 2 × L × KV heads × head size × bytes × tokens<br>training with Adam (mixed precision) ≈ 16 bytes per weight",i:"N, precision",o:"× bytes",out:"GB",
+ ex:`<p>7B: FP16 ${gb(mpParts(MP[1]).N*2)}, INT8 ${gb(mpParts(MP[1]).N)}, 4-bit ${gb(mpParts(MP[1]).N/2)}.</p><p>70B: FP16 ${gb(mpParts(MP[2]).N*2)}, 4-bit ${gb(mpParts(MP[2]).N/2)}.</p>`,
+ x:"Without this sum, there is no way to know whether a model will even load on a given machine.",go:"23d"};
+MATHKEY["23d"]="quant";
+WHERE["23d"]=[["N","number of weights"],["bytes per weight","4 (FP32), 2 (FP16/BF16), 1 (INT8), 0.5 (4-bit)"],["L","layers"],["KV heads","key/value heads per layer, fewer than query heads with grouped-query attention"],["head size","d ÷ number of query heads, 128 in Llama 2"],["tokens","how many tokens of context are kept, times the batch size"]];
+WHY["23d"]=["Memory, not speed, is usually what decides whether a model can run at all on a given machine.","Without the sum, people try to load a 70B model on a laptop and it simply fails.",`Example: Llama 2 7B needs ${gb(mpParts(MP[1]).N*2)} in FP16 and ${gb(mpParts(MP[1]).N/2)} in 4-bit.`];
+ANALOGY["23d"]="Packing a suitcase. The clothes are the weights and the suitcase is the GPU. Rolling each item tighter (fewer bits) fits more in, though very tight rolling leaves a few creases. The KV cache is the souvenirs you collect during the trip: the longer the trip, the more space they take.";
+DEEP["23d"]=()=>{let m=MP[1],pi=1;const pick=h("select",{"aria-label":"Model"},...MP.map((x,i)=>h("option",{value:i},x.t)));pick.value=1;
+ const pr=h("select",{"aria-label":"Precision"},...PREC.map(([t],i)=>h("option",{value:i},t)));pr.value=1;
+ const sn=h("input",{type:"range",min:9,max:17,step:1,value:12,"aria-label":"Context tokens as power of 2"}),sb=h("input",{type:"range",min:0,max:5,step:1,value:0,"aria-label":"Batch size as power of 2"}),out=h("div",{});
+ const GPUS=[["laptop GPU",8],["gaming GPU",24],["data-centre GPU",80]];
+ function draw(){const N=mpParts(m).N,bw=PREC[pi][1],n=2**+sn.value,bt=2**+sb.value,W=N*bw,K=kvBytes(m,n*bt),T=W+K;
+  out.innerHTML="";out.append(h("div",{class:"sbars"},barRow("weights",W,T,"out",gb(W)),barRow("KV cache (FP16)",K,T,"v",gb(K))),
+   h("p",{class:"geosay"},"Total ≈ ",h("b",{},gb(T))," for ",n.toLocaleString()," tokens × batch ",bt,", plus some working memory."),
+   h("div",{class:"sfit"},...GPUS.map(([t,g])=>{const k=Math.ceil(T/(g*1e9));return h("div",{class:k<=1?"ok":"no"},h("b",{},`${t} (${g} GB)`),h("span",{},k<=1?"fits on one":`needs ${k} or more`))})))}
+ pick.onchange=()=>{m=MP[+pick.value];draw()};pr.onchange=()=>{pi=+pr.value;draw()};sn.oninput=draw;sb.oninput=draw;setTimeout(draw,0);
+ return deepWrap("Will it fit? A memory calculator","Choose a model, a precision for the weights, how much text to keep, and how many conversations run at once (the batch). The KV cache is kept in FP16 here.",
+  h("div",{class:"ctrl"},h("label",{class:"rpick"},"Model ",pick),h("label",{class:"rpick"},"Weights in ",pr)),
+  h("div",{class:"slrow"},h("label",{},"Context tokens (512 to 131,072)"),sn),h("div",{class:"slrow"},h("label",{},"Batch (1 to 32)"),sb),out,
+  pts([["How 4-bit works:","weights are grouped, and each group stores one scale plus a 4-bit code per weight. The scales add a little memory on top of the half byte."],["Training needs far more:","with the Adam optimizer in mixed precision, each weight needs about 16 bytes (the weight, its gradient and the optimizer's running averages), before counting activations. Training a 7B model this way needs over 100 GB."],["Speed follows memory:","writing each token means reading every weight once, so smaller weights also mean faster answers on the same GPU."],["Shrinking the cache:","grouped-query attention, MLA (step 23c) and cache quantization all reduce the KV term."]],"v"))};
 // ===== Step 16b: Looped Transformer, one block run again and again (depth becomes compute) =====
 const LOOP=(()=>{const cnt=o=>Array.isArray(o)?o.reduce((s,v)=>s+cnt(v),0):typeof o==="number"?1:o&&typeof o==="object"?Object.values(o).reduce((s,v)=>s+cnt(v),0):0;
   const W=cnt(D.encP[0]);let H=D.X;const passes=[];
@@ -2406,13 +2622,13 @@ CARDS.specdec={t:"Speculative decoding · later improvement",p:"A small fast dra
 CARDS.mtp={t:"Multi-token prediction · later improvement",p:"During training the model also predicts the 2nd and 3rd next words, not just the next one, giving it a richer learning signal.",f:"L = L(next word) + λ · Σ L(word t+2, t+3, …)",i:"positions 1…n",o:"extra prediction heads",out:"several targets per position",ex:"<p>Gloeckle et al. (ICML 2024) found it helps larger models, especially on code.</p><p>DeepSeek-V3 trains with it, and the extra heads can also draft words for speculative decoding.</p>",x:"Training on the next word only gives one small signal per position.",go:"24"};
 // ===== Flow engine: every step on one page, top to bottom =====
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,speed=RM?0:1;
-const ACC={"0":"tok","1":"sc","2":"tok","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","15b":"q","16":"out","16b":"q","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","23c":"k","24":"tok"};
-const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","15b":"mixture of experts","16":"encoder × N","16b":"looped block","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","23c":"latent attention","24":"later changes"};
-const PARTS=[["1","From text to numbers","Words become rows of numbers that know their position.",["0","1","2","3","4","5"]],
- ["2","Attention","Each token decides whom to listen to, then listens.",["6","6b","7","8","9a","9b","10","11","12"]],
- ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","15b","16","16b"]],
+const ACC={"0":"tok","1":"sc","2":"tok","2b":"tok","12b":"sc","16c":"out","23d":"v","3":"emb","4":"pos","5":"emb","6":"q","6b":"pos","7":"sc","8":"sc","9a":"mask","9b":"mask","10":"att","11":"v","12":"q","13":"out","14":"out","15":"out","15b":"q","16":"out","16b":"q","17":"att","18":"k","19":"out","20":"out","21":"att","22":"att","22b":"att","22c":"emb","22d":"q","23":"out","23b":"k","23c":"k","24":"tok"};
+const SHORT={"0":"the job","1":"RNN vs attention","2":"tokens → ids","2b":"BPE pieces","12b":"text length n²","16c":"counting weights","23d":"GPU memory","3":"embedding","4":"+ position","5":"matrix X","6":"Q, K, V","6b":"RoPE (modern)","7":"Q · Kᵀ","8":"÷ √d_k","9a":"padding mask","9b":"causal mask","10":"softmax","11":"× V","12":"many heads","13":"+ residual","14":"LayerNorm","15":"feed-forward","15b":"mixture of experts","16":"encoder × N","16b":"looped block","17":"masked self-attn","18":"cross-attention","19":"full stack","20":"GPT / BERT","21":"next token","22":"training","22b":"backprop","22c":"gradient descent","22d":"chat tuning","23":"inference","23b":"KV cache","23c":"latent attention","24":"later changes"};
+const PARTS=[["1","From text to numbers","Words become rows of numbers that know their position.",["0","1","2","2b","3","4","5"]],
+ ["2","Attention","Each token decides whom to listen to, then listens.",["6","6b","7","8","9a","9b","10","11","12","12b"]],
+ ["3","The encoder block","Wrap attention with shortcuts, normalisation and a small network, then stack.",["13","14","15","15b","16","16b","16c"]],
  ["4","Decoder and the full model","Write the output one token at a time while reading the input.",["17","18","19","20","21"]],
- ["5","Learning and using it","Train every position at once, then generate in a loop.",["22","22b","22c","22d","23","23b","23c","24"]]];
+ ["5","Learning and using it","Train every position at once, then generate in a loop.",["22","22b","22c","22d","23","23b","23c","23d","24"]]];
 const byId=Object.fromEntries(SC.map(s=>[s.id,s]));const secs={};
 function stopStep(id){const sec=secs[id];if(!sec)return;sec.tok++;sec.playing=false;if(sec.play)sec.play.textContent="▶ Play this step";playSec(id,true)}let litSym=null,cardKey=null,curId="0";
 // one colour per part for navigation; the 10-colour code stays inside the pictures
@@ -2838,7 +3054,7 @@ const G=[["Weight (parameter)","One learned number inside the model, like a dial
 ["Greedy decoding","Always pick the most likely next token.","21"],["Sampling / temperature / top-k","Pick randomly by probability; temperature flattens or sharpens; top-k keeps only the k best.","21"],
 ["Teacher forcing","Training trick: feed the true previous tokens and predict every next token at once.","22"],["Cross-entropy loss","−log of the probability given to the true next token. Lower is better.","22"],
 ["Gradient","The direction to nudge each weight so the loss goes down.","22"],["Backpropagation","Sends the error backwards through the model with the chain rule, giving every weight its gradient.","22b"],["Gradient descent","Repeatedly move each weight a small step downhill on the loss.","22b"],
-["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Mixture of Experts (MoE)","Many small FFNs (experts) in one block; a router sends each word to only the top few, so total weights grow but work per word does not.","15b"],["Router","The tiny layer in an MoE block that scores the experts for each word and picks the top k.","15b"],["Multi-head Latent Attention (MLA)","Caches one small learned latent per word and rebuilds every head's keys and values from it, shrinking the KV cache.","23c"],["Speculative decoding","A small draft model guesses several words; the big model checks them in one pass and keeps the ones it agrees with.","24"],["Multi-token prediction","Training the model to predict the next few words, not just the next one.","24"],["Hybrid attention","Mixing cheap attention layers (sliding window or linear) with a few full-attention layers to handle long texts.","24"],["Looped Transformer","Runs the hidden state through one shared block again and again. Depth becomes the number of passes, chosen at run time, instead of the number of different layers.","16b"],["Universal Transformer","A 2018 design that shares one block across depth and lets each token decide when to stop looping.","16b"],["Adaptive computation","Stopping the loop early when a pass barely changes the hidden state, so easy inputs use fewer passes.","16b"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2"],["Magnitude (length)","How long a vector is when drawn as an arrow, √(x² + y² + …). Tells how big its numbers are, not which way it points.","W"],["Cosine similarity","The dot product divided by both lengths. Measures direction only, from 1 (same way) through 0 (right angle) to −1 (opposite).","W"],["Inference","Using a model after training. The weights are frozen and the model only computes answers for new inputs. For a Transformer this means predicting one token, appending it, and repeating.","23"],["Training","The learning phase. The model sees examples with known answers and gradient descent adjusts its weights to make its predictions less wrong.","22"],
+["Instruction tuning (SFT)","Fine-tuning a base model on prompts paired with answers written by people.","22d"],["RLHF","Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, and the model is tuned to score well.","22d"],["Reward model","A network that gives an answer a score predicting how much people would like it.","22d"],["DPO","Direct preference optimisation: learns from ranked answer pairs without a separate reward model.","22d"],["Mixture of Experts (MoE)","Many small FFNs (experts) in one block; a router sends each word to only the top few, so total weights grow but work per word does not.","15b"],["Router","The tiny layer in an MoE block that scores the experts for each word and picks the top k.","15b"],["Multi-head Latent Attention (MLA)","Caches one small learned latent per word and rebuilds every head's keys and values from it, shrinking the KV cache.","23c"],["Speculative decoding","A small draft model guesses several words; the big model checks them in one pass and keeps the ones it agrees with.","24"],["Multi-token prediction","Training the model to predict the next few words, not just the next one.","24"],["Hybrid attention","Mixing cheap attention layers (sliding window or linear) with a few full-attention layers to handle long texts.","24"],["Looped Transformer","Runs the hidden state through one shared block again and again. Depth becomes the number of passes, chosen at run time, instead of the number of different layers.","16b"],["Universal Transformer","A 2018 design that shares one block across depth and lets each token decide when to stop looping.","16b"],["Adaptive computation","Stopping the loop early when a pass barely changes the hidden state, so easy inputs use fewer passes.","16b"],["Pre-norm","Putting LayerNorm before each sublayer instead of after the residual add. Used by most models since GPT-2.","14"],["Learning rate (η)","The size of each gradient-descent step.","22c"],["Local minimum","A valley in the loss that is lower than its surroundings but not the lowest of all. Gradient descent can stop there.","22c"],["Momentum","Keeps part of the previous step, like a rolling ball, so training can roll through small bumps.","22c"],["Forward pass","Running the model from input to prediction and loss. Used both for answering and as the first half of training.","22b"],["Embedding space","The space where each token is a point; similar words end up close together.","3"],["BPE (byte-pair encoding)","A tokenizer that learns subword pieces by repeatedly merging the most frequent pairs.","2b"],["Magnitude (length)","How long a vector is when drawn as an arrow, √(x² + y² + …). Tells how big its numbers are, not which way it points.","W"],["Cosine similarity","The dot product divided by both lengths. Measures direction only, from 1 (same way) through 0 (right angle) to −1 (opposite).","W"],["Parameter count (N)","The total number of weights in a model. About 12 · L · d² + V · d for a standard Transformer. The 7B in a model name means about 7 billion.","16c"],["FLOPs","Floating-point operations. One multiply plus one add counts as 2. Using a model costs about 2N FLOPs per token, training about 6 · N · D.","16c"],["Scaling laws (Chinchilla)","Rules for how loss improves with more weights, data and compute. The 2022 Chinchilla study suggests about 20 training tokens per weight for a fixed compute budget.","16c"],["FlashAttention","An exact way to compute attention in tiles, so the n × n score table is never stored whole. Memory grows with n instead of n².","12b"],["Sliding-window attention","Each token attends only to the last w tokens, so the work grows with n × w instead of n².","12b"],["Quantization","Storing weights with fewer bits (8-bit, 4-bit) to save memory and speed up inference, at a small cost in accuracy.","23d"],["FP16 / BF16","16-bit number formats (2 bytes per weight), the usual precision for running and training large models.","23d"],["Inference","Using a model after training. The weights are frozen and the model only computes answers for new inputs. For a Transformer this means predicting one token, appending it, and repeating.","23"],["Training","The learning phase. The model sees examples with known answers and gradient descent adjusts its weights to make its predictions less wrong.","22"],
 ["KV cache","Stores past keys and values so each new token only computes its own.","23b"],["Grouped-query attention","Several query heads share one key/value head, shrinking the cache.","24"]];
 const gp=h("div",{class:"gloss",id:"gloss",role:"dialog","aria-label":"Glossary"});const gi=h("input",{type:"search",placeholder:"Search terms, e.g. softmax, mask, cache",id:"gsearch","aria-label":"Search glossary"}),gl=h("div",{class:"glist"});
 const gclose=h("button",{class:"btn"},"✕ Close");gclose.onclick=()=>gp.classList.remove("open");
@@ -2924,7 +3140,7 @@ window.CORE=["0","2","3","4","5","6","7","10","11","13","21","22"];
   const map=$("map");map&&map.prepend(h("div",{class:"corebar"},mk("mp"),h("span",{class:"note"},"New to the topic? The core path keeps the 12 steps you need for the big idea and folds the advanced ones away. Every step can still be opened.")));
   let saved=false;try{saved=localStorage.getItem("tbb_"+KEY)==="1"}catch(e){}set(saved)})();
 // ---------- "builds on" strip for advanced steps, so a newcomer knows what to read first
-(function(){const PRE={"6b":["4","6"],"9a":["7"],"9b":["9a"],"12":["11"],"14":["13"],"15b":["15"],"16b":["16"],"22b":["22"],"22c":["22b"],"22d":["22"],"23b":["6","23"],"23c":["6","23b"],"24":["16","23b"]};
+(function(){const PRE={"2b":["2"],"12b":["7","12"],"16c":["16"],"23d":["16c","23b"],"6b":["4","6"],"9a":["7"],"9b":["9a"],"12":["11"],"14":["13"],"15b":["15"],"16b":["16"],"22b":["22"],"22c":["22b"],"22d":["22"],"23b":["6","23"],"23c":["6","23b"],"24":["16","23b"]};
   Object.entries(PRE).forEach(([id,req])=>{const sec=$("sec-"+id),st=sec&&sec.querySelector(".story");if(!st)return;
     st.before(h("div",{class:"prereq"},h("b",{},"Builds on: "),...req.flatMap((r,i)=>[i?" and ":"",h("a",{href:"#sec-"+r},`step ${r} (${SHORT[r]})`)]),h("span",{}," · new to this? read those first.")))})})();
 // ===== For Master's students: ablation lab, reproduce, research map, question builder, roadmap =====
@@ -3129,7 +3345,7 @@ ik.oninput=drawInf;im.oninput=drawInf;setInterval(()=>{if(document.activeElement
 const icard=card("7","Training versus inference: learning the dials, then using them",plain("Training is the learning phase. The model sees examples with the right answers and turns its dials. Inference is the using phase. The dials are frozen and the model simply computes answers for new inputs.","A student studies with past exam papers and their answers (training), then sits the real exam and just answers (inference). No more studying happens during the exam.","Training a big Transformer happens once and costs weeks of computing. Every time you chat with one, that is inference, a forward pass through fixed dials, one word at a time."),[["22","training"],["23","inference"]],
   h("div",{class:"winf"},h("div",{class:"wphase t"},h("b",{},"Training"),h("span",{},"examples + right answers → dials change"),h("small",{},"card 1: press Learn")),h("div",{class:"wphase i"},h("b",{},"Inference"),h("span",{},"new input → fixed dials → answer"),h("small",{},"try it here"))),
   h("div",{class:"ctrl"},h("label",{class:"rpick"},"New ride: km ",ik),h("label",{class:"rpick"},"minutes ",im)),io);
-const sec=h("section",{class:"chap",id:"ch-W"},h("div",{class:"chead"},h("span",{class:"cn"},"✦"),h("div",{},h("h2",{},"Before you start: seven ideas, explained simply"),h("p",{},"No background needed. Each card explains one idea in plain words, gives an everyday example, and lets you try it. Then it says why the Transformer needs it. About two minutes each."))),
+const sec=h("section",{class:"chap",id:"ch-W"},h("div",{class:"chead"},h("span",{class:"cn"},"✦"),h("div",{},h("h2",{},"New to this? Start with seven small ideas"),h("p",{},"You don't need any maths background. Each card takes one idea, explains it in everyday words and gives you something to try. Then it shows where the Transformer uses it. Allow about two minutes per card."))),
   h("div",{class:"wgrid2"},nn,vcard,dcard,ccard,mcard,ecard,icard));
 const A=$("ch-A");A&&A.parentNode.insertBefore(sec,A);
 const j=document.querySelector(".cta-jump");if(j)j.insertBefore(h("a",{href:"#ch-W"},h("i",{style:"--c:var(--sc)"}),"Maths warm-up"),j.children[1]);
@@ -3181,5 +3397,4 @@ const add=()=>{const top=document.querySelector(".dhtop");if(!top)return setTime
 const ctas=document.querySelector(".hero .cta-main");if(ctas){const b=h("button",{class:"btn cta-big cta-play"},h("span",{class:"pl","aria-hidden":"true"},"▶"),"Play the whole model");b.onclick=()=>tour(0);ctas.append(b)}
 })();
 </script>
-
 </body></html>
