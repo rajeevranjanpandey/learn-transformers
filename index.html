@@ -1010,7 +1010,7 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 .sgrids{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin:6px 0}
 .sgcell{display:flex;flex-direction:column;align-items:center;gap:4px;max-width:200px;text-align:center;font-size:.88em}
 .sgcell span{color:var(--ink2)}.sgrid{width:150px;height:auto}
-.sbars{display:grid;gap:6px;margin:8px 0}
+.hbars{display:grid;gap:6px;margin:8px 0}
 .sbar{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.9em}
 .sbar>div{background:var(--panel2);border-radius:4px;height:14px;overflow:hidden}.sbar i{display:block;height:100%;opacity:.85}
 .sstack{display:flex;border-radius:8px;overflow:hidden;font-size:.85em;color:#fff;font-weight:600}
@@ -1020,10 +1020,49 @@ body.core #map .mchip:not(.iscore),body.core #side a[data-go]:not(.iscore){opaci
 .sfit>div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:.88em}
 .sfit .ok{border-left:4px solid var(--q)}.sfit .no{border-left:4px solid var(--att)}
 @media(max-width:600px){.sbar{grid-template-columns:minmax(0,1fr)}.sfit{grid-template-columns:minmax(0,1fr)}.sstack{flex-direction:column}.sstack i{flex:none!important}}
-.flow>.sbars,.flow>.sgpu,.flow>.sgrids{flex:1 1 100%;width:100%;min-width:0}.stage .sbars{width:100%}
+.flow>.hbars,.flow>.sgpu,.flow>.sgrids{flex:1 1 100%;width:100%;min-width:0}.stage .hbars{width:100%}
 .sblock{width:100%;display:flex;flex-direction:column;gap:6px}
-.sblock{display:block}.sblock>*{flex:none;margin-bottom:6px}.sbars{height:auto!important;min-height:min-content}
+.sblock{display:block}.sblock>*{flex:none;margin-bottom:6px}.hbars{height:auto!important;min-height:min-content}
 @media(max-width:600px){.sbar{grid-template-columns:minmax(0,1fr) auto;row-gap:3px}.sbar>div{grid-column:1/-1;grid-row:2}}
+
+.wvec2{display:grid;grid-template-columns:44px repeat(4,minmax(0,1fr));gap:6px 8px;align-items:center}
+.wvec2 small{font-size:11px;color:var(--ink3);text-align:center}
+.wvc{position:relative;height:34px;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.wvc::before{content:"";position:absolute;left:50%;top:4px;bottom:4px;width:1px;background:var(--ink3)}
+.wvc i{position:absolute;top:7px;bottom:7px;border-radius:3px}
+.wvc i.p{left:50%;background:var(--emb)}.wvc i.n{right:50%;background:color-mix(in srgb,var(--att) 75%,var(--panel))}
+.wvc span{position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--ink2);background:color-mix(in srgb,var(--panel) 80%,transparent);padding:0 2px;border-radius:3px}
+.wdpgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.wdpside{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px dashed var(--line);border-radius:10px}
+@media(max-width:700px){.wdpgrid{grid-template-columns:minmax(0,1fr)}.wvec2{grid-template-columns:34px repeat(4,minmax(0,1fr));gap:4px}.wvc span{font-size:10px;right:2px}}
+.wvc i.s{left:4px;background:color-mix(in srgb,var(--q) 70%,var(--panel))}.wvec2.st .wvc::before{display:none}
+.wvc span{background:var(--panel)}
+@media(max-width:700px){.wvc{height:42px}.wvc i{top:5px;bottom:21px}.wvc::before{bottom:19px}.wvc span{top:auto;bottom:2px;right:0;left:0;transform:none;text-align:center;background:none}.wvc i.s{left:3px}}
+
+.wvhint{font-size:.9em;color:var(--ink2);margin:0 0 6px}
+.wslot{display:flex;flex-direction:column;align-items:center;font-size:11px;line-height:1.2}.wslot b{font-size:12px}.wslot span{color:var(--ink3);font-family:var(--fm)}
+.wword{display:flex;flex-direction:column;line-height:1.2}.wword span{display:none}
+.wvec2{grid-template-columns:52px repeat(4,minmax(0,1fr))}
+.wcosout{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:10px 16px;font-family:inherit;font-size:.9em;line-height:1.55;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.wcl{font-weight:600;color:var(--ink2)}.wcm{font-family:var(--fm,monospace);font-size:.92em}
+.wmall{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:6px 0}
+.wmbox{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.85em}.wmbox small{color:var(--ink3)}
+.wsm td,.wsm th{padding:3px 7px!important;font-size:12px}.wsm.q td{background:color-mix(in srgb,var(--q) 14%,transparent)}
+.wop{font-size:20px;font-weight:700;color:var(--ink3)}
+@media(max-width:700px){.wcosout{grid-template-columns:minmax(0,1fr);gap:2px}.wcl{margin-top:8px}.wvec2{grid-template-columns:40px repeat(4,minmax(0,1fr))}}
+.wvc span.l{right:auto;left:5px}.wvc span.r{right:5px}
+@media(max-width:700px){.wvc span.l,.wvc span.r{left:0;right:0}}
+
+.wwords{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.wwc{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:10px 10px 6px}
+.wwh{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}.wwh b{font-size:15px}.wwh span{font-size:11px;color:var(--ink3)}
+.wwbars{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.wwcol{display:flex;flex-direction:column;align-items:center;gap:2px}.wwcol small{font-size:10px;color:var(--ink3)}
+.wwplot{position:relative;width:100%;height:132px}
+.wwplot::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--ink3)}
+.wwplot i{position:absolute;left:50%;width:22px;margin-left:-11px;border-radius:3px}
+.wwplot i.p{bottom:50%;background:var(--emb)}.wwplot i.n{top:calc(50% + 1px);background:color-mix(in srgb,var(--att) 75%,var(--panel))}
+.wwplot span{position:absolute;left:0;right:0;text-align:center;font-size:11px;color:var(--ink2)}
 </style>
 <div id="prog"></div>
 <div class="wrap">
@@ -2358,7 +2397,7 @@ scene({id:"12b",t:"How long can the text be? Attention grows with n²",
  build(c){const ns=[4,8,16];
   c.append(h("div",{class:"dsub",b:1},"Every coloured square is one score. Each extra token adds a whole new row and a whole new column."),
    h("div",{class:"sgrids",b:1},...ns.map(n=>h("div",{class:"sgcell",card:"ctxlen"},h("div",{html:gridSvg(n)}),h("b",{},`n = ${n}`),h("span",{},`${n*n} scores`)))),
-   h("div",{b:2,class:"sblock"},h("div",{class:"sbars",card:"ctxlen"},...[1e3,4e3,32e3,128e3].map(n=>barRow(`${n/1e3}k tokens`,n*n,128e3**2,"sc",nice(n*n)+" scores")))),
+   h("div",{b:2,class:"sblock"},h("div",{class:"hbars",card:"ctxlen"},...[1e3,4e3,32e3,128e3].map(n=>barRow(`${n/1e3}k tokens`,n*n,128e3**2,"sc",nice(n*n)+" scores")))),
    FB(3,h("div",{class:"sgrids"},h("div",{class:"sgcell",card:"flash"},h("div",{html:gridSvg(12)}),h("b",{},"FlashAttention"),h("span",{},"same scores, worked out tile by tile, never stored whole")),
      h("div",{class:"sgcell",card:"flash"},h("div",{html:gridSvg(12,4)}),h("b",{},"Sliding window (w = 4)"),h("span",{},"each token sees itself and the 3 before it")))))},
  check:{q:"A model reads 8,000 tokens instead of 2,000. How much bigger is each score table?",a:"16 times. The text is 4 times longer and the table is n × n, so 4 × 4 = 16."}});
@@ -2377,7 +2416,7 @@ DEEP["12b"]=()=>{let m=MP[1];const sl=h("input",{type:"range",min:9,max:20,step:
  const pick=h("select",{"aria-label":"Model"},...MP.map((x,i)=>h("option",{value:i},x.t)));pick.value=1;pick.onchange=()=>{m=MP[+pick.value];draw()};
  function draw(){const n=Math.round(2**+sl.value),d=m.d,att=4*n*n*d,rest=24*n*d*d,tab=n*n*2,all=tab*m.H*m.L;
   out.innerHTML="";out.append(h("p",{class:"geosay"},h("b",{},n.toLocaleString())," tokens in ",m.t," (d = "+d.toLocaleString()+", "+m.H+" heads, "+m.L+" layers)"),
-   h("div",{class:"sbars"},barRow("attention scores",att,Math.max(att,rest),"sc",nice(att)+" FLOPs"),barRow("rest of the layer",rest,Math.max(att,rest),"out",nice(rest)+" FLOPs")),
+   h("div",{class:"hbars"},barRow("attention scores",att,Math.max(att,rest),"sc",nice(att)+" FLOPs"),barRow("rest of the layer",rest,Math.max(att,rest),"out",nice(rest)+" FLOPs")),
    h("p",{class:"geosay"},att>rest?`Attention is now the bigger cost in each layer. They balance at about n = 6 × d = ${(6*d).toLocaleString()} tokens.`:`The weight matrices still cost more than attention. Attention takes over beyond about n = 6 × d = ${(6*d).toLocaleString()} tokens.`),
    h("p",{class:"geosay"},`Storing every score table in FP16: one head of one layer = ${gb(tab)}; all heads and layers at once = ${gb(all)}. FlashAttention never stores them whole.`))}
  sl.oninput=draw;setTimeout(draw,0);
@@ -2412,7 +2451,7 @@ ANALOGY["16c"]="A library's size is shelves per room × rooms. Making each room 
 DEEP["16c"]=()=>{const ds=[256,512,768,1024,2048,4096,5120,8192,12288],sd=h("input",{type:"range",min:0,max:ds.length-1,step:1,value:5,"aria-label":"Width d"}),sL=h("input",{type:"range",min:2,max:96,step:1,value:32,"aria-label":"Blocks L"}),sV=h("input",{type:"range",min:0,max:3,step:1,value:1,"aria-label":"Vocabulary"}),Vs=[32000,50257,128000,256000],out=h("div",{});
  function draw(){const d=ds[+sd.value],L=+sL.value,V=Vs[+sV.value],blk=12*d*d,N=L*blk+2*V*d,D=20*N;
   out.innerHTML="";out.append(h("p",{class:"geosay"},`d = ${d.toLocaleString()}, L = ${L}, V = ${V.toLocaleString()}`),
-   h("div",{class:"sbars"},barRow("all blocks 12·L·d²",L*blk,N,"out",nice(L*blk)),barRow("token tables 2·V·d",2*V*d,N,"tok",nice(2*V*d))),
+   h("div",{class:"hbars"},barRow("all blocks 12·L·d²",L*blk,N,"out",nice(L*blk)),barRow("token tables 2·V·d",2*V*d,N,"tok",nice(2*V*d))),
    h("div",{class:"kvcount"},...[["Weights N",nice(N)],["FLOPs per token (2N)",nice(2*N)],["Chinchilla data D ≈ 20N",nice(D)+" tokens"],["Training compute 6·N·D",nice(6*N*D)+" FLOPs"],["Memory in BF16 (2 bytes each)",gb(2*N)]].map(([a,b])=>h("div",{},h("span",{},a),h("b",{},b)))))}
  [sd,sL,sV].forEach(s=>s.oninput=draw);setTimeout(draw,0);
  return deepWrap("Build your own model size","Pick a width, a depth and a vocabulary. The count assumes a standard block (4d² attention, 8d² FFN) and separate input and output tables.",
@@ -2430,7 +2469,7 @@ scene({id:"23d",t:"Fitting a model on a GPU: memory and quantization",
  track:[["N weights","× bytes per weight","weight memory"],["FP16 → INT8 → 4-bit","fewer bits per weight","2× and 4× smaller"],["+ KV cache","2 · L · KV heads · head size · bytes · tokens","total memory"]],
  build(c){const p=mpParts(MP[1]),mx=p.N*4;
   c.append(h("div",{class:"callout",b:1,card:"quant"},`Llama 2 7B has ${nice(p.N)} weights. In FP32 that is ${nice(p.N)} × 4 bytes = ${gb(p.N*4)}.`),
-   h("div",{b:2,class:"sblock"},h("div",{class:"sbars",card:"quant"},...PREC.map(([t,b,c])=>barRow(t,p.N*b,mx,c.slice(2),gb(p.N*b)))),
+   h("div",{b:2,class:"sblock"},h("div",{class:"hbars",card:"quant"},...PREC.map(([t,b,c])=>barRow(t,p.N*b,mx,c.slice(2),gb(p.N*b)))),
      h("div",{class:"sgpu"},h("span",{},"Common GPU memory: laptop 8 GB · gaming card 24 GB · data-centre card 80 GB"))),
    FB(3,h("div",{class:"callout",card:"quant"},`KV cache for Llama 2 7B in FP16: 2 × 32 layers × 32 heads × 128 numbers × 2 bytes = ${gb(kvBytes(MP[1],1))} per token, so ${gb(kvBytes(MP[1],4096))} for a full 4,096-token context.`),
      h("div",{class:"callout"},`Llama 2 70B shares each key/value head among 8 query heads (grouped-query attention, step 24), so it needs only ${gb(kvBytes(MP[2],1))} per token despite being 10 times bigger.`)))},
@@ -2448,7 +2487,7 @@ DEEP["23d"]=()=>{let m=MP[1],pi=1;const pick=h("select",{"aria-label":"Model"},.
  const sn=h("input",{type:"range",min:9,max:17,step:1,value:12,"aria-label":"Context tokens as power of 2"}),sb=h("input",{type:"range",min:0,max:5,step:1,value:0,"aria-label":"Batch size as power of 2"}),out=h("div",{});
  const GPUS=[["laptop GPU",8],["gaming GPU",24],["data-centre GPU",80]];
  function draw(){const N=mpParts(m).N,bw=PREC[pi][1],n=2**+sn.value,bt=2**+sb.value,W=N*bw,K=kvBytes(m,n*bt),T=W+K;
-  out.innerHTML="";out.append(h("div",{class:"sbars"},barRow("weights",W,T,"out",gb(W)),barRow("KV cache (FP16)",K,T,"v",gb(K))),
+  out.innerHTML="";out.append(h("div",{class:"hbars"},barRow("weights",W,T,"out",gb(W)),barRow("KV cache (FP16)",K,T,"v",gb(K))),
    h("p",{class:"geosay"},"Total ≈ ",h("b",{},gb(T))," for ",n.toLocaleString()," tokens × batch ",bt,", plus some working memory."),
    h("div",{class:"sfit"},...GPUS.map(([t,g])=>{const k=Math.ceil(T/(g*1e9));return h("div",{class:k<=1?"ok":"no"},h("b",{},`${t} (${g} GB)`),h("span",{},k<=1?"fits on one":`needs ${k} or more`))})))}
  pick.onchange=()=>{m=MP[+pick.value];draw()};pr.onchange=()=>{pi=+pr.value;draw()};sn.oninput=draw;sb.oninput=draw;setTimeout(draw,0);
@@ -3281,8 +3320,18 @@ const nn=card("1","What is a neural network? A machine with dials",plain("Number
 
 // ---------- 1 · a vector is a list of numbers
 const vcard=card("2","A vector: a word written as a list of numbers",plain("A vector is just a short list of numbers. Computers cannot read words, so each word is stored as one.","A student's report card [maths 8, art 3, sport 6, music 9]. Four numbers describe the student; similar students have similar lists.","Every word on this page becomes 4 numbers (real models use thousands). All the later steps work on these lists."),[["3","embedding"],["5","the input matrix"]],
-  h("div",{class:"wvec"},...["the","cat","sat"].map(wd=>{const v=D.E[VOCAB.indexOf(wd)];return h("div",{class:"wvrow"},h("b",{},wd),h("span",{class:"mono"},vec(v)),signBars(v,"emb","",["1","2","3","4"]))})),
-  h("p",{class:"note"},"A tall bar is a big number, a bar below the line is negative. A matrix is simply several of these lists stacked as rows."));
+  h("div",{class:"dsub"},"The everyday example as lists (marks out of 10)"),
+  h("div",{class:"wvec2 st"},h("span",{}),...["maths","art","sport","music"].map(t=>h("small",{},t)),
+    ...[["Asha",[8,3,6,9]],["Ben",[7,2,6,8]],["Chen",[2,9,3,1]]].flatMap(([n,v])=>[h("b",{},n),...v.map(x=>h("div",{class:"wvc"},h("i",{class:"s",style:`width:${x/10*80}%`}),h("span",{class:"mono"},x)))])),
+  h("p",{class:"note"},"Asha and Ben have similar lists, so they are similar students. Chen's list looks different. Card 3 turns 'looks similar' into one number."),
+  h("div",{class:"dsub"},"Now real words from this page, 4 numbers each"),
+  h("p",{class:"wvhint"},"A report card has named columns. A word's list does not. The model learns what each of the 4 slots should capture during training, so we can only call them slot 1 to slot 4."),
+  h("div",{class:"wwords"},...["the","cat","sat"].map(wd=>{const v=D.E[VOCAB.indexOf(wd)],mx=1.1;
+    return h("div",{class:"wwc"},h("div",{class:"wwh"},h("b",{},wd),h("span",{class:"mono"},vec(v))),
+      h("div",{class:"wwbars"},...v.map((x,k)=>h("div",{class:"wwcol"},
+        h("div",{class:"wwplot"},h("i",{class:x<0?"n":"p",style:`height:${Math.max(2,Math.abs(x)/mx*46)}px`}),h("span",{class:"mono "+(x<0?"n":"p"),style:`${x<0?"top":"bottom"}:calc(50% + ${Math.max(2,Math.abs(x)/mx*46)+2}px)`},f(x))),
+        h("small",{},"slot "+(k+1))))))})),
+  h("p",{class:"note"},"Each word gets its own little chart: one bar per slot. Bars above the line are positive, bars below are negative, and taller means bigger. Put the three lists on top of each other as rows and you have a matrix."));
 
 // ---------- 2 · dot product: multiply matching numbers, then add
 const qv=D.h.Q[0],kv=D.h.K[1];const dpRows=h("div",{class:"wdp"}),dpSum=h("div",{class:"wdps"});
@@ -3290,7 +3339,8 @@ const drawDP=k=>{dpRows.innerHTML="";let s=0;qv.forEach((a,i)=>{const on=i<k;if(
   dpSum.innerHTML=k>=qv.length?`Add them: <b>${f(R(qv[0]*kv[0]+qv[1]*kv[1]))}</b>. A big positive number means the two lists point the same way: a good match.`:"Press play to multiply each matching pair, then add."};
 const dpb=h("button",{class:"btn pri"},"▶ Play the dot product");dpb.onclick=async()=>{for(let k=0;k<=qv.length;k++){drawDP(k);await wait(700)}};drawDP(0);
 const dcard=card("3","The dot product: one number that says how well two lists match",plain("Multiply the matching numbers of two lists, then add the results. The result is one number. It is big and positive when the lists agree, near zero when they are unrelated, negative when they disagree.","Two friends rate pizza, football and music from −2 to 2. Multiply their ratings item by item and add. A high total means similar taste. Try it below.","Attention must answer, for every pair of words, 'how related are you two?' It needs one number for that, quickly, millions of times. The dot product is the simplest way to get it."),[["7","match scores"]],TASTE(),h("div",{class:"dsub"},"Now the same sum with this page's real numbers, the query of 'the' and the key of 'cat'"),
-  h("div",{class:"wdpwrap"},h("div",{},h("span",{class:"wtag q"},"query of 'the'"),h("span",{class:"mono"},vec(qv))),h("div",{},h("span",{class:"wtag k"},"key of 'cat'"),h("span",{class:"mono"},vec(kv)))),dpRows,dpSum,h("div",{class:"ctrl"},dpb));
+  h("div",{class:"wdpgrid"},h("div",{},h("div",{class:"wdpwrap"},h("div",{},h("span",{class:"wtag q"},"query of 'the'"),h("span",{class:"mono"},vec(qv))),h("div",{},h("span",{class:"wtag k"},"key of 'cat'"),h("span",{class:"mono"},vec(kv)))),dpRows),
+    h("div",{class:"wdpside"},dpSum,h("div",{class:"ctrl"},dpb))));
 
 // ---------- 3 · a row times a matrix: one dot product per column
 const xr=D.X[0],Wq=D.Wq,mmOut=h("div",{class:"wmmo"});let mmk=-1;
@@ -3314,20 +3364,27 @@ function drawCos(){const th=+cAng.value*Math.PI/180,L=+cLen.value,B=[L*Math.cos(
   const tt=sv("text",{x:12,y:20,"text-anchor":"start","font-size":12,fill:"var(--ink,#555)"});tt.textContent="angle θ = "+cAng.value+"°";cosSvg.append(tt);
   cosSvg.append(arrow(CA,"var(--q)","a"),arrow(B,"var(--k)","b"));
   const lab=c>.95?"same direction":c>.3?"similar direction":c>-.3?"unrelated (about a right angle)":c>-.95?"pointing away":"opposite direction";
-  cOut.innerHTML=`<div>a = [${CA.map(f2).join(", ")}], b = [${B.map(f2).join(", ")}]</div>
-<div>length |a| = √(${f2(CA[0])}² + ${f2(CA[1])}²) = <b>${f2(na)}</b>, length |b| = √(${f2(B[0])}² + ${f2(B[1])}²) = <b>${f2(nb)}</b></div>
-<div>dot product a·b = ${f2(CA[0])}×${f2(B[0])} + ${f2(CA[1])}×${f2(B[1])} = <b>${f2(dot)}</b> = |a| × |b| × cos θ = ${f2(na)} × ${f2(nb)} × ${f2(Math.cos(th))}</div>
-<div>cosine similarity = a·b ÷ (|a| × |b|) = <b>${f2(c)}</b> → ${lab}</div>`}
+  const row=(l,m)=>`<span class="wcl">${l}</span><span class="wcm">${m}</span>`;
+  cOut.innerHTML=row("The two arrows",`a = [${CA.map(f2).join(", ")}]<br>b = [${B.map(f2).join(", ")}]`)
+   +row("Lengths",`|a| = √(${f2(CA[0])}² + ${f2(CA[1])}²) = <b>${f2(na)}</b><br>|b| = √(${f2(B[0])}² + ${f2(B[1])}²) = <b>${f2(nb)}</b>`)
+   +row("Dot product",`a·b = ${f2(CA[0])} × ${f2(B[0])} + ${f2(CA[1])} × ${f2(B[1])} = <b>${f2(dot)}</b>`)
+   +row("Same, using the angle",`|a| × |b| × cos θ = ${f2(na)} × ${f2(nb)} × ${f2(Math.cos(th))} = <b>${f2(na*nb*Math.cos(th))}</b>`)
+   +row("Cosine similarity",`a·b ÷ (|a| × |b|) = ${f2(dot)} ÷ ${f2(na*nb)} = <b>${f2(c)}</b><br>→ ${lab}`)}
 const f2=x=>(Math.abs(x)<.005?0:x).toFixed(2);
 cAng.oninput=drawCos;cLen.oninput=drawCos;
 const pre=(t,a,l)=>{const b=h("button",{class:"btn"},t);b.onclick=()=>{cAng.value=a;cLen.value=l;drawCos()};return b};
 drawCos();
 const ccard=card("4","Length and direction: cosine similarity",plain("Any list of numbers can be drawn as an arrow. Its length, called the magnitude, is √(x² + y² + …) and says how big the numbers are. Its direction says what mix of numbers it holds. The dot product combines both, a·b = |a| × |b| × cos θ, where θ is the angle between the arrows. Divide out the two lengths and what remains is the cosine similarity, which measures direction only. It is 1 when the arrows point the same way, 0 at a right angle and −1 when they point in opposite ways.","Two smoothie recipes. One uses 1 banana and 2 strawberries, the other 2 bananas and 4 strawberries. The second is just a bigger batch of the same drink. Both arrows point the same way, so the cosine similarity is 1 (same taste), while the dot product grows because the second arrow is longer.","Words with similar meanings end up pointing in similar directions in embedding space, and cosine similarity is the usual way to check that (step 3). Attention uses the plain dot product, so length counts as well as direction. That is why its scores can grow large, and why step 8 divides them by √d_k."),[["3","embedding space"],["7","match scores"],["8","scaling"]],
   h("div",{class:"wcosbox"},cosSvg,h("div",{},h("div",{class:"ctrl"},h("label",{class:"rpick"},"Direction of b ",cAng),h("label",{class:"rpick"},"Length of b ",cLen)),
-    h("div",{class:"ctrl"},pre("Same way, longer",0,3),pre("Right angle",90,2),pre("Opposite",180,2)),cOut)),
+    h("div",{class:"ctrl"},pre("Same way, longer",0,3),pre("Right angle",90,2),pre("Opposite",180,2)))),cOut,
   h("p",{class:"note"},"Change only the length of b and watch. The dot product changes, but the cosine similarity stays the same."));
 const mcard=card("5","A row times a matrix: many dot products at once",plain("A matrix is a table of dials. To multiply a word's list by it, do one dot product with each column. Each column gives one new number.","A judge scores a dish with two score sheets. Sheet 1 cares about taste and price, sheet 2 about looks and size. The same dish gives a different score on each sheet.","This is how each word gets its question (Q), label (K) and content (V). The same word list, multiplied by three different tables of dials."),[["6","Q, K, V"],["15","feed-forward"]],
-  h("div",{class:"wmmwrap"},mmTab,mmOut),h("div",{class:"ctrl"},mmb));
+  h("div",{class:"wmmwrap"},mmTab,mmOut),h("div",{class:"ctrl"},mmb),
+  h("div",{class:"dsub"},"All words at once: stack the rows into a matrix and do the same for every row"),
+  (()=>{const words=TOK4,Xr=words.map((_,i)=>D.X[i]),Q=Xr.map(r=>[0,1].map(j=>r.reduce((s,v,i)=>s+v*Wq[i][j],0)));
+    const mt=(name,rows,lab,cls)=>h("div",{class:"wmbox"},h("b",{},name),h("table",{class:"mt dt wsm "+cls},...rows.map((r,i)=>h("tr",{},lab?h("th",{},lab[i]):null,...r.map(v=>h("td",{class:"mono"},f(v)))))),h("small",{},`${rows.length} × ${rows[0].length}`));
+    return h("div",{class:"wmall"},mt("X (word + position, step 5)",Xr,words,""),h("span",{class:"wop"},"×"),mt("Wq (dials)",Wq,null,""),h("span",{class:"wop"},"="),mt("Q (questions)",Q,words,"q"))})(),
+  h("p",{class:"note"},"The shape rule: (4 × 4) × (4 × 2) gives (4 × 2). The two inner numbers must match, because each dot product pairs a word's 4 numbers with a column's 4 dials. The outer numbers give the result's shape. The first row of Q is the result you just played."));
 
 // ---------- 4 · e to the power x: always positive, grows fast
 const exs=h("input",{type:"range",min:-3,max:3,step:.1,value:1,"aria-label":"x"}),exOut=h("div",{class:"wex"});
